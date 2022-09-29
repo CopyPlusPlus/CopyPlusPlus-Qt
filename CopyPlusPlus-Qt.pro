@@ -20,7 +20,8 @@ SOURCES += \
     material/lib/qtmaterialstyle.cpp \
     material/lib/qtmaterialtheme.cpp \
     material/qtmaterialtoggle.cpp \
-    material/qtmaterialtoggle_internal.cpp
+    material/qtmaterialtoggle_internal.cpp \
+    toggle.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -38,10 +39,12 @@ HEADERS += \
     material/lib/qtmaterialtheme_p.h \
     material/qtmaterialtoggle.h \
     material/qtmaterialtoggle_internal.h \
-    material/qtmaterialtoggle_p.h
+    material/qtmaterialtoggle_p.h \
+    toggle.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    toggle.ui
 
 TRANSLATIONS += CopyPlusPlus-Qt_en_US.ts
 CONFIG += lrelease
