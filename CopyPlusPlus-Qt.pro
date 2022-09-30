@@ -21,6 +21,7 @@ SOURCES += \
     material/lib/qtmaterialtheme.cpp \
     material/qtmaterialtoggle.cpp \
     material/qtmaterialtoggle_internal.cpp \
+    processtext.cpp \
     toggle.cpp
 
 HEADERS += \
@@ -40,6 +41,7 @@ HEADERS += \
     material/qtmaterialtoggle.h \
     material/qtmaterialtoggle_internal.h \
     material/qtmaterialtoggle_p.h \
+    processtext.h \
     toggle.h
 
 FORMS += \
