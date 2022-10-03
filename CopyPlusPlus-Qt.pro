@@ -51,20 +51,19 @@ FORMS += \
     mainwindow.ui \
     toggle.ui
 
-TRANSLATIONS += CopyPlusPlus-Qt_en_US.ts
-CONFIG += lrelease
-CONFIG += embed_translations
-
-
 mac: SOURCES += 3rdparty/QHotKey/qhotkey_mac.cpp
 else:win32: SOURCES += 3rdparty/QHotkey/qhotkey_win.cpp
 else:unix: SOURCES += 3rdparty/QHotkey/qhotkey_x11.cpp
 
 INCLUDEPATH += material 3rdparty\QHotkey
 
+RESOURCES += resources.qrc
+
+TRANSLATIONS += CopyPlusPlus-Qt_en_US.ts
+CONFIG += lrelease
+CONFIG += embed_translations
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-RESOURCES += resources.qrc
