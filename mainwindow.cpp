@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "processtext.h"
+#include "qhotkey.h"
 #include "ui_mainwindow.h"
 #include <QClipboard>
 #include <QCloseEvent>
@@ -7,7 +8,8 @@
 #include <QHBoxLayout>
 #include <QSettings>
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow),
+                                          settings("WY", "CopyPlusPlus", this), pro(this) {
     ui->setupUi(this);
 
     setFixedSize(420, 360);
@@ -36,6 +38,18 @@ void MainWindow::loadSettings() {
         ui->toggle1->setChecked(true);
 
         connect(QGuiApplication::clipboard(), &QClipboard::changed, &pro, &ProcessText::process);
+    }
+
+    if (settings.value("toggle2", false).toBool()) {
+        ui->toggle2->setChecked(true);
+
+        // Register hotkey
+        hotkey = new QHotkey(QKeySequence("Ctrl+Shift+C"), true, qApp);
+        qDebug() << "Is segistered:" << hotkey->isRegistered();
+
+        connect(hotkey, &QHotkey::activated, qApp, []() {
+            qDebug() << "Hotkey activated";
+        });
     }
 }
 

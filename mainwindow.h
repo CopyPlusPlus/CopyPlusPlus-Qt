@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "processtext.h"
+#include "qhotkey.h"
 #include "qsettings.h"
 #include <QMainWindow>
 
@@ -27,6 +28,8 @@ private:
 
 private:
     Ui::MainWindow *ui;
+    QHotkey *hotkey;
+
     QString settingsIniFile;
     QSettings settings;
     ProcessText pro;
