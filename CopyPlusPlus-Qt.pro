@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    3rdparty/QHotkey/qhotkey.cpp \
     main.cpp \
     mainwindow.cpp \
     material/lib/qtmaterialcheckable.cpp \
@@ -25,6 +26,8 @@ SOURCES += \
     toggle.cpp
 
 HEADERS += \
+    3rdparty/QHotkey/qhotkey.h \
+    3rdparty/QHotkey/qhotkey_p.h \
     mainwindow.h \
     material/lib/qtmaterialcheckable.h \
     material/lib/qtmaterialcheckable_internal.h \
@@ -52,7 +55,12 @@ TRANSLATIONS += CopyPlusPlus-Qt_en_US.ts
 CONFIG += lrelease
 CONFIG += embed_translations
 
-INCLUDEPATH += material
+
+mac: SOURCES += 3rdparty/QHotKey/qhotkey_mac.cpp
+else:win32: SOURCES += 3rdparty/QHotkey/qhotkey_win.cpp
+else:unix: SOURCES += 3rdparty/QHotkey/qhotkey_x11.cpp
+
+INCLUDEPATH += material 3rdparty\QHotkey
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
