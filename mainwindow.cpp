@@ -7,9 +7,10 @@
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QSettings>
+#include <QThread>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow),
-                                          settings("WY", "CopyPlusPlus", this), pro(this) {
+                                          settings("WY", "CopyPlusPlus", this) {
     ui->setupUi(this);
 
     setFixedSize(420, 360);
@@ -37,7 +38,7 @@ void MainWindow::loadSettings() {
     if (settings.value("toggle1", false).toBool()) {
         ui->toggle1->setChecked(true);
 
-        connect(QGuiApplication::clipboard(), &QClipboard::changed, &pro, &ProcessText::process);
+        connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
 
     if (settings.value("toggle2", false).toBool()) {
@@ -59,6 +60,24 @@ void MainWindow::saveSettings() {
     settings.setValue("toggle2", ui->toggle2->isChecked());
 }
 
-void MainWindow::disConnect() {
-    // disconnect(QGuiApplication::clipboard(), &QClipboard::changed, &pro, &ProcessText::process);
+void MainWindow::process() {
+    qDebug() << "Clipboard changed";
+
+    QString s = QGuiApplication::clipboard()->text();
+
+    qDebug() << "Before :" << s;
+
+    s.replace("r", "a");
+
+    QGuiApplication::clipboard()->setText(s);
+
+    qDebug() << "After :" << QGuiApplication::clipboard()->text();
+}
+
+bool flag = true;
+void MainWindow::afterChanged() {
+    if (flag) {
+        process();
+    }
+    flag = !flag;
 }

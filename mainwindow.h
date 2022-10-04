@@ -18,12 +18,12 @@ class MainWindow : public QMainWindow {
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    static void disConnect();
 
 private:
     void ininGui();
     void loadSettings();
     void saveSettings();
+    void process();
     void closeEvent(QCloseEvent *event);
 
 private:
@@ -32,6 +32,6 @@ private:
 
     QString settingsIniFile;
     QSettings settings;
-    ProcessText pro;
+    void afterChanged();
 };
 #endif // MAINWINDOW_H
