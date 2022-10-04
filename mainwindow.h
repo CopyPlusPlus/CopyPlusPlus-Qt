@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "processtext.h"
 #include "qhotkey.h"
 #include "qsettings.h"
 #include <QMainWindow>

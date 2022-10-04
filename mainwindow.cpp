@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "processtext.h"
 #include "qhotkey.h"
 #include "ui_mainwindow.h"
 #include <QClipboard>
