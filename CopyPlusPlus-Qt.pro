@@ -4,9 +4,15 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 
+mac:QMAKE_MACOSX_DEPLOYMENT_TARGET = 12
+
+# mac:QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+INCLUDEPATH += material 3rdparty/QHotkey
 
 SOURCES += \
     3rdparty/QHotkey/qhotkey.cpp \
@@ -54,8 +60,6 @@ FORMS += \
 mac: SOURCES += 3rdparty/QHotKey/qhotkey_mac.cpp
 else:win32: SOURCES += 3rdparty/QHotkey/qhotkey_win.cpp
 else:unix: SOURCES += 3rdparty/QHotkey/qhotkey_x11.cpp
-
-INCLUDEPATH += material 3rdparty\QHotkey
 
 RESOURCES += resources.qrc
 
