@@ -32,5 +32,6 @@ private:
     QString settingsIniFile;
     QSettings settings;
     void afterChanged();
+    void pressCtrlC();
 };
 #endif // MAINWINDOW_H

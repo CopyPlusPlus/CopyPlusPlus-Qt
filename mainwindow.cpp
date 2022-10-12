@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QSettings>
 #include <QThread>
+#include <Carbon/Carbon.h>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow),
                                           settings("WY", "CopyPlusPlus", this) {
@@ -47,8 +48,9 @@ void MainWindow::loadSettings() {
         hotkey = new QHotkey(QKeySequence("Ctrl+Shift+C"), true, qApp);
         qDebug() << "Is segistered:" << hotkey->isRegistered();
 
-        connect(hotkey, &QHotkey::activated, qApp, []() {
+        connect(hotkey, &QHotkey::activated, qApp, [&]() {
             qDebug() << "Hotkey activated";
+            pressCtrlC();
         });
     }
 }
@@ -73,10 +75,26 @@ void MainWindow::process() {
     qDebug() << "After :" << QGuiApplication::clipboard()->text();
 }
 
-bool flag = true;
+bool flag = false;
 void MainWindow::afterChanged() {
+    qDebug() << "triggered";
+    flag = !flag;
     if (flag) {
         process();
     }
-    flag = !flag;
+}
+
+void MainWindow::pressCtrlC() {
+    CGKeyCode inputKeyCode = kVK_ANSI_C;
+    CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
+    CGEventRef saveCommandDown = CGEventCreateKeyboardEvent(source, inputKeyCode, true);
+    CGEventSetFlags(saveCommandDown, kCGEventFlagMaskCommand);
+    CGEventRef saveCommandUp = CGEventCreateKeyboardEvent(source, inputKeyCode, false);
+
+    CGEventPost(kCGAnnotatedSessionEventTap, saveCommandDown);
+    CGEventPost(kCGAnnotatedSessionEventTap, saveCommandUp);
+
+    CFRelease(saveCommandUp);
+    CFRelease(saveCommandDown);
+    CFRelease(source);
 }
