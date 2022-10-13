@@ -5,20 +5,20 @@
 
 Toggle::Toggle(QWidget *parent) : QWidget(parent), ui(new Ui::Toggle) {
     ui->setupUi(this);
-    addToggle();
+    initToggle();
 }
 
 Toggle::Toggle(QString name, QWidget *parent) : QWidget(parent), ui(new Ui::Toggle) {
     ui->setupUi(this);
     ui->label->setText(name);
-    addToggle();
+    initToggle();
 }
 
 Toggle::~Toggle() {
     delete ui;
 }
 
-void Toggle::addToggle() {
+void Toggle::initToggle() {
     m_toggle = new QtMaterialToggle;
 
     auto h = new QHBoxLayout();
@@ -45,4 +45,8 @@ QString Toggle::getName() {
 
 void Toggle::setName(QString name) {
     ui->label->setText(name);
+}
+
+void Toggle::connectToggled(bool (*action)(bool)) {
+    connect(this->m_toggle, &QtMaterialToggle::toggled, qApp, action);
 }

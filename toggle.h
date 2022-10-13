@@ -21,9 +21,10 @@ public:
     void setChecked(bool status);
     QString getName();
     void setName(QString name);
+    void connectToggled(bool (*action)(bool));
 
 private:
-    void addToggle();
+    void initToggle();
 
 public:
     QtMaterialToggle *m_toggle;
