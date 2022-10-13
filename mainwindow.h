@@ -22,7 +22,8 @@ private:
     void ininGui();
     void loadSettings();
     void saveSettings();
-    void process();
+    void registerHotkey(bool status);
+    void processClipboard();
     void closeEvent(QCloseEvent *event);
 
 private:

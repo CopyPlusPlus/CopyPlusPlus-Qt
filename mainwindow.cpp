@@ -12,6 +12,9 @@
 #include <Carbon/Carbon.h>
 #endif
 
+#ifdef Q_OS_MAC
+#endif
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow),
     settings("WY", "CopyPlusPlus", this) {
     ui->setupUi(this);
@@ -19,7 +22,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     setFixedSize(420, 360);
     ui->toggle1->setName("自动合并");
     ui->toggle2->setName("快捷键合并");
+    ui->toggle1->connectToggled(&);
 
+#ifdef Q_OS_MAC
+    // mac 暂不支持自动合并
+    ui->toggle1->setEnabled(false);
+#endif
     // settingsIniFile = QApplication::applicationDirPath() + "/settings.ini";
     loadSettings();
 }
@@ -47,15 +55,25 @@ void MainWindow::loadSettings() {
     if (settings.value("toggle2", false).toBool()) {
         ui->toggle2->setChecked(true);
 
-        // Register hotkey
-        hotkey = new QHotkey(QKeySequence("Ctrl+Shift+C"), true, qApp);
+        //registerHotkey(true);
+    }
+}
+
+// Register hotkey
+void MainWindow::registerHotkey(bool status) {
+    if (status) {
+        hotkey = new QHotkey(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()), true, qApp);
         qDebug() << "Is segistered:" << hotkey->isRegistered();
 
         connect(hotkey, &QHotkey::activated, qApp, [&]() {
             qDebug() << "Hotkey activated";
             pressCtrlC();
+            processClipboard();
         });
+    } else {
+        hotkey->resetShortcut();
     }
+
 }
 
 void MainWindow::saveSettings() {
@@ -64,14 +82,13 @@ void MainWindow::saveSettings() {
     settings.setValue("toggle2", ui->toggle2->isChecked());
 }
 
-void MainWindow::process() {
-    qDebug() << "Clipboard changed";
-
+void MainWindow::processClipboard() {
     QString s = QGuiApplication::clipboard()->text();
 
     qDebug() << "Before :" << s;
 
-    s.replace("r", "a");
+    s.replace("\r", "");
+    s.replace("\n", "");
 
     QGuiApplication::clipboard()->setText(s);
 
@@ -83,7 +100,7 @@ void MainWindow::afterChanged() {
     qDebug() << "triggered";
     flag = !flag;
     if (flag) {
-        process();
+        processClipboard();
     }
 }
 
