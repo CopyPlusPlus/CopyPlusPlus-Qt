@@ -5,11 +5,13 @@
 
 class QtMaterialToggle;
 
-namespace Ui {
+namespace Ui
+{
     class Toggle;
 }
 
-class Toggle : public QWidget {
+class Toggle : public QWidget
+{
     Q_OBJECT
 
 public:

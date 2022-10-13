@@ -4,7 +4,8 @@
 #include <QObject>
 #include <QString>
 
-class ProcessText : public QObject {
+class ProcessText : public QObject
+{
     Q_OBJECT
 public:
     explicit ProcessText(QObject *parent = nullptr);

@@ -6,7 +6,8 @@
 
 ProcessText::ProcessText(QObject *parent) : QObject{parent} {}
 
-void ProcessText::process() {
+void ProcessText::process()
+{
     qDebug() << "Clipboard changed";
 
     QString s = QGuiApplication::clipboard()->text();

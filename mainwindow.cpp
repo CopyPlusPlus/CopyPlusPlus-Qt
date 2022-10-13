@@ -16,7 +16,8 @@
 #endif
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow),
-    settings("WY", "CopyPlusPlus", this) {
+                                          settings("WY", "CopyPlusPlus", this)
+{
     ui->setupUi(this);
 
     setFixedSize(420, 360);
@@ -32,57 +33,67 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     loadSettings();
 }
 
-MainWindow::~MainWindow() {
+MainWindow::~MainWindow()
+{
     delete ui;
 }
 
 void MainWindow::ininGui() {}
 
-void MainWindow::closeEvent(QCloseEvent *event) {
+void MainWindow::closeEvent(QCloseEvent *event)
+{
     saveSettings();
     event->accept();
 }
 
-void MainWindow::loadSettings() {
+void MainWindow::loadSettings()
+{
     // QSettings settings(settingsIniFile, QSettings::IniFormat);
 
-    if (settings.value("toggle1", false).toBool()) {
+    if (settings.value("toggle1", false).toBool())
+    {
         ui->toggle1->setChecked(true);
 
         connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
 
-    if (settings.value("toggle2", false).toBool()) {
+    if (settings.value("toggle2", false).toBool())
+    {
         ui->toggle2->setChecked(true);
 
-        //registerHotkey(true);
+        // registerHotkey(true);
     }
 }
 
 // Register hotkey
-void MainWindow::registerHotkey(bool status) {
-    if (status) {
+void MainWindow::registerHotkey(bool status)
+{
+    if (status)
+    {
         hotkey = new QHotkey(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()), true, qApp);
         qDebug() << "Is segistered:" << hotkey->isRegistered();
 
-        connect(hotkey, &QHotkey::activated, qApp, [&]() {
+        connect(hotkey, &QHotkey::activated, qApp, [&]()
+                {
             qDebug() << "Hotkey activated";
             pressCtrlC();
-            processClipboard();
-        });
-    } else {
+            processClipboard(); });
+    }
+    else
+    {
         hotkey->resetShortcut();
     }
-
 }
 
-void MainWindow::saveSettings() {
+void MainWindow::saveSettings()
+{
     // QSettings settings(settingsIniFile, QSettings::IniFormat, this);
     settings.setValue("toggle1", ui->toggle1->isChecked());
     settings.setValue("toggle2", ui->toggle2->isChecked());
 }
 
-void MainWindow::processClipboard() {
+void MainWindow::processClipboard()
+{
     QString s = QGuiApplication::clipboard()->text();
 
     qDebug() << "Before :" << s;
@@ -96,15 +107,18 @@ void MainWindow::processClipboard() {
 }
 
 bool flag = false;
-void MainWindow::afterChanged() {
+void MainWindow::afterChanged()
+{
     qDebug() << "triggered";
     flag = !flag;
-    if (flag) {
+    if (flag)
+    {
         processClipboard();
     }
 }
 
-void MainWindow::pressCtrlC() {
+void MainWindow::pressCtrlC()
+{
 #ifdef Q_OS_MAC
     CGKeyCode inputKeyCode = kVK_ANSI_C;
     CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);

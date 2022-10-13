@@ -3,7 +3,8 @@
 #include <QLocale>
 #include <QTranslator>
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     //  High DPI
     qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
@@ -13,9 +14,11 @@ int main(int argc, char *argv[]) {
     // multi languages
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
-    for (const QString &locale : uiLanguages) {
+    for (const QString &locale : uiLanguages)
+    {
         const QString baseName = "CopyPlusPlus-Qt_" + QLocale(locale).name();
-        if (translator.load(":/i18n/" + baseName)) {
+        if (translator.load(":/i18n/" + baseName))
+        {
             a.installTranslator(&translator);
             break;
         }
