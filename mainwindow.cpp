@@ -7,10 +7,13 @@
 #include <QHBoxLayout>
 #include <QSettings>
 #include <QThread>
+
+#ifdef Q_OS_MAC
 #include <Carbon/Carbon.h>
+#endif
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow),
-                                          settings("WY", "CopyPlusPlus", this) {
+    settings("WY", "CopyPlusPlus", this) {
     ui->setupUi(this);
 
     setFixedSize(420, 360);
@@ -85,6 +88,7 @@ void MainWindow::afterChanged() {
 }
 
 void MainWindow::pressCtrlC() {
+#ifdef Q_OS_MAC
     CGKeyCode inputKeyCode = kVK_ANSI_C;
     CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
     CGEventRef saveCommandDown = CGEventCreateKeyboardEvent(source, inputKeyCode, true);
@@ -97,4 +101,5 @@ void MainWindow::pressCtrlC() {
     CFRelease(saveCommandUp);
     CFRelease(saveCommandDown);
     CFRelease(source);
+#endif
 }
