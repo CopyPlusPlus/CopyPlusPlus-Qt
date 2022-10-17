@@ -55,8 +55,3 @@ void Toggle::setName(QString name)
 {
     ui->label->setText(name);
 }
-
-void Toggle::connectToggled(bool (*action)(bool))
-{
-    connect(this->m_toggle, &QtMaterialToggle::toggled, qApp, action);
-}

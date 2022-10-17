@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "qhotkey.h"
+#include "qtmaterialtoggle.h"
 #include "ui_mainwindow.h"
 #include <QClipboard>
 #include <QCloseEvent>
@@ -23,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     setFixedSize(420, 360);
     ui->toggle1->setName("自动合并");
     ui->toggle2->setName("快捷键合并");
-    ui->toggle1->connectToggled(&);
+    connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::registerHotkey);
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
@@ -106,7 +107,6 @@ void MainWindow::processClipboard()
     qDebug() << "After :" << QGuiApplication::clipboard()->text();
 }
 
-bool flag = false;
 void MainWindow::afterChanged()
 {
     qDebug() << "triggered";

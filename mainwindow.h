@@ -29,6 +29,8 @@ private:
     void closeEvent(QCloseEvent *event);
 
 private:
+    bool flag = false;
+
     Ui::MainWindow *ui;
     QHotkey *hotkey;
 
