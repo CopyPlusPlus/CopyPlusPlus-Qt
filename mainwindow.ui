@@ -34,7 +34,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QKeySequenceEdit" name="keySequenceEdit">
+   <widget class="myKeySequenceEdit" name="keySequenceEdit">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -65,6 +65,11 @@
    <extends>QWidget</extends>
    <header>toggle.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>myKeySequenceEdit</class>
+   <extends>QKeySequenceEdit</extends>
+   <header>mykeysequenceedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
