@@ -32,6 +32,7 @@ private:
     void enableHotkey(bool status);
     void registerHotkey(const QKeySequence &keySequence);
     void hotkeyActivated();
+    void truncateShortcut();
 
     void pressCtrlC();
     void processClipboard();
