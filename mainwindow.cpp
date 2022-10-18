@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "mykeysequenceedit.h"
 #include "qhotkey.h"
 #include "qtmaterialtoggle.h"
 #include "ui_mainwindow.h"
@@ -28,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->toggle2->setName("快捷键合并");
 
     connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::enableHotkey);
+
+    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&](){ qDebug() << "Hotkey reseted."; hotkey->resetShortcut(); });
 
     connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::truncateShortcut);
     connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
