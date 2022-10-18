@@ -89,6 +89,8 @@ void MainWindow::enableHotkey(bool status)
 
 void MainWindow::keySequenceEditFinished()
 {
+    ui->keySequenceEdit->clearFocus();
+
     settings.setValue("shortcut", ui->keySequenceEdit->keySequence().toString());
     registerHotkey(ui->keySequenceEdit->keySequence());
 }
