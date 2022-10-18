@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&](){ qDebug() << "Hotkey reseted."; hotkey->resetShortcut(); });
 
-    connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::truncateShortcut);
+    // connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::truncateShortcut);
     connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
 
     connect(hotkey, &QHotkey::activated, this, &MainWindow::hotkeyActivated);
