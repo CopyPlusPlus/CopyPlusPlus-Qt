@@ -40,6 +40,7 @@ SOURCES += \
     material/lib/qtmaterialtheme.cpp \
     material/qtmaterialtoggle.cpp \
     material/qtmaterialtoggle_internal.cpp \
+    mykeysequenceedit.cpp \
     processtext.cpp \
     toggle.cpp
 
@@ -62,6 +63,7 @@ HEADERS += \
     material/qtmaterialtoggle.h \
     material/qtmaterialtoggle_internal.h \
     material/qtmaterialtoggle_p.h \
+    mykeysequenceedit.h \
     processtext.h \
     toggle.h
 
