@@ -17,19 +17,25 @@
 #endif
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow),
-                                          settings("WY", "CopyPlusPlus", this)
+                                          hotkey(new QHotkey(this)), settings("WY", "CopyPlusPlus", this)
 {
     ui->setupUi(this);
 
     setFixedSize(420, 360);
+    setFocusPolicy(Qt::ClickFocus);
+
     ui->toggle1->setName("自动合并");
     ui->toggle2->setName("快捷键合并");
-    connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::registerHotkey);
+
+    connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::enableHotkey);
+    connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
+    connect(hotkey, &QHotkey::activated, this, &MainWindow::hotkeyActivated);
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
     ui->toggle1->setEnabled(false);
 #endif
+
     // settingsIniFile = QApplication::applicationDirPath() + "/settings.ini";
     loadSettings();
 }
@@ -51,39 +57,54 @@ void MainWindow::loadSettings()
 {
     // QSettings settings(settingsIniFile, QSettings::IniFormat);
 
+    ui->keySequenceEdit->setKeySequence(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()));
+
     if (settings.value("toggle1", false).toBool())
     {
         ui->toggle1->setChecked(true);
-
         connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
 
     if (settings.value("toggle2", false).toBool())
     {
         ui->toggle2->setChecked(true);
-
-        // registerHotkey(true);
     }
 }
 
-// Register hotkey
-void MainWindow::registerHotkey(bool status)
+void MainWindow::enableHotkey(bool status)
 {
+    ui->keySequenceEdit->setEnabled(status);
+
     if (status)
     {
-        hotkey = new QHotkey(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()), true, qApp);
-        qDebug() << "Is segistered:" << hotkey->isRegistered();
-
-        connect(hotkey, &QHotkey::activated, qApp, [&]()
-                {
-            qDebug() << "Hotkey activated";
-            pressCtrlC();
-            processClipboard(); });
+        qDebug() << "Hotkey enabled.";
+        registerHotkey(ui->keySequenceEdit->keySequence());
     }
     else
     {
+        qDebug() << "Hotkey disabled.";
         hotkey->resetShortcut();
     }
+}
+
+void MainWindow::keySequenceEditFinished()
+{
+    settings.setValue("shortcut", ui->keySequenceEdit->keySequence().toString());
+    registerHotkey(ui->keySequenceEdit->keySequence());
+}
+
+// Register hotkey
+void MainWindow::registerHotkey(const QKeySequence &keySequence)
+{
+    hotkey->setShortcut(keySequence, true);
+    qDebug() << "Hotkey" << keySequence << "registered:" << hotkey->isRegistered();
+}
+
+void MainWindow::hotkeyActivated()
+{
+    qDebug() << "Hotkey activated";
+    pressCtrlC();
+    processClipboard();
 }
 
 void MainWindow::saveSettings()

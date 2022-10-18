@@ -21,12 +21,21 @@ public:
     ~MainWindow();
 
 private:
+    void closeEvent(QCloseEvent *event);
+
     void ininGui();
     void loadSettings();
     void saveSettings();
-    void registerHotkey(bool status);
+
+    void keySequenceEditFinished();
+
+    void enableHotkey(bool status);
+    void registerHotkey(const QKeySequence &keySequence);
+    void hotkeyActivated();
+
+    void pressCtrlC();
     void processClipboard();
-    void closeEvent(QCloseEvent *event);
+    void afterChanged();
 
 private:
     bool flag = false;
@@ -36,7 +45,5 @@ private:
 
     QString settingsIniFile;
     QSettings settings;
-    void afterChanged();
-    void pressCtrlC();
 };
 #endif // MAINWINDOW_H
