@@ -34,6 +34,19 @@
      </rect>
     </property>
    </widget>
+   <widget class="QKeySequenceEdit" name="keySequenceEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>220</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -41,7 +54,7 @@
      <x>0</x>
      <y>0</y>
      <width>515</width>
-     <height>26</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>
