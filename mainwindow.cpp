@@ -28,7 +28,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->toggle2->setName("快捷键合并");
 
     connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::enableHotkey);
+
+    connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::truncateShortcut);
     connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
+
     connect(hotkey, &QHotkey::activated, this, &MainWindow::hotkeyActivated);
 
 #ifdef Q_OS_MAC
@@ -93,6 +96,12 @@ void MainWindow::keySequenceEditFinished()
 
     settings.setValue("shortcut", ui->keySequenceEdit->keySequence().toString());
     registerHotkey(ui->keySequenceEdit->keySequence());
+}
+
+void MainWindow::truncateShortcut()
+{
+    ui->keySequenceEdit->clearFocus();
+    ui->keySequenceEdit->setKeySequence(ui->keySequenceEdit->keySequence()[0]);
 }
 
 // Register hotkey
