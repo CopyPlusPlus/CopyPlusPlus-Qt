@@ -10,7 +10,8 @@ class myKeySequenceEdit : public QKeySequenceEdit
 public:
     myKeySequenceEdit(QWidget *parent = nullptr);
 
-    void focusInEvent(QFocusEvent *event);
+    void focusInEvent(QFocusEvent *event) override;
+    void keyPressEvent(QKeyEvent *) override;
 
 signals:
     void focusIn();
