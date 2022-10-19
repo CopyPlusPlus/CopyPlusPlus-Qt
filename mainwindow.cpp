@@ -30,7 +30,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::enableHotkey);
 
-    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&](){ qDebug() << "Hotkey reseted."; hotkey->resetShortcut(); });
+    // clang-format off
+    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&](){ qDebug() << "Hotkey reseted.";  hotkey->resetShortcut(); });
+    // clang-format on
 
     // connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::truncateShortcut);
     connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
