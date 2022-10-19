@@ -5,8 +5,7 @@
 
 class QtMaterialToggle;
 
-namespace Ui
-{
+namespace Ui {
     class Toggle;
 }
 
