@@ -30,9 +30,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::enableHotkey);
 
-    // clang-format off
-    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&](){ qDebug() << "Hotkey reseted.";  hotkey->resetShortcut(); });
-    // clang-format on
+    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&]() { qDebug() << "Hotkey reseted."; hotkey->resetShortcut(); });
 
     // editingFinished: 仅在输入结束时触发, setKeySequence 不触发
     // keySequenceChanged: 输入结束以及 setKeySequence 时触发
@@ -69,14 +67,12 @@ void MainWindow::loadSettings()
 
     ui->keySequenceEdit->setKeySequence(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()));
 
-    if (settings.value("toggle1", false).toBool())
-    {
+    if (settings.value("toggle1", false).toBool()) {
         ui->toggle1->setChecked(true);
         connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
 
-    if (settings.value("toggle2", false).toBool())
-    {
+    if (settings.value("toggle2", false).toBool()) {
         ui->toggle2->setChecked(true);
     }
 }
@@ -85,13 +81,10 @@ void MainWindow::enableHotkey(bool status)
 {
     ui->keySequenceEdit->setEnabled(status);
 
-    if (status)
-    {
+    if (status) {
         qDebug() << "Hotkey enabled.";
         registerHotkey(ui->keySequenceEdit->keySequence());
-    }
-    else
-    {
+    } else {
         qDebug() << "Hotkey disabled.";
         hotkey->resetShortcut();
     }
@@ -150,8 +143,7 @@ void MainWindow::afterChanged()
 {
     qDebug() << "triggered";
     flag = !flag;
-    if (flag)
-    {
+    if (flag) {
         processClipboard();
     }
 }
