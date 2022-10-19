@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&](){ qDebug() << "Hotkey reseted.";  hotkey->resetShortcut(); });
     // clang-format on
 
+    // editingFinished: 仅在输入结束时触发, setKeySequence 不触发
+    // keySequenceChanged: 输入结束以及 setKeySequence 时触发
     // connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::truncateShortcut);
     connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
 
