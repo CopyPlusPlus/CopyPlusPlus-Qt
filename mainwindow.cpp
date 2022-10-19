@@ -10,6 +10,11 @@
 #include <QSettings>
 #include <QThread>
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#include <winuser.h>
+#endif
+
 #ifdef Q_OS_MAC
 #include <Carbon/Carbon.h>
 #endif
@@ -150,6 +155,66 @@ void MainWindow::afterChanged()
 
 void MainWindow::pressCtrlC()
 {
+#ifdef Q_OS_WIN
+    INPUT inputs[7] = {};
+    ZeroMemory(inputs, sizeof(inputs));
+    Sleep(100);
+
+    //    inputs[0].type = INPUT_KEYBOARD;
+    //    inputs[0].ki.wVk = VK_LCONTROL;
+
+    //    inputs[1].type = INPUT_KEYBOARD;
+    //    inputs[1].ki.wVk = 0x43; // C
+
+    //    inputs[2].type = INPUT_KEYBOARD;
+    //    inputs[2].ki.wVk = 0x43; // C
+    //    inputs[2].ki.dwFlags = KEYEVENTF_KEYUP;
+
+    //    inputs[3].type = INPUT_KEYBOARD;
+    //    inputs[3].ki.wVk = VK_LCONTROL;
+    //    inputs[3].ki.dwFlags = KEYEVENTF_KEYUP;
+
+    inputs[0].ki.time = 0;
+    inputs[1].ki.time = 0;
+    inputs[2].ki.time = 0;
+    inputs[3].ki.time = 0;
+
+    inputs[0].type = INPUT_KEYBOARD;
+    inputs[0].ki.wVk = VK_LSHIFT;
+    inputs[0].ki.dwFlags = KEYEVENTF_KEYUP;
+
+    inputs[1].type = INPUT_KEYBOARD;
+    inputs[1].ki.wVk = VK_LCONTROL;
+    inputs[1].ki.dwFlags = KEYEVENTF_KEYUP;
+
+    inputs[2].type = INPUT_KEYBOARD;
+    inputs[2].ki.wVk = 0x43;
+    inputs[2].ki.dwFlags = KEYEVENTF_KEYUP;
+
+    inputs[3].type = INPUT_KEYBOARD;
+    inputs[3].ki.wVk = VK_LWIN;
+    inputs[3].ki.dwFlags = 0;
+
+    inputs[4].type = INPUT_KEYBOARD;
+    inputs[4].ki.wVk = 0x44;
+    inputs[4].ki.dwFlags = 0;
+
+    inputs[5].type = INPUT_KEYBOARD;
+    inputs[5].ki.wVk = VK_LWIN;
+    inputs[5].ki.dwFlags = KEYEVENTF_KEYUP;
+
+    inputs[6].type = INPUT_KEYBOARD;
+    inputs[6].ki.wVk = 0x44;
+    inputs[6].ki.dwFlags = KEYEVENTF_KEYUP;
+
+    UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+    if (uSent != ARRAYSIZE(inputs)) {
+        qDebug() << "SendInput failed" << HRESULT_FROM_WIN32(GetLastError());
+    } else {
+        qDebug() << "SendInput succeed";
+    }
+#endif
+
 #ifdef Q_OS_MAC
     CGKeyCode inputKeyCode = kVK_ANSI_C;
     CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
