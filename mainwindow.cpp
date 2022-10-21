@@ -156,56 +156,53 @@ void MainWindow::afterChanged()
 void MainWindow::pressCtrlC()
 {
 #ifdef Q_OS_WIN
-    INPUT inputs[7] = {};
+    QStringList keys = ui->keySequenceEdit->keySequence().toString().split("+");
+
+    const int n = keys.size();
+    INPUT inputs[n + 4];
     ZeroMemory(inputs, sizeof(inputs));
-    Sleep(100);
 
-    //    inputs[0].type = INPUT_KEYBOARD;
-    //    inputs[0].ki.wVk = VK_LCONTROL;
+    // 释放 Modifier
+    for (int i = 0; i < n - 1; ++i) {
+        inputs[i].type = INPUT_KEYBOARD;
+        inputs[i].ki.dwFlags = KEYEVENTF_KEYUP;
 
-    //    inputs[1].type = INPUT_KEYBOARD;
-    //    inputs[1].ki.wVk = 0x43; // C
+        switch (keys[i].toStdString()[0]) {
+        case 'C':
+            inputs[i].ki.wVk = VK_LCONTROL;
+            break;
+        case 'S':
+            inputs[i].ki.wVk = VK_LSHIFT;
+            break;
+        case 'M':
+            inputs[i].ki.wVk = VK_LWIN;
+            break;
+        case 'A':
+            inputs[i].ki.wVk = VK_LMENU;
+            break;
+        }
+    }
+    // 释放快捷键
+    inputs[n - 1].type = INPUT_KEYBOARD;
+    inputs[n - 1].ki.dwFlags = KEYEVENTF_KEYUP;
+    inputs[n - 1].ki.wVk = VkKeyScanA(keys[n - 1].toStdString()[0]);
 
-    //    inputs[2].type = INPUT_KEYBOARD;
-    //    inputs[2].ki.wVk = 0x43; // C
-    //    inputs[2].ki.dwFlags = KEYEVENTF_KEYUP;
-
-    //    inputs[3].type = INPUT_KEYBOARD;
-    //    inputs[3].ki.wVk = VK_LCONTROL;
-    //    inputs[3].ki.dwFlags = KEYEVENTF_KEYUP;
-
-    inputs[0].ki.time = 0;
-    inputs[1].ki.time = 0;
-    inputs[2].ki.time = 0;
-    inputs[3].ki.time = 0;
-
-    inputs[0].type = INPUT_KEYBOARD;
-    inputs[0].ki.wVk = VK_LSHIFT;
-    inputs[0].ki.dwFlags = KEYEVENTF_KEYUP;
-
-    inputs[1].type = INPUT_KEYBOARD;
-    inputs[1].ki.wVk = VK_LCONTROL;
-    inputs[1].ki.dwFlags = KEYEVENTF_KEYUP;
-
-    inputs[2].type = INPUT_KEYBOARD;
-    inputs[2].ki.wVk = 0x43;
-    inputs[2].ki.dwFlags = KEYEVENTF_KEYUP;
-
-    inputs[3].type = INPUT_KEYBOARD;
-    inputs[3].ki.wVk = VK_LWIN;
-    inputs[3].ki.dwFlags = 0;
-
-    inputs[4].type = INPUT_KEYBOARD;
-    inputs[4].ki.wVk = 0x44;
-    inputs[4].ki.dwFlags = 0;
-
-    inputs[5].type = INPUT_KEYBOARD;
-    inputs[5].ki.wVk = VK_LWIN;
-    inputs[5].ki.dwFlags = KEYEVENTF_KEYUP;
-
-    inputs[6].type = INPUT_KEYBOARD;
-    inputs[6].ki.wVk = 0x44;
-    inputs[6].ki.dwFlags = KEYEVENTF_KEYUP;
+    // 按下 CTRL
+    inputs[n].type = INPUT_KEYBOARD;
+    inputs[n].ki.wVk = VK_LCONTROL;
+    inputs[n].ki.dwFlags = 0;
+    // 按下 C
+    inputs[n + 1].type = INPUT_KEYBOARD;
+    inputs[n + 1].ki.wVk = 0x43; // C
+    inputs[n + 1].ki.dwFlags = 0;
+    // 释放 CTRL
+    inputs[n + 2].type = INPUT_KEYBOARD;
+    inputs[n + 2].ki.wVk = VK_LCONTROL;
+    inputs[n + 2].ki.dwFlags = KEYEVENTF_KEYUP;
+    // 释放 C
+    inputs[n + 3].type = INPUT_KEYBOARD;
+    inputs[n + 3].ki.wVk = 0x43; // C
+    inputs[n + 3].ki.dwFlags = KEYEVENTF_KEYUP;
 
     UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
     if (uSent != ARRAYSIZE(inputs)) {
