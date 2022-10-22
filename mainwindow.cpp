@@ -132,6 +132,7 @@ void MainWindow::saveSettings()
 
 void MainWindow::processClipboard()
 {
+    Sleep(50);
     QString s = QGuiApplication::clipboard()->text();
 
     qDebug() << "Before :" << s;
@@ -139,7 +140,8 @@ void MainWindow::processClipboard()
     s.replace("\r", "");
     s.replace("\n", "");
 
-    QGuiApplication::clipboard()->setText(s);
+    // QGuiApplication::clipboard()->setText(s);
+    setClipboardText(s);
 
     qDebug() << "After :" << QGuiApplication::clipboard()->text();
 }
@@ -226,4 +228,28 @@ void MainWindow::pressCtrlC()
     CFRelease(saveCommandDown);
     CFRelease(source);
 #endif
+}
+
+void MainWindow::setClipboardText(QString _text)
+{
+    QByteArray ba = _text.toLocal8Bit();
+    const char *text = ba.data();
+    const size_t len = strlen(text) + 1;
+
+    HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
+    memcpy(GlobalLock(hMem), text, len);
+    GlobalUnlock(hMem);
+
+    while (!OpenClipboard(0)) {
+        qDebug() << "Cannot open clipboard";
+        Sleep(50);
+    }
+
+    while (!EmptyClipboard()) {
+        qDebug() << "Cannot empty clipboard";
+        Sleep(50);
+    }
+
+    SetClipboardData(CF_TEXT, hMem);
+    CloseClipboard();
 }
