@@ -34,6 +34,7 @@ private:
     void truncateShortcut();
 
     void pressCtrlC();
+    void setClipboardText(QString);
     void processClipboard();
     void afterChanged();
 
