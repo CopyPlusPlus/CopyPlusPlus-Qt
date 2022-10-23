@@ -33,16 +33,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->toggle1->setName("自动合并");
     ui->toggle2->setName("快捷键合并");
 
-    connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::enableHotkey);
+    connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::setShortcutEnabled);
 
-    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&]() { qDebug() << "Hotkey reseted."; hotkey->resetShortcut(); });
+    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&]() { qDebug() << "Shortcut reseted"; hotkey->resetShortcut(); });
 
     // editingFinished: 仅在输入结束时触发, setKeySequence 不触发
     // keySequenceChanged: 输入结束以及 setKeySequence 时触发
     // connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::truncateShortcut);
     connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
 
-    connect(hotkey, &QHotkey::activated, this, &MainWindow::hotkeyActivated);
+    connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
@@ -82,15 +82,15 @@ void MainWindow::loadSettings()
     }
 }
 
-void MainWindow::enableHotkey(bool status)
+void MainWindow::setShortcutEnabled(bool status)
 {
     ui->keySequenceEdit->setEnabled(status);
 
     if (status) {
-        qDebug() << "Hotkey enabled.";
-        registerHotkey(ui->keySequenceEdit->keySequence());
+        qDebug() << "Shortcut enabled";
+        registerShortcut(ui->keySequenceEdit->keySequence());
     } else {
-        qDebug() << "Hotkey disabled.";
+        qDebug() << "Shortcut disabled";
         hotkey->resetShortcut();
     }
 }
@@ -100,25 +100,26 @@ void MainWindow::keySequenceEditFinished()
     ui->keySequenceEdit->clearFocus();
 
     settings.setValue("shortcut", ui->keySequenceEdit->keySequence().toString());
-    registerHotkey(ui->keySequenceEdit->keySequence());
+    registerShortcut(ui->keySequenceEdit->keySequence());
 }
 
-void MainWindow::truncateShortcut()
-{
-    ui->keySequenceEdit->clearFocus();
-    ui->keySequenceEdit->setKeySequence(ui->keySequenceEdit->keySequence()[0]);
-}
+// Make keySequenceEdit only show one shortcut
+// void MainWindow::truncateShortcut()
+// {
+//     ui->keySequenceEdit->clearFocus();
+//     ui->keySequenceEdit->setKeySequence(ui->keySequenceEdit->keySequence()[0]);
+// }
 
-// Register hotkey
-void MainWindow::registerHotkey(const QKeySequence &keySequence)
+// Register shortcut
+void MainWindow::registerShortcut(const QKeySequence &keySequence)
 {
     hotkey->setShortcut(keySequence, true);
-    qDebug() << "Hotkey" << keySequence << "registered:" << hotkey->isRegistered();
+    qDebug() << "Shortcut" << keySequence << "registered:" << hotkey->isRegistered();
 }
 
-void MainWindow::hotkeyActivated()
+void MainWindow::shortcutTriggered()
 {
-    qDebug() << "Hotkey activated";
+    qDebug() << "Shortcut activated";
     pressCtrlC();
     processClipboard();
 }
@@ -133,22 +134,23 @@ void MainWindow::saveSettings()
 void MainWindow::processClipboard()
 {
     Sleep(50);
+
     QString s = QGuiApplication::clipboard()->text();
 
-    qDebug() << "Before :" << s;
+    qDebug() << "Before:" << s;
 
     s.replace("\r", "");
     s.replace("\n", "");
 
     // QGuiApplication::clipboard()->setText(s);
-    setClipboardText(s);
+    setClipboardTextWin(s);
 
-    qDebug() << "After :" << QGuiApplication::clipboard()->text();
+    qDebug() << "After:" << QGuiApplication::clipboard()->text();
 }
 
 void MainWindow::afterChanged()
 {
-    qDebug() << "triggered";
+    qDebug() << "Clipboard changed";
     flag = !flag;
     if (flag) {
         processClipboard();
@@ -208,7 +210,7 @@ void MainWindow::pressCtrlC()
 
     UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
     if (uSent != ARRAYSIZE(inputs)) {
-        qDebug() << "SendInput failed" << HRESULT_FROM_WIN32(GetLastError());
+        qDebug() << "SendInput failed:" << HRESULT_FROM_WIN32(GetLastError());
     } else {
         qDebug() << "SendInput succeed";
     }
@@ -230,7 +232,7 @@ void MainWindow::pressCtrlC()
 #endif
 }
 
-void MainWindow::setClipboardText(QString _text)
+void MainWindow::setClipboardTextWin(QString _text)
 {
     QByteArray ba = _text.toLocal8Bit();
     const char *text = ba.data();
