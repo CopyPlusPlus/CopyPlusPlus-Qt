@@ -26,11 +26,13 @@ private:
     void loadSettings();
     void saveSettings();
 
-    void keySequenceEditFinished();
+    void toggleAutoEnabled();
 
     void setShortcutEnabled(bool status);
     void registerShortcut(const QKeySequence &keySequence);
     void shortcutTriggered();
+
+    void keySequenceEditFinished();
     // void truncateShortcut();
 
     void pressCtrlC();
