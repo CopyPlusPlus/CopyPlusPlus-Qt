@@ -28,13 +28,14 @@ private:
 
     void keySequenceEditFinished();
 
-    void enableHotkey(bool status);
-    void registerHotkey(const QKeySequence &keySequence);
-    void hotkeyActivated();
-    void truncateShortcut();
+    void setShortcutEnabled(bool status);
+    void registerShortcut(const QKeySequence &keySequence);
+    void shortcutTriggered();
+    // void truncateShortcut();
 
     void pressCtrlC();
-    void setClipboardText(QString);
+    void setClipboardTextWin(QString);
+
     void processClipboard();
     void afterChanged();
 
