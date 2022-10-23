@@ -131,8 +131,12 @@ void MainWindow::registerShortcut(const QKeySequence &keySequence)
 void MainWindow::shortcutTriggered()
 {
     qDebug() << "Shortcut activated";
+
     pressCtrlC();
     processClipboard();
+
+    // 还会再触发一次 afterChanged()
+    flag = true;
 }
 
 void MainWindow::saveSettings()
@@ -153,15 +157,23 @@ void MainWindow::processClipboard()
     s.replace("\r", "");
     s.replace("\n", "");
 
-    // QGuiApplication::clipboard()->setText(s);
+#ifdef Q_OS_MAC
+    QGuiApplication::clipboard()->setText(s);
+#endif
+
+#ifdef Q_OS_WIN
     setClipboardTextWin(s);
+#endif
 
     qDebug() << "After:" << QGuiApplication::clipboard()->text();
 }
 
+// 目前快捷键 setClipboard 后还会触发一次
 void MainWindow::afterChanged()
 {
     qDebug() << "Clipboard changed";
+
+    // TODO: 改用 EventFilter
     flag = !flag;
     if (flag) {
         processClipboard();
@@ -243,6 +255,7 @@ void MainWindow::pressCtrlC()
 #endif
 }
 
+#ifdef Q_OS_WIN
 void MainWindow::setClipboardTextWin(QString _text)
 {
     QByteArray ba = _text.toLocal8Bit();
@@ -266,3 +279,4 @@ void MainWindow::setClipboardTextWin(QString _text)
     SetClipboardData(CF_TEXT, hMem);
     CloseClipboard();
 }
+#endif
