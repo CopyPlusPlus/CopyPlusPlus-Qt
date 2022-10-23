@@ -6,7 +6,7 @@
 #include <QClipboard>
 #include <QCloseEvent>
 #include <QDebug>
-#include <QHBoxLayout>
+#include <QMimeData>
 #include <QSettings>
 #include <QThread>
 
@@ -149,6 +149,11 @@ void MainWindow::saveSettings()
 void MainWindow::processClipboard()
 {
     Sleep(50);
+
+    // 防止截图等仅复制图片时处理导致无法复制
+    if (!QGuiApplication::clipboard()->mimeData()->hasText()) {
+        return;
+    }
 
     QString s = QGuiApplication::clipboard()->text();
 
