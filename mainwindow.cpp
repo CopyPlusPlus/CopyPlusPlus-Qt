@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->toggle1->setName("自动合并");
     ui->toggle2->setName("快捷键合并");
 
+    connect(ui->toggle1->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoEnabled);
     connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::setShortcutEnabled);
 
     connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&]() { qDebug() << "Shortcut reseted"; hotkey->resetShortcut(); });
@@ -74,11 +75,21 @@ void MainWindow::loadSettings()
 
     if (settings.value("toggle1", false).toBool()) {
         ui->toggle1->setChecked(true);
-        connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
 
     if (settings.value("toggle2", false).toBool()) {
         ui->toggle2->setChecked(true);
+    }
+}
+
+void MainWindow::toggleAutoEnabled()
+{
+    if (ui->toggle1->isChecked()) {
+        qDebug() << "Auto enabled";
+        connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
+    } else {
+        qDebug() << "Auto disabled";
+        disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
 }
 
