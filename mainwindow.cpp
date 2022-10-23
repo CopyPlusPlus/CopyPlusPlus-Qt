@@ -148,7 +148,7 @@ void MainWindow::saveSettings()
 
 void MainWindow::processClipboard()
 {
-    Sleep(50);
+    QThread::msleep(50);
 
     // 防止截图等仅复制图片时处理导致无法复制
     if (!QGuiApplication::clipboard()->mimeData()->hasText()) {
