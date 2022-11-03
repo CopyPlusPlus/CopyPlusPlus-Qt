@@ -7,6 +7,7 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QMimeData>
+#include <QPushButton>
 #include <QSettings>
 #include <QThread>
 
@@ -30,13 +31,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     setFixedSize(420, 360);
     setFocusPolicy(Qt::ClickFocus);
 
-    ui->toggle1->setName("自动合并");
-    ui->toggle2->setName("快捷键合并");
+    ui->toggle1->setName(tr("自动合并"));
+    ui->toggle2->setName(tr("快捷键合并"));
+    ui->pushButton->setText(tr("设置快捷键"));
 
     connect(ui->toggle1->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoEnabled);
     connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::setShortcutEnabled);
+    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::startSetShorcut);
 
-    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&]() { qDebug() << "Shortcut reseted"; hotkey->resetShortcut(); });
+    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&]() {
+        qDebug() << "Shortcut reseted";
+        ui->keySequenceEdit->clear();
+        hotkey->resetShortcut();
+    });
 
     // editingFinished: 仅在输入结束时触发, setKeySequence 不触发
     // keySequenceChanged: 输入结束以及 setKeySequence 时触发
@@ -91,6 +98,11 @@ void MainWindow::toggleAutoEnabled()
         qDebug() << "Auto disabled";
         disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
+}
+
+void MainWindow::startSetShorcut()
+{
+    ui->keySequenceEdit->setFocus();
 }
 
 void MainWindow::setShortcutEnabled(bool status)

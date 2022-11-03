@@ -28,6 +28,8 @@ private:
 
     void toggleAutoEnabled();
 
+    void startSetShorcut();
+
     void setShortcutEnabled(bool status);
     void registerShortcut(const QKeySequence &keySequence);
     void shortcutTriggered();
