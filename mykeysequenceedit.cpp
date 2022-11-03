@@ -1,6 +1,11 @@
 #include "mykeysequenceedit.h"
 
-myKeySequenceEdit::myKeySequenceEdit(QWidget *parent) : QKeySequenceEdit(parent) {}
+myKeySequenceEdit::myKeySequenceEdit(QWidget *parent) : QKeySequenceEdit(parent)
+{
+    setStyleSheet("background-color: transparent;"
+                  "qproperty-frame: false;");
+    setFocusPolicy(Qt::NoFocus);
+}
 
 void myKeySequenceEdit::focusInEvent(QFocusEvent *event)
 {
