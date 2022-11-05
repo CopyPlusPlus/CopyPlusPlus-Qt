@@ -2,6 +2,7 @@
 #define MYKEYSEQUENCEEDIT_H
 
 #include <QKeySequenceEdit>
+#include <QLineEdit>
 #include <QWidget>
 
 class myKeySequenceEdit : public QKeySequenceEdit
@@ -12,6 +13,13 @@ public:
 
     void focusInEvent(QFocusEvent *event) override;
     void keyPressEvent(QKeyEvent *) override;
+    void clear();
+
+private:
+    // void resetState();
+
+private:
+    QLineEdit *lineEdit;
 
 signals:
     void focusIn();
