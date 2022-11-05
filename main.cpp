@@ -22,6 +22,10 @@ int main(int argc, char *argv[])
         }
     }
 
+    QFont font("Source Han Sans");
+    font.setStyleHint(QFont::SansSerif);
+    QApplication::setFont(font);
+
     MainWindow w;
     w.show();
     return a.exec();
