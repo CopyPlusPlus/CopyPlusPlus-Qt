@@ -6,6 +6,7 @@
 #include <QClipboard>
 #include <QCloseEvent>
 #include <QDebug>
+#include <QMessageBox>
 #include <QMimeData>
 #include <QPushButton>
 #include <QSettings>
@@ -111,7 +112,9 @@ void MainWindow::setShortcutEnabled(bool status)
 
     if (status) {
         qDebug() << "Shortcut enabled";
-        registerShortcut(ui->keySequenceEdit->keySequence());
+        if (!registerShortcut(ui->keySequenceEdit->keySequence())) {
+            errorInput();
+        }
     } else {
         qDebug() << "Shortcut disabled";
         hotkey->resetShortcut();
@@ -123,7 +126,9 @@ void MainWindow::keySequenceEditFinished()
     ui->keySequenceEdit->clearFocus();
 
     settings.setValue("shortcut", ui->keySequenceEdit->keySequence().toString());
-    registerShortcut(ui->keySequenceEdit->keySequence());
+    if (!registerShortcut(ui->keySequenceEdit->keySequence())) {
+        errorInput();
+    }
 }
 
 // Make keySequenceEdit only show one shortcut
@@ -134,10 +139,21 @@ void MainWindow::keySequenceEditFinished()
 // }
 
 // Register shortcut
-void MainWindow::registerShortcut(const QKeySequence &keySequence)
+bool MainWindow::registerShortcut(const QKeySequence &keySequence)
 {
     hotkey->setShortcut(keySequence, true);
     qDebug() << "Shortcut" << keySequence << "registered:" << hotkey->isRegistered();
+    return hotkey->isRegistered();
+}
+
+void MainWindow::errorInput()
+{
+    ui->keySequenceEdit->clear();
+    hotkey->resetShortcut();
+
+    QMessageBox msgBox;
+    msgBox.setText(tr("快捷键无效，更换快捷键"));
+    msgBox.exec();
 }
 
 void MainWindow::shortcutTriggered()

@@ -31,11 +31,13 @@ private:
     void startSetShorcut();
 
     void setShortcutEnabled(bool status);
-    void registerShortcut(const QKeySequence &keySequence);
+    bool registerShortcut(const QKeySequence &keySequence);
     void shortcutTriggered();
 
     void keySequenceEditFinished();
     // void truncateShortcut();
+
+    void errorInput();
 
     void pressCtrlC();
 #ifdef Q_OS_WIN
