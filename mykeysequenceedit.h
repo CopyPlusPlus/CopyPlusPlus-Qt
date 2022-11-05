@@ -18,7 +18,7 @@ public:
 private:
     // void resetState();
 
-private:
+public:
     QLineEdit *lineEdit;
 
 signals:
