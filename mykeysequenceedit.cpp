@@ -1,10 +1,17 @@
 #include "mykeysequenceedit.h"
+#include <QLineEdit>
 
 myKeySequenceEdit::myKeySequenceEdit(QWidget *parent) : QKeySequenceEdit(parent)
 {
     setStyleSheet("background-color: transparent;"
-                  "qproperty-frame: false;");
+                  "qproperty-frame: true;");
     setFocusPolicy(Qt::NoFocus);
+
+    lineEdit = findChild<QLineEdit *>("qt_keysequenceedit_lineedit", Qt::FindDirectChildrenOnly);
+    lineEdit->setCursor(Qt::ArrowCursor);
+    lineEdit->setAlignment(Qt::AlignHCenter);
+
+    lineEdit->setPlaceholderText(QKeySequenceEdit::tr("快捷键"));
 }
 
 void myKeySequenceEdit::focusInEvent(QFocusEvent *event)
@@ -20,4 +27,10 @@ void myKeySequenceEdit::keyPressEvent(QKeyEvent *event)
         QKeySequenceEdit::setKeySequence(this->keySequence());
         emit editingFinished();
     }
+}
+
+void myKeySequenceEdit::clear()
+{
+    QKeySequenceEdit::clear();
+    lineEdit->setPlaceholderText(QKeySequenceEdit::tr("快捷键"));
 }
