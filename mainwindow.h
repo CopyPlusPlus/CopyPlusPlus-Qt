@@ -27,10 +27,10 @@ private:
     void loadSettings();
     void saveSettings();
 
-    void toggleAutoEnabled();
+    void toggleAutoChecked(bool status);
 
-    void setShortcutEnabled(bool status);
-    bool registerShortcut(const QKeySequence &keySequence);
+    void toggleShortcutChecked(bool status);
+    void registerShortcut(const QKeySequence &keySequence);
     void shortcutTriggered();
 
     void keySequenceEditFinished();

@@ -50,6 +50,10 @@ void MainWindow::initUI()
     ui->toggle2->setName(tr("快捷键合并"));
     ui->pushButton->setText(tr("设置快捷键"));
 
+    // 跟随开关默认关闭
+    ui->keySequenceEdit->setEnabled(false);
+    ui->pushButton->setEnabled(false);
+
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
     ui->toggle1->setEnabled(false);
@@ -58,8 +62,8 @@ void MainWindow::initUI()
 
 void MainWindow::initConnections()
 {
-    connect(ui->toggle1->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoEnabled);
-    connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::setShortcutEnabled);
+    connect(ui->toggle1->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoChecked);
+    connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleShortcutChecked);
 
     connect(ui->pushButton, &QPushButton::clicked, this, [&]() { ui->keySequenceEdit->setFocus(); });
 
@@ -86,13 +90,17 @@ void MainWindow::loadSettings()
 
     QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
     if (seq.isEmpty()) {
+        // setKeySequence 时会 resetState，从而 reset PlaceholderText，所以这里要特殊处理，否则会出现默认的"Press shortcut"
         ui->keySequenceEdit->lineEdit->setPlaceholderText("快捷键");
     } else {
         ui->keySequenceEdit->setKeySequence(QKeySequence(seq));
+    }
 
-        if (settings.value("toggle2", false).toBool()) {
-            ui->toggle2->setChecked(true); // 因为已经 connect，所以会自动绑定快捷键
-        }
+    if (settings.value("toggle2", false).toBool()) {
+        ui->keySequenceEdit->setEnabled(true);
+        ui->pushButton->setEnabled(true);
+
+        ui->toggle2->setChecked(true); // 因为已经 connect，所以会自动绑定快捷键
     }
 }
 
@@ -101,6 +109,7 @@ void MainWindow::saveSettings()
     // QSettings settings(settingsIniFile, QSettings::IniFormat, this);
     settings.setValue("toggle1", ui->toggle1->isChecked());
     settings.setValue("toggle2", ui->toggle2->isChecked());
+    settings.setValue("shortcut", ui->keySequenceEdit->keySequence().toString());
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -109,9 +118,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
-void MainWindow::toggleAutoEnabled()
+void MainWindow::toggleAutoChecked(bool status)
 {
-    if (ui->toggle1->isChecked()) {
+    if (status) {
         qDebug() << "Auto enabled";
         connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     } else {
@@ -120,15 +129,14 @@ void MainWindow::toggleAutoEnabled()
     }
 }
 
-void MainWindow::setShortcutEnabled(bool status)
+void MainWindow::toggleShortcutChecked(bool status)
 {
     ui->keySequenceEdit->setEnabled(status);
+    ui->pushButton->setEnabled(status);
 
     if (status) {
         qDebug() << "Shortcut enabled";
-        if (!registerShortcut(ui->keySequenceEdit->keySequence())) {
-            errorInput();
-        }
+        registerShortcut(ui->keySequenceEdit->keySequence());
     } else {
         qDebug() << "Shortcut disabled";
         hotkey->resetShortcut();
@@ -140,9 +148,7 @@ void MainWindow::keySequenceEditFinished()
     ui->keySequenceEdit->clearFocus();
 
     settings.setValue("shortcut", ui->keySequenceEdit->keySequence().toString());
-    if (!registerShortcut(ui->keySequenceEdit->keySequence())) {
-        errorInput();
-    }
+    registerShortcut(ui->keySequenceEdit->keySequence());
 }
 
 // Make keySequenceEdit only show one shortcut
@@ -153,11 +159,13 @@ void MainWindow::keySequenceEditFinished()
 // }
 
 // Register shortcut
-bool MainWindow::registerShortcut(const QKeySequence &keySequence)
+void MainWindow::registerShortcut(const QKeySequence &keySequence)
 {
-    hotkey->setShortcut(keySequence, true);
+    // what's autoRegister?
+    if (!hotkey->setShortcut(keySequence, true) && !keySequence.isEmpty()) {
+        errorInput();
+    }
     qDebug() << "Shortcut" << keySequence << "registered:" << hotkey->isRegistered();
-    return hotkey->isRegistered();
 }
 
 void MainWindow::errorInput()
@@ -166,7 +174,7 @@ void MainWindow::errorInput()
     hotkey->resetShortcut();
 
     QMessageBox msgBox;
-    msgBox.setText(tr("快捷键无效，更换快捷键"));
+    msgBox.setText(tr("快捷键占用，请更换快捷键。"));
     msgBox.exec();
 }
 
