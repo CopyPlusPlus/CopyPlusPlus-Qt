@@ -5,11 +5,11 @@
 #include <QLineEdit>
 #include <QWidget>
 
-class myKeySequenceEdit : public QKeySequenceEdit
+class MyKeySequenceEdit : public QKeySequenceEdit
 {
     Q_OBJECT
 public:
-    myKeySequenceEdit(QWidget *parent = nullptr);
+    MyKeySequenceEdit(QWidget *parent = nullptr);
 
     void focusInEvent(QFocusEvent *event) override;
     void keyPressEvent(QKeyEvent *) override;

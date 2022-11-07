@@ -63,7 +63,7 @@ void MainWindow::initConnections()
 
     connect(ui->pushButton, &QPushButton::clicked, this, [&]() { ui->keySequenceEdit->setFocus(); });
 
-    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&]() {
+    connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusIn, this, [&]() {
         qDebug() << "Shortcut reseted";
         ui->keySequenceEdit->clear();
         hotkey->resetShortcut();
