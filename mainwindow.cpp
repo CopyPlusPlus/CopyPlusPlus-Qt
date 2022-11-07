@@ -146,8 +146,9 @@ void MainWindow::toggleShortcutChecked(bool status)
 void MainWindow::keySequenceEditFinished()
 {
     ui->keySequenceEdit->clearFocus();
-
+    ui->keySequenceEdit->lineEdit->setPlaceholderText("快捷键");
     settings.setValue("shortcut", ui->keySequenceEdit->keySequence().toString());
+
     registerShortcut(ui->keySequenceEdit->keySequence());
 }
 
@@ -162,7 +163,7 @@ void MainWindow::keySequenceEditFinished()
 void MainWindow::registerShortcut(const QKeySequence &keySequence)
 {
     // what's autoRegister?
-    if (!hotkey->setShortcut(keySequence, true) && !keySequence.isEmpty()) {
+    if (!hotkey->setShortcut(keySequence, true) && !keySequence.toString().isEmpty()) {
         errorInput();
     }
     qDebug() << "Shortcut" << keySequence << "registered:" << hotkey->isRegistered();
