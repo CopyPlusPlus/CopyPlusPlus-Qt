@@ -22,13 +22,12 @@ public:
 private:
     void closeEvent(QCloseEvent *event);
 
-    void ininGui();
+    void initUI();
+    void initConnections();
     void loadSettings();
     void saveSettings();
 
     void toggleAutoEnabled();
-
-    void startSetShorcut();
 
     void setShortcutEnabled(bool status);
     bool registerShortcut(const QKeySequence &keySequence);
