@@ -1,7 +1,7 @@
 #include "mykeysequenceedit.h"
 #include <QLineEdit>
 
-myKeySequenceEdit::myKeySequenceEdit(QWidget *parent) : QKeySequenceEdit(parent)
+MyKeySequenceEdit::MyKeySequenceEdit(QWidget *parent) : QKeySequenceEdit(parent)
 {
     setStyleSheet("background-color: transparent;"
                   "qproperty-frame: true;");
@@ -14,13 +14,13 @@ myKeySequenceEdit::myKeySequenceEdit(QWidget *parent) : QKeySequenceEdit(parent)
     lineEdit->setPlaceholderText(QKeySequenceEdit::tr("快捷键"));
 }
 
-void myKeySequenceEdit::focusInEvent(QFocusEvent *event)
+void MyKeySequenceEdit::focusInEvent(QFocusEvent *event)
 {
     emit focusIn();
     QKeySequenceEdit::focusInEvent(event);
 }
 
-void myKeySequenceEdit::keyPressEvent(QKeyEvent *event)
+void MyKeySequenceEdit::keyPressEvent(QKeyEvent *event)
 {
     QKeySequenceEdit::keyPressEvent(event);
     if (this->keySequence().count() > 0) {
@@ -29,7 +29,7 @@ void myKeySequenceEdit::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void myKeySequenceEdit::clear()
+void MyKeySequenceEdit::clear()
 {
     QKeySequenceEdit::clear();
     lineEdit->setPlaceholderText(QKeySequenceEdit::tr("快捷键"));

@@ -34,7 +34,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="myKeySequenceEdit" name="keySequenceEdit">
+   <widget class="MyKeySequenceEdit" name="keySequenceEdit">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -77,7 +77,7 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>myKeySequenceEdit</class>
+   <class>MyKeySequenceEdit</class>
    <extends>QKeySequenceEdit</extends>
    <header>mykeysequenceedit.h</header>
   </customwidget>
