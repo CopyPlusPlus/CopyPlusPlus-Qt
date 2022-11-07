@@ -35,9 +35,6 @@
     </property>
    </widget>
    <widget class="myKeySequenceEdit" name="keySequenceEdit">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
     <property name="geometry">
      <rect>
       <x>70</x>

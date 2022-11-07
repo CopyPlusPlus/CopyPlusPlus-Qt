@@ -27,36 +27,9 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow),
                                           hotkey(new QHotkey(this)), settings("WY", "CopyPlusPlus", this)
 {
-    ui->setupUi(this);
+    initUI();
 
-    setFixedSize(420, 360);
-    setFocusPolicy(Qt::ClickFocus);
-
-    ui->toggle1->setName(tr("自动合并"));
-    ui->toggle2->setName(tr("快捷键合并"));
-    ui->pushButton->setText(tr("设置快捷键"));
-
-    connect(ui->toggle1->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoEnabled);
-    connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::setShortcutEnabled);
-    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::startSetShorcut);
-
-    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&]() {
-        qDebug() << "Shortcut reseted";
-        ui->keySequenceEdit->clear();
-        hotkey->resetShortcut();
-    });
-
-    // editingFinished: 仅在输入结束时触发, setKeySequence 不触发
-    // keySequenceChanged: 输入结束以及 setKeySequence 时触发
-    // connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::truncateShortcut);
-    connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
-
-    connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
-
-#ifdef Q_OS_MAC
-    // mac 暂不支持自动合并
-    ui->toggle1->setEnabled(false);
-#endif
+    initConnections();
 
     // settingsIniFile = QApplication::applicationDirPath() + "/settings.ini";
     loadSettings();
@@ -67,32 +40,73 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::ininGui() {}
-
-void MainWindow::closeEvent(QCloseEvent *event)
+void MainWindow::initUI()
 {
-    saveSettings();
-    event->accept();
+    ui->setupUi(this);
+    setFocusPolicy(Qt::ClickFocus);
+
+    setFixedSize(420, 360);
+    ui->toggle1->setName(tr("自动合并"));
+    ui->toggle2->setName(tr("快捷键合并"));
+    ui->pushButton->setText(tr("设置快捷键"));
+
+#ifdef Q_OS_MAC
+    // mac 暂不支持自动合并
+    ui->toggle1->setEnabled(false);
+#endif
+}
+
+void MainWindow::initConnections()
+{
+    connect(ui->toggle1->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoEnabled);
+    connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::setShortcutEnabled);
+
+    connect(ui->pushButton, &QPushButton::clicked, this, [&]() { ui->keySequenceEdit->setFocus(); });
+
+    connect(ui->keySequenceEdit, &myKeySequenceEdit::focusIn, this, [&]() {
+        qDebug() << "Shortcut reseted";
+        ui->keySequenceEdit->clear();
+        hotkey->resetShortcut();
+    });
+
+    // editingFinished: 仅在输入结束时触发, setKeySequence 不触发
+    // keySequenceChanged: 输入结束以及 setKeySequence 时触发
+    connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
+
+    connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 }
 
 void MainWindow::loadSettings()
 {
     // QSettings settings(settingsIniFile, QSettings::IniFormat);
 
+    if (settings.value("toggle1", false).toBool()) {
+        ui->toggle1->setChecked(true);
+    }
+
     QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
     if (seq.isEmpty()) {
         ui->keySequenceEdit->lineEdit->setPlaceholderText("快捷键");
     } else {
         ui->keySequenceEdit->setKeySequence(QKeySequence(seq));
-    }
 
-    if (settings.value("toggle1", false).toBool()) {
-        ui->toggle1->setChecked(true);
+        if (settings.value("toggle2", false).toBool()) {
+            ui->toggle2->setChecked(true); // 因为已经 connect，所以会自动绑定快捷键
+        }
     }
+}
 
-    if (settings.value("toggle2", false).toBool()) {
-        ui->toggle2->setChecked(true);
-    }
+void MainWindow::saveSettings()
+{
+    // QSettings settings(settingsIniFile, QSettings::IniFormat, this);
+    settings.setValue("toggle1", ui->toggle1->isChecked());
+    settings.setValue("toggle2", ui->toggle2->isChecked());
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    saveSettings();
+    event->accept();
 }
 
 void MainWindow::toggleAutoEnabled()
@@ -104,11 +118,6 @@ void MainWindow::toggleAutoEnabled()
         qDebug() << "Auto disabled";
         disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
-}
-
-void MainWindow::startSetShorcut()
-{
-    ui->keySequenceEdit->setFocus();
 }
 
 void MainWindow::setShortcutEnabled(bool status)
@@ -170,13 +179,6 @@ void MainWindow::shortcutTriggered()
 
     // 还会再触发一次 afterChanged()
     flag = true;
-}
-
-void MainWindow::saveSettings()
-{
-    // QSettings settings(settingsIniFile, QSettings::IniFormat, this);
-    settings.setValue("toggle1", ui->toggle1->isChecked());
-    settings.setValue("toggle2", ui->toggle2->isChecked());
 }
 
 void MainWindow::processClipboard()
