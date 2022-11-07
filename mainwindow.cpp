@@ -79,7 +79,12 @@ void MainWindow::loadSettings()
 {
     // QSettings settings(settingsIniFile, QSettings::IniFormat);
 
-    ui->keySequenceEdit->setKeySequence(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()));
+    QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
+    if (seq.isEmpty()) {
+        ui->keySequenceEdit->lineEdit->setPlaceholderText("快捷键");
+    } else {
+        ui->keySequenceEdit->setKeySequence(QKeySequence(seq));
+    }
 
     if (settings.value("toggle1", false).toBool()) {
         ui->toggle1->setChecked(true);
