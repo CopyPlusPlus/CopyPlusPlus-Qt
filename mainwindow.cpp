@@ -163,7 +163,7 @@ void MainWindow::keySequenceEditFinished()
 void MainWindow::registerShortcut(const QKeySequence &keySequence)
 {
     // what's autoRegister?
-    if (!hotkey->setShortcut(keySequence, true) && !keySequence.toString().isEmpty()) {
+    if (!hotkey->setShortcut(keySequence, true) && !keySequence.isEmpty()) {
         errorInput();
     }
     qDebug() << "Shortcut" << keySequence << "registered:" << hotkey->isRegistered();
