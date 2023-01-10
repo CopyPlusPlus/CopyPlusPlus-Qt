@@ -3,6 +3,7 @@
 
 #include "qhotkey.h"
 #include "qsettings.h"
+#include "qtmaterialfab.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -51,6 +52,8 @@ private:
 
     Ui::MainWindow *ui;
     QHotkey *hotkey;
+
+    QtMaterialFloatingActionButton *floatBtn;
 
     QString settingsIniFile;
     QSettings settings;

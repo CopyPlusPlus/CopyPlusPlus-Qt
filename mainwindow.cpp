@@ -45,6 +45,9 @@ void MainWindow::initUI()
     ui->setupUi(this);
     setFocusPolicy(Qt::ClickFocus);
 
+    floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("toggle", "star"), this);
+    floatBtn->setMini(true);
+
     setFixedSize(420, 360);
     ui->toggle1->setName(tr("自动合并"));
     ui->toggle2->setName(tr("快捷键合并"));
