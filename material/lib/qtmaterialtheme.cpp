@@ -1,8 +1,8 @@
 #include "lib/qtmaterialtheme.h"
 #include "lib/qtmaterialtheme_p.h"
+#include <QDebug>
 #include <QString>
 #include <QStringBuilder>
-#include <QDebug>
 
 /*!material
  *  \class QtMaterialThemePrivate
@@ -147,13 +147,12 @@ void QtMaterialTheme::setColor(const QString &key, Material::Color color)
         d->rgba(0, 0, 0, 0.12),
         d->rgba(255, 255, 255, 1),
         d->rgba(255, 255, 255, 0.87),
-        d->rgba(255, 255, 255, 0.54)
-    };
+        d->rgba(255, 255, 255, 0.54)};
 
     d->colors.insert(key, palette[color]);
 }
 
-QIcon QtMaterialTheme::icon(QString category, QString icon)
+QIcon QtMaterialTheme::icon(QString icon)
 {
-    return QIcon(":/icons/material/icons/" % category % "/svg/production/ic_" % icon % "_24px.svg");
+    return QIcon(":/icons/material/icons/" % icon % ".svg");
 }
