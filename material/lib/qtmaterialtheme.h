@@ -1,53 +1,60 @@
 #ifndef QTMATERIALTHEME_H
 #define QTMATERIALTHEME_H
 
-#include <QObject>
-#include <QScopedPointer>
 #include <QColor>
 #include <QIcon>
+#include <QObject>
+#include <QScopedPointer>
 
-namespace Material
-{
-    enum ButtonPreset {
+namespace Material {
+    enum ButtonPreset
+    {
         FlatPreset,
         CheckablePreset
     };
 
-    enum RippleStyle {
+    enum RippleStyle
+    {
         CenteredRipple,
         PositionedRipple,
         NoRipple
     };
 
-    enum OverlayStyle {
+    enum OverlayStyle
+    {
         NoOverlay,
         TintedOverlay,
         GrayOverlay
     };
 
-    enum Role {
+    enum Role
+    {
         Default,
         Primary,
         Secondary
     };
 
-    enum ButtonIconPlacement {
+    enum ButtonIconPlacement
+    {
         LeftIcon,
         RightIcon
     };
 
-    enum ProgressType {
+    enum ProgressType
+    {
         DeterminateProgress,
         IndeterminateProgress
     };
 
-    enum AvatarType {
+    enum AvatarType
+    {
         ImageAvatar,
         IconAvatar,
         LetterAvatar
     };
 
-    enum Color {
+    enum Color
+    {
         red50,
         red100,
         red200,
@@ -331,7 +338,7 @@ public:
     void setColor(const QString &key, const QColor &color);
     void setColor(const QString &key, Material::Color color);
 
-    static QIcon icon(QString category, QString icon);
+    static QIcon icon(QString icon);
 
 protected:
     const QScopedPointer<QtMaterialThemePrivate> d_ptr;
