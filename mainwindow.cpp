@@ -46,7 +46,7 @@ void MainWindow::initUI()
     ui->setupUi(this);
     setFocusPolicy(Qt::ClickFocus);
 
-    floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("star"), this);
+    floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
     floatBtn->setMini(true);
 
     setFixedSize(420, 360);
