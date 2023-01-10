@@ -73,6 +73,7 @@ SOURCES += \
     material/qtmaterialtoggle_internal.cpp \
     mykeysequenceedit.cpp \
     processtext.cpp \
+    settingswindow.cpp \
     toggle.cpp
 
 HEADERS += \
@@ -156,10 +157,12 @@ HEADERS += \
     material/qtmaterialtoggle_p.h \
     mykeysequenceedit.h \
     processtext.h \
+    settingswindow.h \
     toggle.h
 
 FORMS += \
     mainwindow.ui \
+    settingswindow.ui \
     toggle.ui
 
 mac: SOURCES += 3rdparty/QHotKey/qhotkey_mac.cpp

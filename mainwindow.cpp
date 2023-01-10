@@ -2,6 +2,7 @@
 #include "mykeysequenceedit.h"
 #include "qhotkey.h"
 #include "qtmaterialtoggle.h"
+#include "settingswindow.h"
 #include "ui_mainwindow.h"
 #include <QClipboard>
 #include <QCloseEvent>
@@ -81,6 +82,11 @@ void MainWindow::initConnections()
     connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
 
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
+
+    connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
+        SettingsWindow *setting = new SettingsWindow(this);
+        setting->show();
+    });
 }
 
 void MainWindow::loadSettings()
