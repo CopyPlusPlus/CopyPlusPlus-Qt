@@ -116,4 +116,6 @@ compile_commands.json
 # Ignore code-workspaces
 *.code-workspace
 
+.qtc_clangd
+
 # End of https://www.toptal.com/developers/gitignore/api/qtcreator,qt,visualstudiocode
