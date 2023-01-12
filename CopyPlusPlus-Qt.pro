@@ -21,6 +21,8 @@ else:unix {
     LIBS += -lX11
 }
 
+UI_DIR = $$PWD
+
 SOURCES += \
     3rdparty/QHotkey/qhotkey.cpp \
     main.cpp \
