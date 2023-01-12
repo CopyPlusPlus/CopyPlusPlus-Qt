@@ -117,5 +117,7 @@ compile_commands.json
 *.code-workspace
 
 .qtc_clangd
+debug
+release
 
 # End of https://www.toptal.com/developers/gitignore/api/qtcreator,qt,visualstudiocode
