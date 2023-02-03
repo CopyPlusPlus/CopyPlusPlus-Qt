@@ -6,56 +6,37 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>515</width>
-    <height>348</height>
+    <width>234</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="Toggle" name="toggle1" native="true">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>271</width>
-      <height>80</height>
+      <x>30</x>
+      <y>20</y>
+      <width>161</width>
+      <height>151</height>
      </rect>
     </property>
-   </widget>
-   <widget class="Toggle" name="toggle2" native="true">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>130</y>
-      <width>271</width>
-      <height>80</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="MyKeySequenceEdit" name="keySequenceEdit">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>220</y>
-      <width>111</width>
-      <height>41</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>220</y>
-      <width>91</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>10</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
+     <item>
+      <widget class="Toggle" name="toggle1" native="true"/>
+     </item>
+     <item>
+      <widget class="Toggle" name="toggle2" native="true"/>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -63,8 +44,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>515</width>
-     <height>24</height>
+     <width>234</width>
+     <height>18</height>
     </rect>
    </property>
   </widget>
@@ -75,11 +56,6 @@
    <extends>QWidget</extends>
    <header>toggle.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>MyKeySequenceEdit</class>
-   <extends>QKeySequenceEdit</extends>
-   <header>mykeysequenceedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -1,6 +1,7 @@
 #ifndef MYKEYSEQUENCEEDIT_H
 #define MYKEYSEQUENCEEDIT_H
 
+#include "qsettings.h"
 #include <QKeySequenceEdit>
 #include <QLineEdit>
 #include <QWidget>
@@ -12,17 +13,22 @@ public:
     MyKeySequenceEdit(QWidget *parent = nullptr);
 
     void focusInEvent(QFocusEvent *event) override;
+    void focusOutEvent(QFocusEvent *event) override;
     void keyPressEvent(QKeyEvent *) override;
     void clear();
 
 private:
     // void resetState();
+    void errorInput();
 
 public:
     QLineEdit *lineEdit;
 
+private:
+    QSettings settings;
+
 signals:
-    void focusIn();
+    void myEditFinished(const QKeySequence &keySequence);
 };
 
 #endif // MYKEYSEQUENCEEDIT_H
