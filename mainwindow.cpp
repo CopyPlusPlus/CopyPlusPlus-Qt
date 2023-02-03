@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "mykeysequenceedit.h"
 #include "qhotkey.h"
 #include "qtmaterialtoggle.h"
 #include "settingswindow.h"
@@ -22,12 +21,10 @@
 #include <Carbon/Carbon.h>
 #endif
 
-#ifdef Q_OS_MAC
-#endif
-
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow),
-                                          hotkey(new QHotkey(this)), settings("WY", "CopyPlusPlus", this)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+    hotkey = new QHotkey(this);
+
     initUI();
 
     initConnections();
@@ -44,19 +41,16 @@ MainWindow::~MainWindow()
 void MainWindow::initUI()
 {
     ui->setupUi(this);
+
     setFocusPolicy(Qt::ClickFocus);
+    // setFixedSize(420, 360);
 
-    floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
-    floatBtn->setMini(true);
-
-    setFixedSize(420, 360);
     ui->toggle1->setName(tr("自动合并"));
     ui->toggle2->setName(tr("快捷键合并"));
-    ui->pushButton->setText(tr("设置快捷键"));
 
-    // 跟随开关默认关闭
-    ui->keySequenceEdit->setEnabled(false);
-    ui->pushButton->setEnabled(false);
+    // 设置按钮
+    floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
+    floatBtn->setMini(true);
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
@@ -69,23 +63,11 @@ void MainWindow::initConnections()
     connect(ui->toggle1->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoChecked);
     connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleShortcutChecked);
 
-    connect(ui->pushButton, &QPushButton::clicked, this, [&]() { ui->keySequenceEdit->setFocus(); });
-
-    connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusIn, this, [&]() {
-        qDebug() << "Shortcut reseted";
-        ui->keySequenceEdit->clear();
-        hotkey->resetShortcut();
-    });
-
-    // editingFinished: 仅在输入结束时触发, setKeySequence 不触发
-    // keySequenceChanged: 输入结束以及 setKeySequence 时触发
-    connect(ui->keySequenceEdit, &QKeySequenceEdit::editingFinished, this, &MainWindow::keySequenceEditFinished);
-
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
     connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
-        SettingsWindow *setting = new SettingsWindow(this);
-        setting->show();
+        SettingsWindow *st = new SettingsWindow(this);
+        st->show();
     });
 }
 
@@ -97,18 +79,7 @@ void MainWindow::loadSettings()
         ui->toggle1->setChecked(true);
     }
 
-    QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
-    if (seq.isEmpty()) {
-        // setKeySequence 时会 resetState，从而 reset PlaceholderText，所以这里要特殊处理，否则会出现默认的"Press shortcut"
-        ui->keySequenceEdit->lineEdit->setPlaceholderText("快捷键");
-    } else {
-        ui->keySequenceEdit->setKeySequence(QKeySequence(seq));
-    }
-
     if (settings.value("toggle2", false).toBool()) {
-        ui->keySequenceEdit->setEnabled(true);
-        ui->pushButton->setEnabled(true);
-
         ui->toggle2->setChecked(true); // 因为已经 connect，所以会自动绑定快捷键
     }
 }
@@ -118,7 +89,7 @@ void MainWindow::saveSettings()
     // QSettings settings(settingsIniFile, QSettings::IniFormat, this);
     settings.setValue("toggle1", ui->toggle1->isChecked());
     settings.setValue("toggle2", ui->toggle2->isChecked());
-    settings.setValue("shortcut", ui->keySequenceEdit->keySequence().toString());
+    settings.setValue("shortcut", hotkey->shortcut().toString());
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -140,33 +111,16 @@ void MainWindow::toggleAutoChecked(bool status)
 
 void MainWindow::toggleShortcutChecked(bool status)
 {
-    ui->keySequenceEdit->setEnabled(status);
-    ui->pushButton->setEnabled(status);
-
+    // 快捷键为空、冲突时，应该有提醒
+    QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
     if (status) {
         qDebug() << "Shortcut enabled";
-        registerShortcut(ui->keySequenceEdit->keySequence());
+        registerShortcut(seq);
     } else {
         qDebug() << "Shortcut disabled";
         hotkey->resetShortcut();
     }
 }
-
-void MainWindow::keySequenceEditFinished()
-{
-    ui->keySequenceEdit->clearFocus();
-    ui->keySequenceEdit->lineEdit->setPlaceholderText("快捷键");
-    settings.setValue("shortcut", ui->keySequenceEdit->keySequence().toString());
-
-    registerShortcut(ui->keySequenceEdit->keySequence());
-}
-
-// Make keySequenceEdit only show one shortcut
-// void MainWindow::truncateShortcut()
-// {
-//     ui->keySequenceEdit->clearFocus();
-//     ui->keySequenceEdit->setKeySequence(ui->keySequenceEdit->keySequence()[0]);
-// }
 
 // Register shortcut
 void MainWindow::registerShortcut(const QKeySequence &keySequence)
@@ -180,7 +134,6 @@ void MainWindow::registerShortcut(const QKeySequence &keySequence)
 
 void MainWindow::errorInput()
 {
-    ui->keySequenceEdit->clear();
     hotkey->resetShortcut();
 
     QMessageBox msgBox;
@@ -217,9 +170,7 @@ void MainWindow::processClipboard()
 
 #ifdef Q_OS_MAC
     QGuiApplication::clipboard()->setText(s);
-#endif
-
-#ifdef Q_OS_WIN
+#elif defined(Q_OS_WIN)
     setClipboardTextWin(s);
 #endif
 
@@ -241,7 +192,8 @@ void MainWindow::afterChanged()
 void MainWindow::pressCtrlC()
 {
 #ifdef Q_OS_WIN
-    QStringList keys = ui->keySequenceEdit->keySequence().toString().split("+");
+    // QStringList keys = ui->keySequenceEdit->keySequence().toString().split("+");
+    QStringList keys = settings.value("shortcut", "Ctrl+Shift+C").toString().split("+");
 
     const int n = keys.size();
     INPUT inputs[n + 4];
@@ -295,9 +247,7 @@ void MainWindow::pressCtrlC()
     } else {
         qDebug() << "SendInput succeed";
     }
-#endif
-
-#ifdef Q_OS_MAC
+#elif defined(Q_OS_MAC)
     CGKeyCode inputKeyCode = kVK_ANSI_C;
     CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
     CGEventRef saveCommandDown = CGEventCreateKeyboardEvent(source, inputKeyCode, true);

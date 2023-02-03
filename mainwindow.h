@@ -4,6 +4,7 @@
 #include "qhotkey.h"
 #include "qsettings.h"
 #include "qtmaterialfab.h"
+#include "settingswindow.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -34,12 +35,13 @@ private:
     void registerShortcut(const QKeySequence &keySequence);
     void shortcutTriggered();
 
-    void keySequenceEditFinished();
+    void keySequenceEditFinished(const QKeySequence &keySequence);
     // void truncateShortcut();
 
     void errorInput();
 
     void pressCtrlC();
+
 #ifdef Q_OS_WIN
     void setClipboardTextWin(QString);
 #endif
@@ -47,15 +49,19 @@ private:
     void processClipboard();
     void afterChanged();
 
+    void click();
+
+public:
+    QHotkey *hotkey;
+
 private:
     bool flag = false;
 
     Ui::MainWindow *ui;
-    QHotkey *hotkey;
 
     QtMaterialFloatingActionButton *floatBtn;
 
-    QString settingsIniFile;
+    // QString settingsIniFile;
     QSettings settings;
 };
 #endif // MAINWINDOW_H
