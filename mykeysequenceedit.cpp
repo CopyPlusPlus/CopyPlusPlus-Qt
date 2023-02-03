@@ -26,8 +26,6 @@ void MyKeySequenceEdit::focusInEvent(QFocusEvent *event)
 {
     setStyleSheet("border: 1px solid blue;");
 
-    qDebug() << "Focus" << event->reason();
-
     // 非主动 setFocus() 时，清空内容
     if (event->reason() != Qt::OtherFocusReason) {
         clear();
@@ -39,24 +37,26 @@ void MyKeySequenceEdit::focusOutEvent(QFocusEvent *event)
     // 非主动 clearFocus() 时
     if (event->reason() != Qt::OtherFocusReason) {
         setStyleSheet("border: 1px solid white;");
-    }
 
-    qDebug() << "FocusOut" << event->reason();
+        if (this->keySequence().isEmpty()) {
+            setKeySequence(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()));
+        }
+    }
 }
 
 void MyKeySequenceEdit::keyPressEvent(QKeyEvent *event)
 {
     QKeySequenceEdit::keyPressEvent(event);
+
     if (this->keySequence().count() > 0) {
-        QKeySequenceEdit::setKeySequence(this->keySequence());
+        setKeySequence(this->keySequence());
 
         clearFocus();
         lineEdit->setPlaceholderText("快捷键");
 
-        qDebug() << "66" << this->keySequence().toString();
-        settings.setValue("shortcut", this->keySequence().toString());
+        emit myEditFinished(this->keySequence());
 
-        // emit myEditFinished(this->keySequence());
+        settings.setValue("shortcut", this->keySequence().toString());
 
         setFocus();
     }
