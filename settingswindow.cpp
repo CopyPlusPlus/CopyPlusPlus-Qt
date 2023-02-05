@@ -6,9 +6,6 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
 {
     ui->setupUi(this);
     setWindowTitle(tr("设置"));
-
-    setFocusPolicy(Qt::ClickFocus);
-    ke = ui->keySequenceEdit;
 }
 
 SettingsWindow::~SettingsWindow()
