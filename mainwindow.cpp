@@ -67,6 +67,8 @@ void MainWindow::initConnections()
 {
     connect(autoToggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoChecked);
 
+    connect(ui->keySequenceEdit, &MyKeySequenceEdit::myEditFinished, this, &MainWindow::registerShortcut);
+
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
     connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
