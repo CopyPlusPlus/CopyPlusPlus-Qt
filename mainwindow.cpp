@@ -6,6 +6,7 @@
 #include <QClipboard>
 #include <QCloseEvent>
 #include <QDebug>
+#include <QHBoxLayout>
 #include <QMessageBox>
 #include <QMimeData>
 #include <QPushButton>
@@ -21,10 +22,8 @@
 #include <Carbon/Carbon.h>
 #endif
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent, QHotkey *_hotkey) : QMainWindow(parent), hotkey(_hotkey), ui(new Ui::MainWindow)
 {
-    hotkey = new QHotkey(this);
-
     initUI();
 
     initConnections();
@@ -45,8 +44,12 @@ void MainWindow::initUI()
     setFocusPolicy(Qt::ClickFocus);
     // setFixedSize(420, 360);
 
-    ui->toggle1->setName(tr("自动合并"));
-    ui->toggle2->setName(tr("快捷键合并"));
+    // 初始化 toggle
+    autoToggle = new QtMaterialToggle;
+    auto h = new QHBoxLayout();
+    ui->toggleWidget->setLayout(h);
+    h->setContentsMargins(0, 0, 0, 0);
+    h->addWidget(autoToggle, Qt::AlignRight);
 
     // 设置按钮
     floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
@@ -54,14 +57,13 @@ void MainWindow::initUI()
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
-    ui->toggle1->setEnabled(false);
+    ui->autoToggle->setEnabled(false);
 #endif
 }
 
 void MainWindow::initConnections()
 {
-    connect(ui->toggle1->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoChecked);
-    connect(ui->toggle2->m_toggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleShortcutChecked);
+    connect(autoToggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoChecked);
 
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
@@ -75,20 +77,16 @@ void MainWindow::loadSettings()
 {
     // QSettings settings(settingsIniFile, QSettings::IniFormat);
 
-    if (settings.value("toggle1", false).toBool()) {
-        ui->toggle1->setChecked(true);
-    }
-
-    if (settings.value("toggle2", false).toBool()) {
-        ui->toggle2->setChecked(true); // 因为已经 connect，所以会自动绑定快捷键
+    if (settings.value("autoToggle", false).toBool()) {
+        autoToggle->setChecked(true);
     }
 }
 
 void MainWindow::saveSettings()
 {
     // QSettings settings(settingsIniFile, QSettings::IniFormat, this);
-    settings.setValue("toggle1", ui->toggle1->isChecked());
-    settings.setValue("toggle2", ui->toggle2->isChecked());
+
+    settings.setValue("autoToggle", autoToggle->isChecked());
     settings.setValue("shortcut", hotkey->shortcut().toString());
 }
 
@@ -111,7 +109,7 @@ void MainWindow::toggleAutoChecked(bool status)
 
 void MainWindow::toggleShortcutChecked(bool status)
 {
-    // 快捷键为空、冲突时，应该有提醒
+    // TODO:快捷键为空、冲突时，应该有提醒
     QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
     if (status) {
         qDebug() << "Shortcut enabled";
