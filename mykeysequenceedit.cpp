@@ -24,11 +24,7 @@ MyKeySequenceEdit::MyKeySequenceEdit(QWidget *parent) : QKeySequenceEdit(parent)
 void MyKeySequenceEdit::focusInEvent(QFocusEvent *event)
 {
     setStyleSheet("border: 1px solid blue;");
-
-    // 非主动 setFocus() 时，清空内容
-    if (event->reason() != Qt::OtherFocusReason) {
-        clear();
-    }
+    event->accept();
 }
 
 void MyKeySequenceEdit::focusOutEvent(QFocusEvent *event)
@@ -39,6 +35,7 @@ void MyKeySequenceEdit::focusOutEvent(QFocusEvent *event)
 
         if (this->keySequence().isEmpty()) {
             setKeySequence(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()));
+            lineEdit->setPlaceholderText("快捷键");
         }
     }
 }
