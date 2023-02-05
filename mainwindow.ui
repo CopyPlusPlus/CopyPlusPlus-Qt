@@ -48,9 +48,9 @@
    <widget class="MyKeySequenceEdit" name="keySequenceEdit">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>90</x>
       <y>130</y>
-      <width>91</width>
+      <width>121</width>
       <height>22</height>
      </rect>
     </property>
