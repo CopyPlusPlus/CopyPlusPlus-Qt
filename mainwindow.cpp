@@ -22,8 +22,10 @@
 #include <Carbon/Carbon.h>
 #endif
 
-MainWindow::MainWindow(QWidget *parent, QHotkey *_hotkey) : QMainWindow(parent), hotkey(_hotkey), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+    hotkey = new QHotkey(this);
+
     initUI();
 
     initConnections();
