@@ -1,5 +1,4 @@
 #include "mykeysequenceedit.h"
-#include "qdebug.h"
 #include "qevent.h"
 #include <QLineEdit>
 

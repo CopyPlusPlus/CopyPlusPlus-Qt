@@ -4,7 +4,7 @@
 #include "qhotkey.h"
 #include "qsettings.h"
 #include "qtmaterialfab.h"
-#include "settingswindow.h"
+#include "qtmaterialtoggle.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr, QHotkey *_hotkey = nullptr);
     ~MainWindow();
 
 private:
@@ -58,6 +58,7 @@ private:
     bool flag = false;
 
     Ui::MainWindow *ui;
+    QtMaterialToggle *autoToggle;
 
     QtMaterialFloatingActionButton *floatBtn;
 

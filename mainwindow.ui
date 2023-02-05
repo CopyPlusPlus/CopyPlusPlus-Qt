@@ -14,29 +14,67 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QLabel" name="autoLable">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>50</y>
+      <width>61</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>自动触发</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QWidget" name="toggleWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>40</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="MyKeySequenceEdit" name="keySequenceEdit">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>130</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="hotkeyLable">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>20</y>
-      <width>161</width>
-      <height>151</height>
+      <y>130</y>
+      <width>41</width>
+      <height>21</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <property name="spacing">
-      <number>10</number>
-     </property>
-     <property name="sizeConstraint">
-      <enum>QLayout::SetNoConstraint</enum>
-     </property>
-     <item>
-      <widget class="Toggle" name="toggle1" native="true"/>
-     </item>
-     <item>
-      <widget class="Toggle" name="toggle2" native="true"/>
-     </item>
-    </layout>
+    <property name="font">
+     <font>
+      <family>微软雅黑</family>
+     </font>
+    </property>
+    <property name="text">
+     <string>快捷键</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -52,10 +90,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Toggle</class>
-   <extends>QWidget</extends>
-   <header>toggle.h</header>
-   <container>1</container>
+   <class>MyKeySequenceEdit</class>
+   <extends>QKeySequenceEdit</extends>
+   <header>mykeysequenceedit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

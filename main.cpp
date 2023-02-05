@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "qhotkey.h"
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
@@ -32,7 +33,10 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("WY");
     QCoreApplication::setApplicationName("CopyPlusPlus");
 
-    MainWindow w;
+    QHotkey hotkey(QKeySequence("Ctrl+Alt+Q"), true, &a);
+
+    MainWindow w(nullptr, &hotkey);
     w.show();
+
     return a.exec();
 }
