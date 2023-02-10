@@ -115,18 +115,18 @@ void MainWindow::autoToggleChecked(bool status)
     }
 }
 
-void MainWindow::toggleShortcutChecked(bool status)
-{
-    // TODO:快捷键为空、冲突时，应该有提醒
-    QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
-    if (status) {
-        qDebug() << "Shortcut enabled";
-        registerShortcut(seq);
-    } else {
-        qDebug() << "Shortcut disabled";
-        hotkey->resetShortcut();
-    }
-}
+// void MainWindow::toggleShortcutChecked(bool status)
+//{
+//     // TODO:快捷键为空、冲突时，应该有提醒
+//     QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
+//     if (status) {
+//         qDebug() << "Shortcut enabled";
+//         registerShortcut(seq);
+//     } else {
+//         qDebug() << "Shortcut disabled";
+//         hotkey->resetShortcut();
+//     }
+// }
 
 // Register shortcut
 void MainWindow::registerShortcut(const QKeySequence &keySequence)
