@@ -30,8 +30,8 @@ private:
     void saveSettings();
 
     void autoToggleChecked(bool status);
+    // void toggleShortcutChecked(bool status);
 
-    void toggleShortcutChecked(bool status);
     void registerShortcut(const QKeySequence &keySequence);
     void shortcutTriggered();
 
