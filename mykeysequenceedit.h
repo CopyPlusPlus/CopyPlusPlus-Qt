@@ -15,6 +15,7 @@ public:
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;
     void keyPressEvent(QKeyEvent *) override;
+    void keyReleaseEvent(QKeyEvent *) override;
     void clear();
 
 private:
@@ -29,6 +30,7 @@ private:
 
 signals:
     void myEditFinished(const QKeySequence &keySequence);
+    void focusOut();
 };
 
 #endif // MYKEYSEQUENCEEDIT_H
