@@ -29,7 +29,7 @@ private:
     void loadSettings();
     void saveSettings();
 
-    void toggleAutoChecked(bool status);
+    void autoToggleChecked(bool status);
 
     void toggleShortcutChecked(bool status);
     void registerShortcut(const QKeySequence &keySequence);
