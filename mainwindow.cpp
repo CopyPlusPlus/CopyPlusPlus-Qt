@@ -84,6 +84,8 @@ void MainWindow::loadSettings()
     if (settings.value("autoToggle", false).toBool()) {
         autoToggle->setChecked(true);
     }
+
+    registerShortcut(settings.value("shortcut", "Ctrl+Shift+C").toString());
 }
 
 void MainWindow::saveSettings()
@@ -184,7 +186,7 @@ void MainWindow::processClipboard()
 // 目前快捷键 setClipboard 后还会触发一次
 void MainWindow::afterChanged()
 {
-    //qDebug() << "Clipboard changed";
+    // qDebug() << "Clipboard changed";
 
     // TODO: 改用 EventFilter
     flag = !flag;
