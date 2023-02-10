@@ -30,6 +30,7 @@ private:
 
 signals:
     void myEditFinished(const QKeySequence &keySequence);
+    void focusIn();
     void focusOut();
 };
 
