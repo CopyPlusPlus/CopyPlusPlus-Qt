@@ -65,7 +65,7 @@ void MainWindow::initUI()
 
 void MainWindow::initConnections()
 {
-    connect(autoToggle, &QtMaterialToggle::toggled, this, &MainWindow::toggleAutoChecked);
+    connect(autoToggle, &QtMaterialToggle::toggled, this, &MainWindow::autoToggleChecked);
 
     connect(ui->keySequenceEdit, &MyKeySequenceEdit::myEditFinished, this, &MainWindow::registerShortcut);
 
@@ -102,7 +102,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
-void MainWindow::toggleAutoChecked(bool status)
+void MainWindow::autoToggleChecked(bool status)
 {
     if (status) {
         qDebug() << "Auto enabled";
