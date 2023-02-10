@@ -92,6 +92,8 @@ void MainWindow::saveSettings()
 
     settings.setValue("autoToggle", autoToggle->isChecked());
     settings.setValue("shortcut", hotkey->shortcut().toString());
+
+    qDebug() << "Save shortcut: " << hotkey->shortcut().toString();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -145,7 +147,7 @@ void MainWindow::errorInput()
 
 void MainWindow::shortcutTriggered()
 {
-    qDebug() << "Shortcut activated";
+    // qDebug() << "Shortcut activated";
 
     pressCtrlC();
     processClipboard();
@@ -182,7 +184,7 @@ void MainWindow::processClipboard()
 // 目前快捷键 setClipboard 后还会触发一次
 void MainWindow::afterChanged()
 {
-    qDebug() << "Clipboard changed";
+    //qDebug() << "Clipboard changed";
 
     // TODO: 改用 EventFilter
     flag = !flag;
