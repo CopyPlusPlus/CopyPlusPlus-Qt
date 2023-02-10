@@ -68,6 +68,8 @@ void MainWindow::initConnections()
     connect(autoToggle, &QtMaterialToggle::toggled, this, &MainWindow::autoToggleChecked);
 
     connect(ui->keySequenceEdit, &MyKeySequenceEdit::myEditFinished, this, &MainWindow::registerShortcut);
+    connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusIn, this, [&]() { hotkey->setRegistered(false); });
+    connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusOut, this, [&]() { hotkey->setRegistered(true); });
 
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
@@ -135,6 +137,7 @@ void MainWindow::registerShortcut(const QKeySequence &keySequence)
     if (!hotkey->setShortcut(keySequence, true) && !keySequence.isEmpty()) {
         errorInput();
     }
+
     qDebug() << "Shortcut" << keySequence << "registered:" << hotkey->isRegistered();
 }
 

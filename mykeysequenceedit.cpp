@@ -29,6 +29,8 @@ MyKeySequenceEdit::MyKeySequenceEdit(QWidget *parent) : QKeySequenceEdit(parent)
 void MyKeySequenceEdit::focusInEvent(QFocusEvent *event)
 {
     setStyleSheet("border: 1px solid blue;");
+    emit focusIn();
+
     event->accept();
 }
 
