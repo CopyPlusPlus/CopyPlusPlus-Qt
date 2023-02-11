@@ -59,7 +59,8 @@ void MainWindow::initUI()
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
-    ui->autoToggle->setEnabled(false);
+    autoToggle->setEnabled(false);
+    autoToggle->setToolTip(tr("Mac 暂不支持自动合并"));
 #endif
 }
 
