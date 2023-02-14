@@ -53,6 +53,11 @@ void MyKeySequenceEdit::keyPressEvent(QKeyEvent *event)
 {
     QKeySequenceEdit::keyPressEvent(event);
 
+    if (event->key() == Qt::Key_Backspace) {
+        clear();
+        emit myEditFinished(this->keySequence());
+    }
+
     if (this->keySequence().count() > 0) {
         setKeySequence(this->keySequence());
 
