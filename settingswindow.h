@@ -16,6 +16,9 @@ public:
     ~SettingsWindow();
 
 private:
+    void SetLangusge(QString);
+
+private:
     Ui::SettingsWindow *ui;
 
 public:
