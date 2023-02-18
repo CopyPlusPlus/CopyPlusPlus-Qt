@@ -23,6 +23,7 @@ public:
 
 private:
     void closeEvent(QCloseEvent *event);
+    void changeEvent(QEvent *event);
 
     void initUI();
     void initConnections();
