@@ -1,4 +1,5 @@
 #include "settingswindow.h"
+#include "qdebug.h"
 #include "qtranslator.h"
 #include "ui_settingswindow.h"
 
@@ -21,15 +22,31 @@ SettingsWindow::~SettingsWindow()
     delete ui;
 }
 
+void SettingsWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+    }
+
+    QMainWindow::changeEvent(event);
+}
+
 void SettingsWindow::SetLangusge(QString newLang)
 {
-    QLocale locale = QLocale(newLang);
-    QLocale::setDefault(locale);
-    QString languageName = QLocale::languageToString(locale.language());
-    QTranslator translator;
+    // multi languages
+    const QString baseName = "CopyPlusPlus-Qt_en_US";
 
-    // remove the old translator
-    qApp->removeTranslator(&translator);
+    if (translator.load(":/i18n/" + baseName)) {
+        qApp->installTranslator(&translator);
+    }
 
-    qApp->installTranslator(&translator);
+    const QStringList uiLanguages = QLocale::system().uiLanguages();
+
+    //    for (const QString &locale : uiLanguages) {
+    //        const QString baseName = "CopyPlusPlus-Qt_" + QLocale(locale).name();
+    //        if (translator.load(":/i18n/" + baseName)) {
+    //            // a.installTranslator(&translator);
+    //            break;
+    //        }
+    //    }
 }
