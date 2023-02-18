@@ -48,7 +48,7 @@
         <location filename="mykeysequenceedit.cpp" line="20"/>
         <location filename="mykeysequenceedit.cpp" line="89"/>
         <source>快捷键</source>
-        <translation type="unfinished"></translation>
+        <translation>Hotkey</translation>
     </message>
 </context>
 <context>
@@ -66,22 +66,22 @@
     <message>
         <location filename="settingswindow.cpp" line="9"/>
         <source>设置</source>
-        <translation type="unfinished"></translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <location filename="settingswindow.cpp" line="11"/>
         <source>语言</source>
-        <translation type="unfinished"></translation>
+        <translation>Language</translation>
     </message>
     <message>
         <location filename="settingswindow.cpp" line="13"/>
         <source>中文</source>
-        <translation type="unfinished"></translation>
+        <translation>Chinese</translation>
     </message>
     <message>
         <location filename="settingswindow.cpp" line="13"/>
         <source>英文</source>
-        <translation type="unfinished"></translation>
+        <translation>English</translation>
     </message>
 </context>
 <context>
