@@ -58,7 +58,7 @@ void MainWindow::initUI()
     ui->setupUi(this);
 
     setFocusPolicy(Qt::ClickFocus);
-    // setFixedSize(420, 360);
+    setFixedSize(273, 345);
 
     // 初始化 toggle
     autoToggle = new QtMaterialToggle;
