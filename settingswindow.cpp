@@ -17,7 +17,7 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
 
     // 函数指针
     void (QComboBox::*currentIndexChanged)(const QString &) = &QComboBox::currentIndexChanged;
-    connect(ui->languageList, currentIndexChanged, this, &SettingsWindow::SetLangusge);
+    connect(ui->languageList, currentIndexChanged, this, &SettingsWindow::changeLanguage);
 }
 
 SettingsWindow::~SettingsWindow()
@@ -62,7 +62,7 @@ void SettingsWindow::updateText()
 }
 
 // multi languages
-void SettingsWindow::SetLangusge(const QString newLang)
+void SettingsWindow::changeLanguage(const QString newLang)
 {
     qDebug() << newLang;
     QTranslator *translator = MainWindow::getTranslator();
