@@ -23,7 +23,6 @@
 #endif
 
 MainWindow *MainWindow::instance = nullptr;
-QTranslator *MainWindow::translator = nullptr;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -31,7 +30,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     hotkey = new QHotkey(this);
 
+    allLanguages = QStringList{tr("中文"), tr("英文")};
+    languageName = {{tr("中文"), "zh_CN"}, {tr("英文"), "en_US"}};
+
     initUI();
+
+    updateLanguage(settings.value("language", "0").toInt());
     updateText();
 
     initConnections();
@@ -52,15 +56,6 @@ MainWindow *MainWindow::getInstance()
     }
 
     return instance;
-}
-
-QTranslator *MainWindow::getTranslator()
-{
-    if (translator == nullptr) {
-        translator = new QTranslator();
-    }
-
-    return translator;
 }
 
 void MainWindow::changeEvent(QEvent *event)
@@ -101,6 +96,32 @@ void MainWindow::initUI()
     autoToggle->setEnabled(false);
     autoToggle->setToolTip(tr("Mac 暂不支持自动合并"));
 #endif
+}
+
+void MainWindow::updateLanguage(const int &langIndex)
+{
+    settings.setValue("language", langIndex);
+
+    QString newLang = allLanguages[langIndex];
+
+    if (newLang == tr("中文")) {
+        qApp->removeTranslator(&translator);
+    } else {
+        const QString baseName = "CopyPlusPlus-Qt_" + languageName[newLang];
+
+        if (translator.load(":/i18n/" + baseName)) {
+            qApp->installTranslator(&translator);
+        }
+    }
+
+    //    const QStringList uiLanguages = QLocale::system().uiLanguages();
+    //    for (const QString &locale : uiLanguages) {
+    //        const QString baseName = "CopyPlusPlus-Qt_" + QLocale(locale).name();
+    //        if (translator.load(":/i18n/" + baseName)) {
+    //            // a.installTranslator(&translator);
+    //            break;
+    //        }
+    //    }
 }
 
 // 更新文本，用于翻译
