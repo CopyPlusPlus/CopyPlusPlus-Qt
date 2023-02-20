@@ -22,6 +22,8 @@
 #include <Carbon/Carbon.h>
 #endif
 
+QTranslator *MainWindow::translator = nullptr;
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     hotkey = new QHotkey(this);
@@ -38,6 +40,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+QTranslator *MainWindow::getTranslator()
+{
+    if (translator == nullptr) {
+        translator = new QTranslator();
+    }
+
+    return translator;
 }
 
 void MainWindow::changeEvent(QEvent *event)
