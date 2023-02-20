@@ -1,6 +1,5 @@
 #include "settingswindow.h"
 #include "mainwindow.h"
-#include "qdebug.h"
 #include "qevent.h"
 #include "qtranslator.h"
 #include "ui_settingswindow.h"
@@ -64,7 +63,6 @@ void SettingsWindow::updateText()
 // multi languages
 void SettingsWindow::changeLanguage(const QString newLang)
 {
-    qDebug() << newLang;
     QTranslator *translator = MainWindow::getTranslator();
 
     if (newLang == tr("中文")) {
