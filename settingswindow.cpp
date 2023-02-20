@@ -9,6 +9,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
 {
     ui->setupUi(this);
 
+    setFixedSize(228, 275);
+
     updateText();
 
     QSettings settings;
