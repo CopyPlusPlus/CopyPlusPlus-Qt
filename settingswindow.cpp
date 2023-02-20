@@ -1,4 +1,5 @@
 #include "settingswindow.h"
+#include "mainwindow.h"
 #include "qdebug.h"
 #include "qtranslator.h"
 #include "ui_settingswindow.h"
@@ -8,10 +9,14 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
 {
     ui->setupUi(this);
 
-    languages = QStringList{tr("中文"), tr("英文")};
+    allLanguages = QStringList{tr("中文"), tr("英文")};
+    languageName = {{tr("英文"), "en_US"}};
+
     updateText();
 
-    connect(ui->languageList, &QComboBox::currentTextChanged, this, &SettingsWindow::SetLangusge);
+    // 函数指针
+    void (QComboBox::*currentIndexChanged)(const QString &) = &QComboBox::currentIndexChanged;
+    connect(ui->languageList, currentIndexChanged, this, &SettingsWindow::SetLangusge);
 }
 
 SettingsWindow::~SettingsWindow()
@@ -41,27 +46,31 @@ void SettingsWindow::updateText()
     QComboBox *list = ui->languageList;
 
     if (list->count() == 0) {
-        list->addItems(languages);
+        list->addItems(allLanguages);
     } else {
-        for (int i = 0; i < languages.count(); ++i) {
-            list->setItemText(i, tr(languages[i].toUtf8()));
+        for (int i = 0; i < allLanguages.count(); ++i) {
+            list->setItemText(i, tr(allLanguages[i].toUtf8()));
         }
     }
 }
 
-void SettingsWindow::SetLangusge(QString newLang)
+// multi languages
+void SettingsWindow::SetLangusge(const QString newLang)
 {
     qDebug() << newLang;
+    QTranslator *translator = MainWindow::getTranslator();
 
-    // multi languages
-    const QString baseName = "CopyPlusPlus-Qt_en_US";
+    if (newLang == tr("中文")) {
+        qApp->removeTranslator(translator);
+    } else {
+        const QString baseName = "CopyPlusPlus-Qt_" + languageName[newLang];
 
-    if (translator.load(":/i18n/" + baseName)) {
-        qApp->installTranslator(&translator);
+        if (translator->load(":/i18n/" + baseName)) {
+            qApp->installTranslator(translator);
+        }
     }
 
     //    const QStringList uiLanguages = QLocale::system().uiLanguages();
-
     //    for (const QString &locale : uiLanguages) {
     //        const QString baseName = "CopyPlusPlus-Qt_" + QLocale(locale).name();
     //        if (translator.load(":/i18n/" + baseName)) {
