@@ -5,6 +5,7 @@
 #include "qsettings.h"
 #include "qtmaterialfab.h"
 #include "qtmaterialtoggle.h"
+#include "qtranslator.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -20,6 +21,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    static QTranslator *getTranslator();
 
 private:
     void closeEvent(QCloseEvent *event);
@@ -57,7 +60,7 @@ public:
     QHotkey *hotkey;
 
 private:
-    bool flag = false;
+    QTranslator static *translator;
 
     Ui::MainWindow *ui;
     QtMaterialToggle *autoToggle;
@@ -66,5 +69,8 @@ private:
 
     // QString settingsIniFile;
     QSettings settings;
+
+    // 用于粘贴板事件二次触发判断
+    bool flag = false;
 };
 #endif // MAINWINDOW_H
