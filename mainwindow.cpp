@@ -22,10 +22,13 @@
 #include <Carbon/Carbon.h>
 #endif
 
+MainWindow *MainWindow::instance = nullptr;
 QTranslator *MainWindow::translator = nullptr;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+    instance = this;
+
     hotkey = new QHotkey(this);
 
     initUI();
@@ -40,6 +43,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+MainWindow *MainWindow::getInstance()
+{
+    if (instance == nullptr) {
+        instance = new MainWindow();
+    }
+
+    return instance;
 }
 
 QTranslator *MainWindow::getTranslator()
