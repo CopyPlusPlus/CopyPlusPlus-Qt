@@ -1,7 +1,6 @@
 #ifndef SETTINGSWINDOW_H
 #define SETTINGSWINDOW_H
 
-#include "qtranslator.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -21,6 +20,10 @@ private:
     void updateText();
 
     void changeEvent(QEvent *event);
+    void closeEvent(QCloseEvent *event);
+
+signals:
+    void closed();
 
 private:
     Ui::SettingsWindow *ui;

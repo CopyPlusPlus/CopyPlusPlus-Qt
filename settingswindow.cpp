@@ -1,6 +1,7 @@
 #include "settingswindow.h"
 #include "mainwindow.h"
 #include "qdebug.h"
+#include "qevent.h"
 #include "qtranslator.h"
 #include "ui_settingswindow.h"
 
@@ -22,6 +23,12 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
 SettingsWindow::~SettingsWindow()
 {
     delete ui;
+}
+
+void SettingsWindow::closeEvent(QCloseEvent *event)
+{
+    emit closed();
+    event->accept();
 }
 
 void SettingsWindow::changeEvent(QEvent *event)
