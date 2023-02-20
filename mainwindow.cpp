@@ -71,6 +71,8 @@ void MainWindow::initUI()
     setFocusPolicy(Qt::ClickFocus);
     setFixedSize(273, 345);
 
+    settingsWindow = nullptr;
+
     // 初始化 toggle
     autoToggle = new QtMaterialToggle;
     auto h = new QHBoxLayout();
@@ -110,8 +112,12 @@ void MainWindow::initConnections()
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
     connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
-        SettingsWindow *st = new SettingsWindow(this);
-        st->show();
+        if (settingsWindow == nullptr) {
+            settingsWindow = new SettingsWindow(this);
+
+            connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
+            settingsWindow->show();
+        }
     });
 }
 

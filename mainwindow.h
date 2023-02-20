@@ -6,6 +6,7 @@
 #include "qtmaterialfab.h"
 #include "qtmaterialtoggle.h"
 #include "qtranslator.h"
+#include "settingswindow.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -60,12 +61,14 @@ public:
     QHotkey *hotkey;
 
 private:
+    Ui::MainWindow *ui;
+
+    QtMaterialToggle *autoToggle;
+    QtMaterialFloatingActionButton *floatBtn;
+
     QTranslator static *translator;
 
-    Ui::MainWindow *ui;
-    QtMaterialToggle *autoToggle;
-
-    QtMaterialFloatingActionButton *floatBtn;
+    SettingsWindow *settingsWindow;
 
     // QString settingsIniFile;
     QSettings settings;
