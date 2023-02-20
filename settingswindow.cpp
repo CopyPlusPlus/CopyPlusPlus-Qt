@@ -62,6 +62,8 @@ void SettingsWindow::SetLangusge(const QString newLang)
 
     if (newLang == tr("中文")) {
         qApp->removeTranslator(translator);
+        delete translator;
+        translator = nullptr;
     } else {
         const QString baseName = "CopyPlusPlus-Qt_" + languageName[newLang];
 
