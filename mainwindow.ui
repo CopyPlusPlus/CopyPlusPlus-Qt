@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string notr="true">CopyPlusPlus</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="autoLable">
@@ -29,7 +29,7 @@
      </font>
     </property>
     <property name="text">
-     <string>自动触发</string>
+     <string notr="true">自动触发</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -70,7 +70,7 @@
      </font>
     </property>
     <property name="text">
-     <string>快捷键</string>
+     <string notr="true">快捷键</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

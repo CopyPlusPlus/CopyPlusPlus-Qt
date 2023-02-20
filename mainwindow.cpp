@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     hotkey = new QHotkey(this);
 
     initUI();
+    updateText();
 
     initConnections();
 
@@ -42,7 +43,11 @@ MainWindow::~MainWindow()
 void MainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
+        // 感觉没啥用
         ui->retranslateUi(this);
+
+        // 更新文本，用于翻译
+        updateText();
     }
 
     QMainWindow::changeEvent(event);
@@ -71,6 +76,16 @@ void MainWindow::initUI()
     autoToggle->setEnabled(false);
     autoToggle->setToolTip(tr("Mac 暂不支持自动合并"));
 #endif
+}
+
+// 更新文本，用于翻译
+void MainWindow::updateText()
+{
+    setWindowTitle(tr("CopyPlusPlus"));
+
+    ui->autoLable->setText(tr("自动触发"));
+    ui->hotkeyLable->setText(tr("快捷键"));
+    ui->keySequenceEdit->lineEdit->setPlaceholderText(tr("快捷键"));
 }
 
 void MainWindow::initConnections()
