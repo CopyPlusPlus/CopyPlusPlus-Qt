@@ -42,7 +42,7 @@ void MyKeySequenceEdit::focusOutEvent(QFocusEvent *event)
 
         if (this->keySequence().isEmpty()) {
             setKeySequence(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()));
-            lineEdit->setPlaceholderText("快捷键");
+            lineEdit->setPlaceholderText(tr("快捷键"));
         }
 
         emit focusOut();
@@ -62,7 +62,7 @@ void MyKeySequenceEdit::keyPressEvent(QKeyEvent *event)
         setKeySequence(this->keySequence());
 
         clearFocus();
-        lineEdit->setPlaceholderText("快捷键");
+        lineEdit->setPlaceholderText(tr("快捷键"));
 
         emit myEditFinished(this->keySequence());
         qDebug() << "myEditFinished";
@@ -79,7 +79,7 @@ void MyKeySequenceEdit::keyReleaseEvent(QKeyEvent *event)
 
     //    if (this->keySequence().isEmpty()) {
     //        setKeySequence(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()));
-    //        lineEdit->setPlaceholderText("快捷键");
+    //        lineEdit->setPlaceholderText(tr("快捷键"));
     //    }
 }
 

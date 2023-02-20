@@ -26,6 +26,7 @@ private:
     void changeEvent(QEvent *event);
 
     void initUI();
+    void updateText();
     void initConnections();
     void loadSettings();
     void saveSettings();

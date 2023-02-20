@@ -4,29 +4,39 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="mainwindow.ui" line="14"/>
-        <source>MainWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="32"/>
+        <location filename="mainwindow.cpp" line="80"/>
         <source>自动触发</source>
         <translation>Auto</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="73"/>
+        <location filename="mainwindow.cpp" line="81"/>
+        <location filename="mainwindow.cpp" line="82"/>
         <source>快捷键</source>
-        <translation type="unfinished">Hotkey</translation>
+        <translation>Hotkey</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="63"/>
+        <location filename="mainwindow.cpp" line="72"/>
         <source>Mac 暂不支持自动合并</source>
-        <translation type="unfinished">Mac not supported</translation>
+        <translation>Mac not supported yet</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="150"/>
+        <location filename="mainwindow.cpp" line="78"/>
+        <source>CopyPlusPlus</source>
+        <translation>CopyPlusPlus</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="168"/>
         <source>快捷键占用，请更换快捷键。</source>
         <translation type="unfinished">Hotkey busy, change another.</translation>
+    </message>
+</context>
+<context>
+    <name>MyKeySequenceEdit</name>
+    <message>
+        <location filename="mykeysequenceedit.cpp" line="45"/>
+        <location filename="mykeysequenceedit.cpp" line="65"/>
+        <source>快捷键</source>
+        <translation>Hotkey</translation>
     </message>
 </context>
 <context>
@@ -54,47 +64,24 @@
 <context>
     <name>SettingsWindow</name>
     <message>
-        <location filename="settingswindow.ui" line="14"/>
-        <source>MainWindow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="settingswindow.ui" line="27"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="settingswindow.cpp" line="9"/>
+        <location filename="settingswindow.cpp" line="33"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="11"/>
+        <location filename="settingswindow.cpp" line="35"/>
         <source>语言</source>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="13"/>
+        <location filename="settingswindow.cpp" line="11"/>
         <source>中文</source>
         <translation>Chinese</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="13"/>
+        <location filename="settingswindow.cpp" line="11"/>
         <source>英文</source>
         <translation>English</translation>
-    </message>
-</context>
-<context>
-    <name>Toggle</name>
-    <message>
-        <location filename="toggle.ui" line="19"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="toggle.ui" line="43"/>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

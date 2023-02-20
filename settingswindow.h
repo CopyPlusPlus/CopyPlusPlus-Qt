@@ -18,14 +18,15 @@ public:
 
 private:
     void SetLangusge(QString);
+    void updateText();
 
     void changeEvent(QEvent *event);
 
 private:
     Ui::SettingsWindow *ui;
-    QTranslator translator;
 
-public:
+    QStringList languages;
+    QTranslator translator;
 };
 
 #endif // SETTINGSWINDOW_H
