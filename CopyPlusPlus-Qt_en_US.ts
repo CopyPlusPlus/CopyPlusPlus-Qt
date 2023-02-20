@@ -4,30 +4,30 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="mainwindow.cpp" line="80"/>
+        <location filename="mainwindow.cpp" line="86"/>
         <source>自动触发</source>
         <translation>Auto</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="81"/>
-        <location filename="mainwindow.cpp" line="82"/>
+        <location filename="mainwindow.cpp" line="87"/>
+        <location filename="mainwindow.cpp" line="88"/>
         <source>快捷键</source>
-        <translation>Hotkey</translation>
+        <translation>Shortcut</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="72"/>
+        <location filename="mainwindow.cpp" line="77"/>
         <source>Mac 暂不支持自动合并</source>
         <translation>Mac not supported yet</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="78"/>
+        <location filename="mainwindow.cpp" line="84"/>
         <source>CopyPlusPlus</source>
         <translation>CopyPlusPlus</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="168"/>
+        <location filename="mainwindow.cpp" line="174"/>
         <source>快捷键占用，请更换快捷键。</source>
-        <translation type="unfinished">Hotkey busy, change another.</translation>
+        <translation>Shortcut occupied, please change another.</translation>
     </message>
 </context>
 <context>
@@ -64,12 +64,12 @@
 <context>
     <name>SettingsWindow</name>
     <message>
-        <location filename="settingswindow.cpp" line="33"/>
+        <location filename="settingswindow.cpp" line="37"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="35"/>
+        <location filename="settingswindow.cpp" line="39"/>
         <source>语言</source>
         <translation>Language</translation>
     </message>
