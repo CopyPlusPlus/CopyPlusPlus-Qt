@@ -24,6 +24,7 @@ public:
     ~MainWindow();
 
     static QTranslator *getTranslator();
+    static MainWindow *getInstance();
 
 private:
     void closeEvent(QCloseEvent *event);
@@ -61,6 +62,8 @@ public:
     QHotkey *hotkey;
 
 private:
+    static MainWindow *instance;
+
     Ui::MainWindow *ui;
 
     QtMaterialToggle *autoToggle;
