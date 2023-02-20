@@ -16,7 +16,7 @@ public:
     ~SettingsWindow();
 
 private:
-    void SetLangusge(const QString);
+    void changeLanguage(const QString);
     void updateText();
 
     void changeEvent(QEvent *event);
