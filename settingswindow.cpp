@@ -1,22 +1,22 @@
 #include "settingswindow.h"
 #include "mainwindow.h"
 #include "qevent.h"
-#include "qtranslator.h"
 #include "ui_settingswindow.h"
+#include <QSettings>
 
 SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
                                                   ui(new Ui::SettingsWindow)
 {
     ui->setupUi(this);
 
-    allLanguages = QStringList{tr("中文"), tr("英文")};
-    languageName = {{tr("英文"), "en_US"}};
-
     updateText();
 
+    QSettings settings;
+    ui->languageList->setCurrentIndex(settings.value("language", "0").toInt());
+
     // 函数指针
-    void (QComboBox::*currentIndexChanged)(const QString &) = &QComboBox::currentIndexChanged;
-    connect(ui->languageList, currentIndexChanged, this, &SettingsWindow::changeLanguage);
+    void (QComboBox::*currentIndexChanged)(int) = &QComboBox::currentIndexChanged;
+    connect(ui->languageList, currentIndexChanged, MainWindow::getInstance(), &MainWindow::updateLanguage);
 }
 
 SettingsWindow::~SettingsWindow()
@@ -50,39 +50,15 @@ void SettingsWindow::updateText()
     ui->languageLable->setText(tr("语言"));
 
     QComboBox *list = ui->languageList;
+    QStringList allLanguages = MainWindow::getInstance()->allLanguages;
 
     if (list->count() == 0) {
-        list->addItems(allLanguages);
+        for (int i = 0; i < allLanguages.count(); ++i) {
+            list->addItem(tr(allLanguages[i].toUtf8()));
+        }
     } else {
         for (int i = 0; i < allLanguages.count(); ++i) {
             list->setItemText(i, tr(allLanguages[i].toUtf8()));
         }
     }
-}
-
-// multi languages
-void SettingsWindow::changeLanguage(const QString newLang)
-{
-    QTranslator *translator = MainWindow::getTranslator();
-
-    if (newLang == tr("中文")) {
-        qApp->removeTranslator(translator);
-        delete translator;
-        translator = nullptr;
-    } else {
-        const QString baseName = "CopyPlusPlus-Qt_" + languageName[newLang];
-
-        if (translator->load(":/i18n/" + baseName)) {
-            qApp->installTranslator(translator);
-        }
-    }
-
-    //    const QStringList uiLanguages = QLocale::system().uiLanguages();
-    //    for (const QString &locale : uiLanguages) {
-    //        const QString baseName = "CopyPlusPlus-Qt_" + QLocale(locale).name();
-    //        if (translator.load(":/i18n/" + baseName)) {
-    //            // a.installTranslator(&translator);
-    //            break;
-    //        }
-    //    }
 }

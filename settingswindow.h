@@ -16,7 +16,6 @@ public:
     ~SettingsWindow();
 
 private:
-    void changeLanguage(const QString);
     void updateText();
 
     void changeEvent(QEvent *event);
@@ -27,9 +26,6 @@ signals:
 
 private:
     Ui::SettingsWindow *ui;
-
-    QStringList allLanguages;
-    QHash<QString, QString> languageName;
 };
 
 #endif // SETTINGSWINDOW_H
