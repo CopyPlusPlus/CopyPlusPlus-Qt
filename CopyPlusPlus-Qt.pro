@@ -10,6 +10,7 @@ CONFIG += c++17
 
 INCLUDEPATH += material 3rdparty/QHotkey
 
+# QHotKey Settings
 mac: LIBS += -framework Carbon
 else:win32: LIBS += -luser32
 else:unix {
@@ -21,6 +22,14 @@ else:unix {
     LIBS += -lX11
 }
 
+# App icon
+mac: #ICON = images/copy.ico
+else:win32: #RC_ICONS = images/copy.ico
+else:unix {
+}
+
+
+# Force refresh UI
 UI_DIR = $$PWD
 
 SOURCES += \
