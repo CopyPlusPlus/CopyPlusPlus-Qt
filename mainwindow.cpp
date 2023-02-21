@@ -35,7 +35,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     initUI();
 
+    if (!settings.contains("language")) {
+        QString sysLang = QLocale::system().name();
+        qDebug() << sysLang;
+        if (sysLang == "en_US") {
+            settings.setValue("language", 1);
+        }
+    }
+
     updateLanguage(settings.value("language", "0").toInt());
+
     updateText();
 
     initConnections();
@@ -115,15 +124,6 @@ void MainWindow::updateLanguage(const int &langIndex)
             qApp->installTranslator(&translator);
         }
     }
-
-    //    const QStringList uiLanguages = QLocale::system().uiLanguages();
-    //    for (const QString &locale : uiLanguages) {
-    //        const QString baseName = "CopyPlusPlus-Qt_" + QLocale(locale).name();
-    //        if (translator.load(":/i18n/" + baseName)) {
-    //            // a.installTranslator(&translator);
-    //            break;
-    //        }
-    //    }
 }
 
 // 更新文本，用于翻译
