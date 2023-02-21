@@ -75,6 +75,8 @@ void MainWindow::initUI()
 {
     ui->setupUi(this);
 
+    setWindowIcon(QIcon(":/icons/images/cpp.svg"));
+
     setFocusPolicy(Qt::ClickFocus);
     setFixedSize(273, 345);
 
