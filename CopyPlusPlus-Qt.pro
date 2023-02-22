@@ -23,8 +23,8 @@ else:unix {
 }
 
 # App icon
-mac: #ICON = images/copy.ico
-else:win32: #RC_ICONS = images/copy.ico
+mac: ICON = images/cpp.ico
+else:win32: RC_ICONS = images/copy.ico
 else:unix {
 }
 
