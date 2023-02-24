@@ -34,6 +34,7 @@ UI_DIR = $$PWD
 
 SOURCES += \
     3rdparty/QHotkey/qhotkey.cpp \
+    language.cpp \
     main.cpp \
     mainwindow.cpp \
     material/lib/qtmaterialcheckable.cpp \
@@ -89,6 +90,7 @@ SOURCES += \
 HEADERS += \
     3rdparty/QHotkey/qhotkey.h \
     3rdparty/QHotkey/qhotkey_p.h \
+    language.h \
     mainwindow.h \
     material/lib/qtmaterialcheckable.h \
     material/lib/qtmaterialcheckable_internal.h \

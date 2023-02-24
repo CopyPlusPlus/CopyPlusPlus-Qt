@@ -1,7 +1,9 @@
 #include "settingswindow.h"
+#include "language.h"
 #include "mainwindow.h"
 #include "qevent.h"
 #include "ui_settingswindow.h"
+
 #include <QSettings>
 
 SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
@@ -14,12 +16,11 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
     updateText();
 
     QSettings settings;
-    QString curLang = MainWindow::getInstance()->languageName.key(settings.value("language", "zh_CN").toString());
-    ui->languageList->setCurrentText(curLang);
+    ui->languageList->setCurrentIndex(settings.value("language", "0").toInt());
 
     // 函数指针
-    void (QComboBox::*currentIndexChanged)(const QString &) = &QComboBox::currentIndexChanged;
-    connect(ui->languageList, currentIndexChanged, MainWindow::getInstance(), &MainWindow::updateLanguageByName);
+    void (QComboBox::*currentIndexChanged)(int) = &QComboBox::currentIndexChanged;
+    connect(ui->languageList, currentIndexChanged, MainWindow::getInstance(), &Language::updateLanguage);
 }
 
 SettingsWindow::~SettingsWindow()
@@ -49,11 +50,12 @@ void SettingsWindow::changeEvent(QEvent *event)
 void SettingsWindow::updateText()
 {
     setWindowTitle(tr("设置"));
-
     ui->languageLable->setText(tr("语言"));
 
+    // Get QComboBox
     QComboBox *list = ui->languageList;
-    QStringList allLanguages = MainWindow::getInstance()->languageName.keys();
+
+    QStringList allLanguages = Language::allLanguages;
 
     if (list->count() == 0) {
         for (int i = 0; i < allLanguages.count(); ++i) {
