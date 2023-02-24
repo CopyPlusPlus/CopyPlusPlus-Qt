@@ -14,11 +14,12 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
     updateText();
 
     QSettings settings;
-    ui->languageList->setCurrentIndex(settings.value("language", "0").toInt());
+    QString curLang = MainWindow::getInstance()->languageName.key(settings.value("language", "zh_CN").toString());
+    ui->languageList->setCurrentText(curLang);
 
     // 函数指针
-    void (QComboBox::*currentIndexChanged)(int) = &QComboBox::currentIndexChanged;
-    connect(ui->languageList, currentIndexChanged, MainWindow::getInstance(), &MainWindow::updateLanguage);
+    void (QComboBox::*currentIndexChanged)(const QString &) = &QComboBox::currentIndexChanged;
+    connect(ui->languageList, currentIndexChanged, MainWindow::getInstance(), &MainWindow::updateLanguageByName);
 }
 
 SettingsWindow::~SettingsWindow()
@@ -52,7 +53,7 @@ void SettingsWindow::updateText()
     ui->languageLable->setText(tr("语言"));
 
     QComboBox *list = ui->languageList;
-    QStringList allLanguages = MainWindow::getInstance()->allLanguages;
+    QStringList allLanguages = MainWindow::getInstance()->languageName.keys();
 
     if (list->count() == 0) {
         for (int i = 0; i < allLanguages.count(); ++i) {
