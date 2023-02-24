@@ -25,7 +25,8 @@ public:
 
     static MainWindow *getInstance();
 
-    void updateLanguage(const int &);
+    void updateLanguageByName(const QString &);
+    void updateLanguage(const QString &);
 
 private:
     void closeEvent(QCloseEvent *event);
@@ -62,7 +63,7 @@ private:
 public:
     QHotkey *hotkey;
 
-    QStringList allLanguages;
+    // QStringList allLanguages;
     QHash<QString, QString> languageName;
 
 private:

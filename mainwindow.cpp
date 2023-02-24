@@ -30,20 +30,27 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     hotkey = new QHotkey(this);
 
-    allLanguages = QStringList{tr("中文"), tr("英文")};
-    languageName = {{tr("中文"), "zh_CN"}, {tr("英文"), "en_US"}};
+    // allLanguages = QStringList{("中文"), ("English")};
+    languageName = {{"中文", "zh_CN"}, {"English", "en_US"}};
 
     initUI();
 
-    if (!settings.contains("language")) {
-        QString sysLang = QLocale::system().name();
-        qDebug() << sysLang;
-        if (sysLang == "en_US") {
-            settings.setValue("language", 1);
-        }
+    // if language setting saves as number (initial version)
+    if (std::isdigit(settings.value("language").toString().toStdString()[0])) {
+        settings.remove("language");
     }
 
-    updateLanguage(settings.value("language", "0").toInt());
+    if (!settings.contains("language")) {
+        QString sysLang = QLocale::system().name();
+
+        qDebug() << sysLang;
+
+        settings.setValue("language", sysLang);
+    }
+
+    qDebug() << settings.value("language", "zh_CN").toString();
+
+    updateLanguage(settings.value("language", "zh_CN").toString());
 
     updateText();
 
@@ -109,21 +116,24 @@ void MainWindow::initUI()
 #endif
 }
 
-void MainWindow::updateLanguage(const int &langIndex)
+void MainWindow::updateLanguage(const QString &newLang)
 {
-    settings.setValue("language", langIndex);
+    settings.setValue("language", newLang);
 
-    QString newLang = allLanguages[langIndex];
+    qApp->removeTranslator(&translator);
 
-    if (newLang == tr("中文")) {
-        qApp->removeTranslator(&translator);
-    } else {
-        const QString baseName = "CopyPlusPlus-Qt_" + languageName[newLang];
+    if (newLang != "zh_CN") {
+        const QString baseName = "CopyPlusPlus-Qt_" + newLang;
 
         if (translator.load(":/i18n/" + baseName)) {
             qApp->installTranslator(&translator);
         }
     }
+}
+
+void MainWindow::updateLanguageByName(const QString &newLang)
+{
+    updateLanguage(languageName[newLang]);
 }
 
 // 更新文本，用于翻译
