@@ -28,6 +28,9 @@ MainWindow *MainWindow::instance = nullptr;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
+    if (instance != nullptr) {
+        qCritical() << "创建多个MainWindow instance，这里应该是个Bug";
+    }
     instance = this;
 
     hotkey = new QHotkey(this);
@@ -47,13 +50,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 MainWindow::~MainWindow()
 {
+    instance = nullptr;
+
     delete ui;
 }
 
 MainWindow *MainWindow::getInstance()
 {
     if (instance == nullptr) {
-        instance = new MainWindow();
+        qDebug() << "MainWindow instance为空，这里应该是个Bug";
     }
 
     return instance;
