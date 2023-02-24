@@ -4,28 +4,28 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="mainwindow.cpp" line="86"/>
+        <location filename="mainwindow.cpp" line="144"/>
         <source>自动触发</source>
         <translation>Auto</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="87"/>
-        <location filename="mainwindow.cpp" line="88"/>
+        <location filename="mainwindow.cpp" line="145"/>
+        <location filename="mainwindow.cpp" line="146"/>
         <source>快捷键</source>
         <translation>Shortcut</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="77"/>
+        <location filename="mainwindow.cpp" line="115"/>
         <source>Mac 暂不支持自动合并</source>
         <translation>Mac not supported yet</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="84"/>
+        <location filename="mainwindow.cpp" line="142"/>
         <source>CopyPlusPlus</source>
         <translation>CopyPlusPlus</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="174"/>
+        <location filename="mainwindow.cpp" line="236"/>
         <source>快捷键占用，请更换快捷键。</source>
         <translation>Shortcut occupied, please change another.</translation>
     </message>
@@ -64,24 +64,14 @@
 <context>
     <name>SettingsWindow</name>
     <message>
-        <location filename="settingswindow.cpp" line="37"/>
+        <location filename="settingswindow.cpp" line="51"/>
         <source>设置</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="settingswindow.cpp" line="39"/>
+        <location filename="settingswindow.cpp" line="53"/>
         <source>语言</source>
         <translation>Language</translation>
-    </message>
-    <message>
-        <location filename="settingswindow.cpp" line="11"/>
-        <source>中文</source>
-        <translation>Chinese</translation>
-    </message>
-    <message>
-        <location filename="settingswindow.cpp" line="11"/>
-        <source>英文</source>
-        <translation>English</translation>
     </message>
 </context>
 </TS>
