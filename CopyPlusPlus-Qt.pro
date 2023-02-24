@@ -64,7 +64,8 @@ FORMS += \
 
 RESOURCES += resources.qrc
 
-TRANSLATIONS += CopyPlusPlus-Qt_en_US.ts
+TRANSLATIONS += $$files(languages/*.ts, true)
+
 CONFIG += lrelease
 CONFIG += embed_translations
 
