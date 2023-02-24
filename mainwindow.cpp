@@ -35,22 +35,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     initUI();
 
-    // if language setting saves as number (initial version)
-    //    if (std::isdigit(settings.value("language").toString().toStdString()[0])) {
-    //        settings.remove("language");
-    //    }
-
-    if (!settings.contains("language")) {
-        QString sysLang = QLocale::system().name();
-
-        qDebug() << sysLang;
-
-        settings.setValue("language", sysLang);
-    }
-
-    qDebug() << settings.value("language", "0");
-
-    Language::updateLanguage(settings.value("language", "0").toInt());
+    Language::initLanguage();
 
     updateText();
 

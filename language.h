@@ -8,8 +8,8 @@ class Language
 public:
     Language();
 
+    static void initLanguage();
     static void updateLanguage(const int &);
-    static void updateLanguageByName(const QString &);
 
     static QStringList allLanguages;
 
