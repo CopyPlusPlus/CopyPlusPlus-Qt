@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>material/icons/settings.svg</file>
-        <file>material/icons/star.svg</file>
         <file>images/cpp.svg</file>
+        <file>3rdparty/material/icons/settings.svg</file>
+        <file>3rdparty/material/icons/star.svg</file>
     </qresource>
 </RCC>

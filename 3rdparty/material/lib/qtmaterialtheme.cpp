@@ -154,5 +154,5 @@ void QtMaterialTheme::setColor(const QString &key, Material::Color color)
 
 QIcon QtMaterialTheme::icon(QString icon)
 {
-    return QIcon(":/icons/material/icons/" % icon % ".svg");
+    return QIcon(":/icons/3rdparty/material/icons/" % icon % ".svg");
 }
