@@ -25,9 +25,6 @@ public:
 
     static MainWindow *getInstance();
 
-    void updateLanguageByName(const QString &);
-    void updateLanguage(const QString &);
-
 private:
     void closeEvent(QCloseEvent *event);
     void changeEvent(QEvent *event);
@@ -63,8 +60,7 @@ private:
 public:
     QHotkey *hotkey;
 
-    // QStringList allLanguages;
-    QHash<QString, QString> languageName;
+    QTranslator *translator;
 
 private:
     static MainWindow *instance;
@@ -73,8 +69,6 @@ private:
 
     QtMaterialToggle *autoToggle;
     QtMaterialFloatingActionButton *floatBtn;
-
-    QTranslator translator;
 
     SettingsWindow *settingsWindow;
 

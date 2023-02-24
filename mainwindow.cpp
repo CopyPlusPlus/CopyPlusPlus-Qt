@@ -1,8 +1,10 @@
 #include "mainwindow.h"
+#include "language.h"
 #include "qhotkey.h"
 #include "qtmaterialtoggle.h"
 #include "settingswindow.h"
 #include "ui_mainwindow.h"
+
 #include <QClipboard>
 #include <QCloseEvent>
 #include <QDebug>
@@ -29,16 +31,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     instance = this;
 
     hotkey = new QHotkey(this);
-
-    // allLanguages = QStringList{("中文"), ("English")};
-    languageName = {{"中文", "zh_CN"}, {"English", "en_US"}};
+    translator = new QTranslator(this);
 
     initUI();
 
     // if language setting saves as number (initial version)
-    if (std::isdigit(settings.value("language").toString().toStdString()[0])) {
-        settings.remove("language");
-    }
+    //    if (std::isdigit(settings.value("language").toString().toStdString()[0])) {
+    //        settings.remove("language");
+    //    }
 
     if (!settings.contains("language")) {
         QString sysLang = QLocale::system().name();
@@ -48,9 +48,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         settings.setValue("language", sysLang);
     }
 
-    qDebug() << settings.value("language", "zh_CN").toString();
+    qDebug() << settings.value("language", "0");
 
-    updateLanguage(settings.value("language", "zh_CN").toString());
+    Language::updateLanguage(settings.value("language", "0").toInt());
 
     updateText();
 
@@ -114,26 +114,6 @@ void MainWindow::initUI()
     autoToggle->setEnabled(false);
     autoToggle->setToolTip(tr("Mac 暂不支持自动合并"));
 #endif
-}
-
-void MainWindow::updateLanguage(const QString &newLang)
-{
-    settings.setValue("language", newLang);
-
-    qApp->removeTranslator(&translator);
-
-    if (newLang != "zh_CN") {
-        const QString baseName = "CopyPlusPlus-Qt_" + newLang;
-
-        if (translator.load(":/i18n/" + baseName)) {
-            qApp->installTranslator(&translator);
-        }
-    }
-}
-
-void MainWindow::updateLanguageByName(const QString &newLang)
-{
-    updateLanguage(languageName[newLang]);
 }
 
 // 更新文本，用于翻译
