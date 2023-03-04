@@ -231,6 +231,9 @@ void MainWindow::processClipboard()
 
     qDebug() << "Before:" << s;
 
+    // 去掉 CAJ viewer 造成的莫名的空格符号
+    s.replace("", "");
+
     s.replace("\r", "");
     s.replace("\n", "");
 
