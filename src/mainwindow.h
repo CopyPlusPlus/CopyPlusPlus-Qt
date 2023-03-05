@@ -46,13 +46,6 @@ private:
 
     void errorInput();
 
-    void pressCtrlC();
-
-#ifdef Q_OS_WIN
-    void setClipboardTextWin(QString);
-#endif
-
-    void processClipboard();
     void afterChanged();
 
     void click();
