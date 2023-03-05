@@ -19,6 +19,28 @@ UI_DIR = $$PWD
 
 INCLUDEPATH += 3rdparty/material 3rdparty/QHotkey src/ src/utils
 
+SOURCES += \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/mykeysequenceedit.cpp \
+    src/settingswindow.cpp \
+    src/toggle.cpp \
+    src/utils/language.cpp \
+    src/utils/textprocessor.cpp
+
+HEADERS += \
+    src/mainwindow.h \
+    src/mykeysequenceedit.h \
+    src/settingswindow.h \
+    src/toggle.h \
+    src/utils/language.h \
+    src/utils/textprocessor.h
+
+FORMS += \
+    src/mainwindow.ui \
+    src/settingswindow.ui \
+    src/toggle.ui
+
 # material files
 SOURCES += $$files(3rdparty/material/*.cpp, true)
 HEADERS += $$files(3rdparty/material/*.h, true)
@@ -41,26 +63,6 @@ else:unix {
     }
     LIBS += -lX11
 }
-
-SOURCES += \
-    src/main.cpp \
-    src/mainwindow.cpp \
-    src/mykeysequenceedit.cpp \
-    src/settingswindow.cpp \
-    src/toggle.cpp \
-    src/utils/language.cpp
-
-HEADERS += \
-    src/mainwindow.h \
-    src/mykeysequenceedit.h \
-    src/settingswindow.h \
-    src/toggle.h \
-    src/utils/language.h
-
-FORMS += \
-    src/mainwindow.ui \
-    src/settingswindow.ui \
-    src/toggle.ui
 
 RESOURCES += resources.qrc
 
