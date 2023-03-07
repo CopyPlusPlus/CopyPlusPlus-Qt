@@ -1,5 +1,8 @@
 # CopyPlusPlus-Qt
 
+![CodeFactor](https://www.codefactor.io/repository/github/copyplusplus/copyplusplus-qt/badge)
+![License](https://img.shields.io/github/license/CopyPlusPlus/CopyPlusPlus-Qt)
+
 This is a version of CopyPlusPlus based on Qt/C++.
 
 Advantage: **Cross-platform**.
