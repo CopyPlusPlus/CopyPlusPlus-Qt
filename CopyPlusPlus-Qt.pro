@@ -15,31 +15,31 @@ else:unix {
 }
 
 # Force refresh UI
-UI_DIR = $$PWD
+UI_DIR = $$PWD/src/ui
 
-INCLUDEPATH += 3rdparty/material 3rdparty/QHotkey src/ src/utils
+INCLUDEPATH += 3rdparty/material 3rdparty/QHotkey src/ src/ui src/components
 
 SOURCES += \
     src/main.cpp \
-    src/mainwindow.cpp \
-    src/mykeysequenceedit.cpp \
-    src/settingswindow.cpp \
-    src/toggle.cpp \
+    src/ui/mainwindow.cpp \
+    src/ui/settingswindow.cpp \
+    src/components/mykeysequenceedit.cpp \
+    src/components/toggle.cpp \
     src/utils/language.cpp \
     src/utils/textprocessor.cpp
 
 HEADERS += \
-    src/mainwindow.h \
-    src/mykeysequenceedit.h \
-    src/settingswindow.h \
-    src/toggle.h \
+    src/ui/mainwindow.h \
+    src/ui/settingswindow.h \
+    src/components/mykeysequenceedit.h \
+    src/components/toggle.h \
     src/utils/language.h \
     src/utils/textprocessor.h
 
 FORMS += \
-    src/mainwindow.ui \
-    src/settingswindow.ui \
-    src/toggle.ui
+    src/ui/mainwindow.ui \
+    src/ui/settingswindow.ui \
+    src/components/toggle.ui
 
 # material files
 SOURCES += $$files(3rdparty/material/*.cpp, true)
@@ -66,7 +66,7 @@ else:unix {
 
 RESOURCES += resources.qrc
 
-TRANSLATIONS += $$files(languages/*.ts, true)
+TRANSLATIONS += $$files(translations/*.ts, true)
 
 CONFIG += lrelease
 CONFIG += embed_translations
