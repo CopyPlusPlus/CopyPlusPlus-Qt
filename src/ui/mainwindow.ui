@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>273</width>
-    <height>345</height>
+    <width>310</width>
+    <height>370</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <widget class="QLabel" name="autoLable">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>50</y>
-      <width>91</width>
+      <width>111</width>
       <height>21</height>
      </rect>
     </property>
@@ -38,7 +38,7 @@
    <widget class="QWidget" name="toggleWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>160</x>
       <y>30</y>
       <width>81</width>
       <height>61</height>
@@ -48,7 +48,7 @@
    <widget class="MyKeySequenceEdit" name="keySequenceEdit">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>140</x>
       <y>120</y>
       <width>121</width>
       <height>22</height>
@@ -58,9 +58,9 @@
    <widget class="QLabel" name="hotkeyLable">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>10</x>
       <y>120</y>
-      <width>71</width>
+      <width>111</width>
       <height>21</height>
      </rect>
     </property>
@@ -82,8 +82,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>273</width>
-     <height>21</height>
+     <width>310</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
