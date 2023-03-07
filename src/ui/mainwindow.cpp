@@ -1,10 +1,10 @@
 #include "mainwindow.h"
-#include "language.h"
 #include "qhotkey.h"
 #include "qtmaterialtoggle.h"
 #include "settingswindow.h"
-#include "textprocessor.h"
 #include "ui_mainwindow.h"
+#include "utils/language.h"
+#include "utils/textprocessor.h"
 
 #include <QClipboard>
 #include <QCloseEvent>
@@ -74,7 +74,7 @@ void MainWindow::initUI()
     setWindowIcon(QIcon(":/icons/images/copy.png"));
 
     setFocusPolicy(Qt::ClickFocus);
-    setFixedSize(273, 345);
+    setFixedSize(310, 370);
 
     settingsWindow = nullptr;
 
