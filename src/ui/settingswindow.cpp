@@ -1,8 +1,8 @@
 #include "settingswindow.h"
-#include "language.h"
 #include "mainwindow.h"
 #include "qevent.h"
 #include "ui_settingswindow.h"
+#include "utils/language.h"
 
 #include <QSettings>
 
@@ -11,7 +11,8 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
 {
     ui->setupUi(this);
 
-    setFixedSize(228, 275);
+    setFixedSize(260, 295);
+    setWindowFlags(Qt::Tool);
 
     updateText();
 
