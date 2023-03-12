@@ -73,11 +73,15 @@ void TextProcessor::pressCtrlC()
     QSettings settings;
 
 #ifdef Q_OS_WIN
-    // 获取当前绑定快捷键 Modifier + Key
-    QStringList keys = settings.value("shortcut", "Ctrl+Shift+C").toString().split("+");
 
-    const int n = keys.size();
-    INPUT inputs[n + 4];
+    // 获取当前绑定快捷键 Modifier + Key
+    QStringList hotKeys = settings.value("shortcut", "Ctrl+Shift+C").toString().split("+");
+
+    const int n = hotKeys.size();
+
+    // 需要模拟的按键事件数组，共需要模拟：快捷键释放:n个；Ctrl+C按下、释放:4个
+    // 恢复时只需要按下Modifier，所以总个数为 2*n+4-1
+    INPUT inputs[2 * n + 3];
     ZeroMemory(inputs, sizeof(inputs));
 
     // 释放 Modifier
@@ -85,7 +89,7 @@ void TextProcessor::pressCtrlC()
         inputs[i].type = INPUT_KEYBOARD;
         inputs[i].ki.dwFlags = KEYEVENTF_KEYUP;
 
-        switch (keys[i].toStdString()[0]) {
+        switch (hotKeys[i].toStdString()[0]) {
         case 'C':
             inputs[i].ki.wVk = VK_LCONTROL;
             break;
@@ -103,7 +107,7 @@ void TextProcessor::pressCtrlC()
     // 释放 key
     inputs[n - 1].type = INPUT_KEYBOARD;
     inputs[n - 1].ki.dwFlags = KEYEVENTF_KEYUP;
-    inputs[n - 1].ki.wVk = VkKeyScanA(keys[n - 1].toStdString()[0]);
+    inputs[n - 1].ki.wVk = VkKeyScanA(hotKeys[n - 1].toStdString()[0]);
 
     // 按下 CTRL
     inputs[n].type = INPUT_KEYBOARD;
@@ -122,13 +126,37 @@ void TextProcessor::pressCtrlC()
     inputs[n + 3].ki.wVk = 0x43; // C
     inputs[n + 3].ki.dwFlags = KEYEVENTF_KEYUP;
 
+    // 恢复按下 Modifier
+    for (int i = n + 4; i < 2 * n + 3; ++i) {
+        inputs[i].type = INPUT_KEYBOARD;
+        inputs[i].ki.dwFlags = 0;
+
+        switch (hotKeys[i - n - 4].toStdString()[0]) {
+        case 'C':
+            inputs[i].ki.wVk = VK_LCONTROL;
+            break;
+        case 'S':
+            inputs[i].ki.wVk = VK_LSHIFT;
+            break;
+        case 'M':
+            inputs[i].ki.wVk = VK_LWIN;
+            break;
+        case 'A':
+            inputs[i].ki.wVk = VK_LMENU;
+            break;
+        }
+    }
+
+    // 模拟按键
     UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
     if (uSent != ARRAYSIZE(inputs)) {
         qDebug() << "SendInput failed:" << HRESULT_FROM_WIN32(GetLastError());
     } else {
         qDebug() << "SendInput succeed";
     }
+
 #elif defined(Q_OS_MAC)
+
     CGKeyCode inputKeyCode = kVK_ANSI_C;
     CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateCombinedSessionState);
     CGEventRef saveCommandDown = CGEventCreateKeyboardEvent(source, inputKeyCode, true);
@@ -141,5 +169,6 @@ void TextProcessor::pressCtrlC()
     CFRelease(saveCommandUp);
     CFRelease(saveCommandDown);
     CFRelease(source);
+
 #endif
 }
