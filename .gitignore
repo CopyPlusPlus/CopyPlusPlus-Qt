@@ -1,7 +1,6 @@
 .DS_Store
 build
 .cache
-*.ui
 
 # Created by https://www.toptal.com/developers/gitignore/api/c++,cmake,qt,visualstudiocode,git
 # Edit at https://www.toptal.com/developers/gitignore?templates=c++,cmake,qt,visualstudiocode,git
