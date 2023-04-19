@@ -1,3 +1,6 @@
 [submodule "vcpkg"]
-	path = vcpkg
+	path = 3rdparty/vcpkg
 	url = https://github.com/Microsoft/vcpkg.git
+[submodule "3rdparty/QHotkey"]
+	path = 3rdparty/QHotkey
+	url = https://github.com/Skycoder42/QHotkey.git
