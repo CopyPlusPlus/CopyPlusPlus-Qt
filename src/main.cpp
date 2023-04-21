@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+#include <qwidget.h>
 
 int main(int argc, char *argv[])
 {

@@ -17,7 +17,32 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
 set(TS_FILES translations/CopyPlusPlus-QtWidget_en_US.ts)
 
-file(GLOB SOURCES src/*.cpp src/*.h src/*.ui)
+set(COMPONENT_SOURCES
+    src/components/mykeysequenceedit.cpp
+    src/components/mykeysequenceedit.h
+)
+
+set(UI_SOURCES
+    src/ui/mainwindow.cpp
+    src/ui/mainwindow.h
+    src/ui/mainwindow.ui
+    src/ui/settingswindow.cpp
+    src/ui/settingswindow.h
+    src/ui/settingswindow.ui
+)
+
+set(UTILS_SOURCES
+    src/utils/language.cpp
+    src/utils/language.h
+    src/utils/textprocessor.cpp
+    src/utils/textprocessor.h
+)
+
+set(SOURCES src/main.cpp
+    ${COMPONENT_SOURCES}
+    ${UI_SOURCES}
+    ${UTILS_SOURCES}
+)
 
 set(PROJECT_SOURCES
     ${SOURCES}
