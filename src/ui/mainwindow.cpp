@@ -122,6 +122,8 @@ void MainWindow::initConnections()
 
             connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
             settingsWindow->show();
+            settingsWindow->raise();
+            settingsWindow->activateWindow();
         }
     });
 }
