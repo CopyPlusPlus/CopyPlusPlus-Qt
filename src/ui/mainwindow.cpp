@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "qhotkey.h"
-#include "qtmaterialtoggle.h"
+//#include "qtmaterialtoggle.h"
 #include "settingswindow.h"
 #include "ui_mainwindow.h"
 #include "utils/language.h"
@@ -79,20 +79,20 @@ void MainWindow::initUI()
     settingsWindow = nullptr;
 
     // 初始化 toggle
-    autoToggle = new QtMaterialToggle;
-    auto h = new QHBoxLayout();
-    ui->toggleWidget->setLayout(h);
-    h->setContentsMargins(0, 0, 0, 0);
-    h->addWidget(autoToggle, Qt::AlignRight);
+    // autoToggle = new QtMaterialToggle;
+    // auto h = new QHBoxLayout();
+    // ui->toggleWidget->setLayout(h);
+    // h->setContentsMargins(0, 0, 0, 0);
+    // h->addWidget(autoToggle, Qt::AlignRight);
 
     // 设置按钮
-    floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
-    floatBtn->setMini(true);
+    //floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
+    //floatBtn->setMini(true);
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
-    autoToggle->setEnabled(false);
-    autoToggle->setToolTip(tr("Mac 暂不支持自动合并"));
+    //autoToggle->setEnabled(false);
+    //autoToggle->setToolTip(tr("Mac 暂不支持自动合并"));
 #endif
 }
 
@@ -108,7 +108,7 @@ void MainWindow::updateText()
 
 void MainWindow::initConnections()
 {
-    connect(autoToggle, &QtMaterialToggle::toggled, this, &MainWindow::autoToggleChecked);
+    //connect(autoToggle, &QtMaterialToggle::toggled, this, &MainWindow::autoToggleChecked);
 
     connect(ui->keySequenceEdit, &MyKeySequenceEdit::myEditFinished, this, &MainWindow::registerShortcut);
     connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusIn, this, [&]() { hotkey->setRegistered(false); });
@@ -116,23 +116,23 @@ void MainWindow::initConnections()
 
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
-    connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
-        if (settingsWindow == nullptr) {
-            settingsWindow = new SettingsWindow(this);
+    // connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
+    //     if (settingsWindow == nullptr) {
+    //         settingsWindow = new SettingsWindow(this);
 
-            connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
-            settingsWindow->show();
-        }
-    });
+    //         connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
+    //         settingsWindow->show();
+    //     }
+    // });
 }
 
 void MainWindow::loadSettings()
 {
     // QSettings settings(settingsIniFile, QSettings::IniFormat);
 
-    if (settings.value("autoToggle", false).toBool()) {
-        autoToggle->setChecked(true);
-    }
+    // if (settings.value("autoToggle", false).toBool()) {
+    //     autoToggle->setChecked(true);
+    // }
 
     registerShortcut(settings.value("shortcut", "Ctrl+Shift+C").toString());
 }
@@ -141,7 +141,7 @@ void MainWindow::saveSettings()
 {
     // QSettings settings(settingsIniFile, QSettings::IniFormat, this);
 
-    settings.setValue("autoToggle", autoToggle->isChecked());
+    //settings.setValue("autoToggle", autoToggle->isChecked());
     settings.setValue("shortcut", hotkey->shortcut().toString());
 
     qDebug() << "Save shortcut: " << hotkey->shortcut().toString();

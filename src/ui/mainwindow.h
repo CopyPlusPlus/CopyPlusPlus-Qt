@@ -3,8 +3,8 @@
 
 #include "qhotkey.h"
 #include "qsettings.h"
-#include "qtmaterialfab.h"
-#include "qtmaterialtoggle.h"
+//#include "qtmaterialfab.h"
+//#include "qtmaterialtoggle.h"
 #include "qtranslator.h"
 #include "settingswindow.h"
 #include <QMainWindow>
@@ -60,8 +60,8 @@ private:
 
     Ui::MainWindow *ui;
 
-    QtMaterialToggle *autoToggle;
-    QtMaterialFloatingActionButton *floatBtn;
+    //QtMaterialToggle *autoToggle;
+    //QtMaterialFloatingActionButton *floatBtn;
 
     SettingsWindow *settingsWindow;
 
