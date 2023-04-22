@@ -59,9 +59,9 @@ jobs:
         # Artifact name
         name: CopyPlusPlus-OSX
         # Destination path
-        path: ${{github.workspace}}/build/
+        #path: ${{github.workspace}}/build/
         
     - name: Display structure of downloaded files
       run: ls -R
-      working-directory: ${{github.workspace}}/build/
+      #working-directory: ${{github.workspace}}/build/
 
