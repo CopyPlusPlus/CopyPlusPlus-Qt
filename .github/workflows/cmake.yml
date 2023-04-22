@@ -54,12 +54,19 @@ jobs:
       # run: ctest -C ${{env.BUILD_TYPE}}
       
     - name: Download a Build Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: CopyPlusPlus-OSX
+        path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app
+
+      
+    - name: Download a Build Artifact
       uses: actions/download-artifact@v3
       with:
         # Artifact name
         name: CopyPlusPlus-OSX
         # Destination path
-        #path: ${{github.workspace}}/build/
+        path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app
         
     - name: Display structure of downloaded files
       run: ls -R
