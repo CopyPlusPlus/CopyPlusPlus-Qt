@@ -2,5 +2,28 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
   "name": "copyplusplus-qtwidget",
   "version-string": "0.1.0",
-  "dependencies": ["qt5-base", "qt5-tools", "qt5-translations", "qt5-declarative"]
+  "dependencies": [
+    "qt5-base",
+    "qt5-tools",
+    "qt5-translations",
+    "qt5-declarative"
+  ],
+  "overrides": [
+    {
+      "name": "qt5-base",
+      "version": "5.15.9"
+    },
+    {
+      "name": "qt5-tools",
+      "version": "5.15.9"
+    },
+    {
+      "name": "qt5-translations",
+      "version": "5.15.9"
+    },
+    {
+      "name": "qt5-declarative",
+      "version": "5.15.9"
+    }
+  ]
 }
