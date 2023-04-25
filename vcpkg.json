@@ -20,10 +20,6 @@
     {
       "name": "qt5-translations",
       "version": "5.15.9"
-    },
-    {
-      "name": "qt5-declarative",
-      "version": "5.15.9"
     }
   ],
   "builtin-baseline": "5787cfa699a75805ef41938ec66bc7492714d290"
