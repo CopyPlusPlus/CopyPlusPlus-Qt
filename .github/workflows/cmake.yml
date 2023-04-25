@@ -2,7 +2,7 @@ name: CMake
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -16,52 +16,60 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: true
-        
-    # Install latest CMake.
-    - uses: lukka/get-cmake@latest
-    
-    - name: Setup vcpkg (it does not install any package yet)
-      uses: lukka/run-vcpkg@v11
-      with:
-        # This is the default location of the directory containing vcpkg sources.
-        # Change it to the right location if needed.
-        vcpkgDirectory: '${{ github.workspace }}/3rdparty/vcpkg'
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
 
-        # This is the glob expression used to locate the vcpkg.json. 
-        # Change it to match a single manifest file you want to use.
-        # Note: do not use `${{ github.context }}` to compose the value as it
-        # contains backslashes that would be misinterpreted. Instead
-        # compose a value relative to the root of the repository using
-        # `**/path/from/root/of/repo/to/vcpkg.json` to match the desired `vcpkg.json`.
-        vcpkgJsonGlob: '**/vcpkg.json'
-     
-    - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      # Install latest CMake.
+      # - uses: lukka/get-cmake@latest
 
-    - name: Build
-      # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      # - name: Setup vcpkg (it does not install any package yet)
+      #   uses: lukka/run-vcpkg@v11
+      #   with:
+      #     # This is the default location of the directory containing vcpkg sources.
+      #     # Change it to the right location if needed.
+      #     vcpkgDirectory: "${{ github.workspace }}/3rdparty/vcpkg"
 
-    # - name: Test
+      #     # This is the glob expression used to locate the vcpkg.json.
+      #     # Change it to match a single manifest file you want to use.
+      #     # Note: do not use `${{ github.context }}` to compose the value as it
+      #     # contains backslashes that would be misinterpreted. Instead
+      #     # compose a value relative to the root of the repository using
+      #     # `**/path/from/root/of/repo/to/vcpkg.json` to match the desired `vcpkg.json`.
+      #     vcpkgJsonGlob: "**/vcpkg.json"
+
+      - name: Clone my vcpkg-export repo
+        run: git clone https://github.com/CopyPlusPlus/qt-vcpkg-zip.git
+
+      - name: Install 7z
+        run: brew install p7zip
+
+      - name: Extract vcpkg-export.7z
+        run: 7z x qt-vcpkg-zip/vcpkg-export.7z -o${{github.workspace}}
+
+      - name: Configure CMake
+        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DVCPKG_MANIFEST_MODE=OFF -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg-export/scripts/buildsystems/vcpkg.cmake
+
+      - name: Build
+        # Build your program with the given configuration
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+      # - name: Test
       # working-directory: ${{github.workspace}}/build
       # Execute tests defined by the CMake configuration.
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       # run: ctest -C ${{env.BUILD_TYPE}}
-      
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: CopyPlusPlus-QtWidget.app
-        path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app
 
-      
-    - name: Download a Build Artifact
-      uses: actions/download-artifact@v3
-      with:
-        # Artifact name
-        name: CopyPlusPlus-QtWidget.app
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: CopyPlusPlus-QtWidget.app
+          path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app
+
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          # Artifact name
+          name: CopyPlusPlus-QtWidget.app
