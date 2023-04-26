@@ -22,39 +22,18 @@ jobs:
         with:
           submodules: true
 
-      # Install latest CMake.
-      # - uses: lukka/get-cmake@latest
-
-      # - name: Setup vcpkg (it does not install any package yet)
-      #   uses: lukka/run-vcpkg@v11
-      #   with:
-      #     # This is the default location of the directory containing vcpkg sources.
-      #     # Change it to the right location if needed.
-      #     vcpkgDirectory: "${{ github.workspace }}/3rdparty/vcpkg"
-
-      #     # This is the glob expression used to locate the vcpkg.json.
-      #     # Change it to match a single manifest file you want to use.
-      #     # Note: do not use `${{ github.context }}` to compose the value as it
-      #     # contains backslashes that would be misinterpreted. Instead
-      #     # compose a value relative to the root of the repository using
-      #     # `**/path/from/root/of/repo/to/vcpkg.json` to match the desired `vcpkg.json`.
-      #     vcpkgJsonGlob: "**/vcpkg.json"
-
       - name: Install gdown
         run: pip3 install gdown
 
       - name: Download vcpkg-export-7z
         run: gdown ${{env.GD_ID}}
 
-      # - name: Install 7z
-      #   run: brew install p7zip
-
       - name: Extract vcpkg-export.7z
         run: 7z x vcpkg-export.7z -o${{github.workspace}}
 
+      - run: ls -R ${{github.workspace}}
+
       - name: Configure CMake
-        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DVCPKG_MANIFEST_MODE=OFF -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg-export/scripts/buildsystems/vcpkg.cmake
 
       - name: Build
