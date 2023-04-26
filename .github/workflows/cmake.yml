@@ -8,6 +8,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  GD_LINK: https://drive.google.com/uc?export=download&id=1WxCknAfmcooVhKi3YYerqdxOd5_lwpQA
 
 jobs:
   build:
@@ -39,14 +40,17 @@ jobs:
       #     # `**/path/from/root/of/repo/to/vcpkg.json` to match the desired `vcpkg.json`.
       #     vcpkgJsonGlob: "**/vcpkg.json"
 
-      - name: Clone my vcpkg-export repo
-        run: git clone https://github.com/CopyPlusPlus/qt-vcpkg-zip.git
+      - name: Install gdown
+        run: pip3 install gdown
+
+      - name: Download  vcpkg-export-7z
+        run: gdown ${{env.GD_LINK}} -O vcpkg-export.7z
 
       # - name: Install 7z
       #   run: brew install p7zip
 
       - name: Extract vcpkg-export.7z
-        run: 7z x qt-vcpkg-zip/vcpkg-export.7z -o${{github.workspace}}
+        run: 7z x vcpkg-export.7z -o${{github.workspace}}
 
       - name: Configure CMake
         # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
