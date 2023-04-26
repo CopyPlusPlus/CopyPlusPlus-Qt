@@ -43,8 +43,8 @@ jobs:
       - name: Install gdown
         run: pip3 install gdown
 
-      - name: Download  vcpkg-export-7z
-        run: gdown ${{env.GD_LINK}} -O vcpkg-export.7z
+      - name: Download vcpkg-export-7z
+        run: gdown ${{env.GD_LINK}}
 
       # - name: Install 7z
       #   run: brew install p7zip
