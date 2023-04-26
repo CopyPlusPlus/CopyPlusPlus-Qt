@@ -8,7 +8,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-  GD_LINK: https://drive.google.com/uc?export=download&id=1WxCknAfmcooVhKi3YYerqdxOd5_lwpQA
+  GD_ID: 1WxCknAfmcooVhKi3YYerqdxOd5_lwpQA
 
 jobs:
   build:
@@ -44,7 +44,7 @@ jobs:
         run: pip3 install gdown
 
       - name: Download vcpkg-export-7z
-        run: gdown ${{env.GD_LINK}}
+        run: gdown ${{env.GD_ID}}
 
       # - name: Install 7z
       #   run: brew install p7zip
