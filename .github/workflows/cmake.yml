@@ -28,15 +28,27 @@ jobs:
       - name: Download vcpkg-export-7z
         run: gdown ${{env.GD_ID}}
 
+      - uses: actions/cache/save@v3
+        id: cache
+        with:
+          path: ${{github.workspace}}/vcpkg-export.7z
+          key: ${{ runner.os }}-${{ hashFiles('vcpkg-export.7z') }}
+
+      - uses: actions/cache/restore@v3
+        id: restore-cache
+        with:
+          path: ${{github.workspace}}/vcpkg-export.7z
+          key: ${{ runner.os }}-${{ hashFiles('vcpkg-export.7z') }}
+
       - name: Extract vcpkg-export.7z
         run: 7z x vcpkg-export.7z -o${{github.workspace}}
 
       - run: pwd
-      - run: ls 
+      - run: ls
       - run: cd ${{github.workspace}}
       - run: pwd
       - run: ls
-      - run: cd ${{github.workspace}}/vcpkg-export 
+      - run: cd ${{github.workspace}}/vcpkg-export
       - run: ls
       - run: cd ..
 
