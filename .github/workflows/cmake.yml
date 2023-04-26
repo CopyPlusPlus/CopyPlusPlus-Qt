@@ -4,7 +4,21 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
-  
+    inputs:
+      logLevel:
+        description: "Log level"
+        required: true
+        default: "warning"
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      environment:
+        description: "Environment to run tests against"
+        type: environment
+        required: true
+
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
@@ -42,8 +56,8 @@ jobs:
       - name: Clone my vcpkg-export repo
         run: git clone https://github.com/CopyPlusPlus/qt-vcpkg-zip.git
 
-      - name: Install 7z
-        run: brew install p7zip
+      # - name: Install 7z
+      #   run: brew install p7zip
 
       - name: Extract vcpkg-export.7z
         run: 7z x qt-vcpkg-zip/vcpkg-export.7z -o${{github.workspace}}
