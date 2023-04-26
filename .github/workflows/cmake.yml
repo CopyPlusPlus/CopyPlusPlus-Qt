@@ -23,29 +23,31 @@ jobs:
         with:
           submodules: true
 
-      - name: Cache vcpkg-export.7z
-        id: Cache-VCPKG
-        uses: actions/cache@v3
+      - name: Restore cached vcpkg-export.7z
+        id: cache-restore
+        uses: actions/cache/restore@v3
         with:
           path: vcpkg-export.7z
           key: vcpkg-export.7z
 
       - name: Download google drive file
-        if: steps.Cache-VCPKG.outputs.cache-hit != 'true'
+        if: steps.cache-restore.outputs.cache-hit != 'true'
         run: |
           echo "Install gdown"
           pip3 install gdown
           echo "Download vcpkg-export.7z"
           gdown ${{env.GDRIVE_FILE_ID}}
 
+      - name: Save vcpkg-export.7z to cache
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        id: cache-save
+        uses: actions/cache/save@v3
+        with:
+          path: vcpkg-export.7z
+          key: vcpkg-export.7z
+
       - name: Extract vcpkg-export.7z
         run: 7z x vcpkg-export.7z -o${{github.workspace}}
-
-      - name: Show vcpkg-export folder
-        run: |
-          cd ${{github.workspace}}/vcpkg-export
-          ls
-          cd ..
 
       - name: Configure CMake
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DVCPKG_MANIFEST_MODE=OFF -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg-export/scripts/buildsystems/vcpkg.cmake
@@ -63,11 +65,11 @@ jobs:
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: CopyPlusPlus-QtWidget.app
+          name: CopyPlusPlus
           path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app
 
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3
         with:
           # Artifact name
-          name: CopyPlusPlus-QtWidget.app
+          name: CopyPlusPlus
