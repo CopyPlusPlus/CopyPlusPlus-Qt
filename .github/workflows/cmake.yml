@@ -22,23 +22,20 @@ jobs:
         with:
           submodules: true
 
-      - name: Install gdown
-        run: pip3 install gdown
-
-      - name: Download vcpkg-export-7z
-        run: gdown ${{env.GD_ID}}
-
-      - uses: actions/cache/save@v3
-        id: cache
+      - name: Cache vcpkg-export.7z
+        id: Cache-VCPKG
+        uses: actions/cache@v3
         with:
-          path: ${{github.workspace}}/vcpkg-export.7z
-          key: ${{ runner.os }}-${{ hashFiles('vcpkg-export.7z') }}
-
-      - uses: actions/cache/restore@v3
-        id: restore-cache
-        with:
-          path: ${{github.workspace}}/vcpkg-export.7z
-          key: ${{ runner.os }}-${{ hashFiles('vcpkg-export.7z') }}
+          path: vcpkg-export.7z
+          key: vcpkg-export.7z
+      
+      - name: Download google drive file
+        if: steps.Cache-VCPKG.outputs.cache-hit != 'true'
+        run: |
+          echo "Install gdown"
+          pip3 install gdown
+          echo "Download vcpkg-export.7z"
+          gdown ${{env.GD_ID}}
 
       - name: Extract vcpkg-export.7z
         run: 7z x vcpkg-export.7z -o${{github.workspace}}
