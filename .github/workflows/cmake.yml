@@ -8,7 +8,8 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-  GD_ID: 1WxCknAfmcooVhKi3YYerqdxOd5_lwpQA
+  # Google drive file id
+  GDRIVE_FILE_ID: 1WxCknAfmcooVhKi3YYerqdxOd5_lwpQA
 
 jobs:
   build:
@@ -28,26 +29,23 @@ jobs:
         with:
           path: vcpkg-export.7z
           key: vcpkg-export.7z
-      
+
       - name: Download google drive file
         if: steps.Cache-VCPKG.outputs.cache-hit != 'true'
         run: |
           echo "Install gdown"
           pip3 install gdown
           echo "Download vcpkg-export.7z"
-          gdown ${{env.GD_ID}}
+          gdown ${{env.GDRIVE_FILE_ID}}
 
       - name: Extract vcpkg-export.7z
         run: 7z x vcpkg-export.7z -o${{github.workspace}}
 
-      - run: pwd
-      - run: ls
-      - run: cd ${{github.workspace}}
-      - run: pwd
-      - run: ls
-      - run: cd ${{github.workspace}}/vcpkg-export
-      - run: ls
-      - run: cd ..
+      - name: Show vcpkg-export folder
+        run: |
+          cd ${{github.workspace}}/vcpkg-export
+          ls
+          cd ..
 
       - name: Configure CMake
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DVCPKG_MANIFEST_MODE=OFF -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg-export/scripts/buildsystems/vcpkg.cmake
