@@ -54,11 +54,14 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       # run: ctest -C ${{env.BUILD_TYPE}}
 
+      - name: Mac deploy
+        run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app -dmg
+
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus
-          path: ${{github.workspace}}/build/
+          path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.dmg
 
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3
