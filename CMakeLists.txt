@@ -4,9 +4,11 @@ cmake_minimum_required(VERSION 3.5)
 # CACHE STRING "Vcpkg toolchain file")
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version")
-message(STATUS "CMAKE_OSX_DEPLOYMENT_TARGET: ${CMAKE_OSX_DEPLOYMENT_TARGET}")
 
 project(CopyPlusPlus-QtWidget VERSION 0.1 LANGUAGES CXX)
+
+message(STATUS "CMAKE_OSX_DEPLOYMENT_TARGET: ${CMAKE_OSX_DEPLOYMENT_TARGET}")
+message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -15,8 +17,12 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+message(STATUS "Before find QT_DIR: ${QT_DIR}")
+
 find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+
+message(STATUS "After find QT_DIR: ${QT_DIR}")
 
 set(TS_FILES translations/CopyPlusPlus-QtWidget_en_US.ts)
 
@@ -77,15 +83,15 @@ else()
         )
     endif()
 
-    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR}/translations ${TS_FILES})
 endif()
 
+# Add and link QHotkey
 add_subdirectory("3rdparty/QHotkey")
-
 target_link_libraries(CopyPlusPlus-QtWidget PRIVATE Qt${QT_VERSION_MAJOR}::Widgets QHotkey::QHotkey)
 
+# Include directories
 set(MY_DIRECTORY "src" "src/components" "src/ui" "src/utils")
-
 target_include_directories(CopyPlusPlus-QtWidget PUBLIC ${MY_DIRECTORY})
 
 set_target_properties(CopyPlusPlus-QtWidget PROPERTIES

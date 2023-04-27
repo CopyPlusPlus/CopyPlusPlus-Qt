@@ -30,18 +30,9 @@ jobs:
           dir: '${{ github.workspace }}/'
           cache: 'true'
           cache-key-prefix: 'install-qt-action'
-      
-      - name: Log environment variables
-        run: |
-          echo "PATH: $PATH"
-          echo "Qt_DIR: $Qt_DIR"
-          echo "Qt5_DIR: $Qt5_DIR"
-          echo "Qt5Core_DIR: $Qt5Core_DIR"
-          echo $PATH
-          echo $CMAKE_PREFIX_PATH
 
       - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=$Qt5_DIR/lib/cmake
 
       - name: Build
         # Build your program with the given configuration
@@ -53,11 +44,14 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       # run: ctest -C ${{env.BUILD_TYPE}}
 
+      - name: Mac deploy
+        run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app -dmg
+
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus
-          path: ${{github.workspace}}/build/
+          path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.dmg
 
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3
