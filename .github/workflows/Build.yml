@@ -45,7 +45,7 @@ jobs:
       # run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Mac deploy
-        run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus.app -dmg
+        run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app -dmg
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
