@@ -1,5 +1,5 @@
 {
-  "cmake.configureSettings": {
-    "CMAKE_TOOLCHAIN_FILE": "./3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
-  }
+  // "cmake.configureSettings": {
+  //   "CMAKE_TOOLCHAIN_FILE": "./3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
+  // }
 }
