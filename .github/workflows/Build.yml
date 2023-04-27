@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus
-          path: ${{github.workspace}}/build/
+          path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.dmg
 
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3
