@@ -21,10 +21,24 @@ jobs:
         with:
           submodules: true
 
-      - name: Install qt
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          host: 'mac'
+          target: 'desktop'
+          arch: 'clang_64'
+          dir: '${{ github.workspace }}/'
+          cache: 'true'
+          cache-key-prefix: 'install-qt-action'
+      
+      - name: Log environment variables
         run: |
-          brew install qt
-          brew link --force qt
+          echo "PATH: $PATH"
+          echo "Qt_DIR: $Qt_DIR"
+          echo "Qt5_DIR: $Qt5_DIR"
+          echo "Qt5Core_DIR: $Qt5Core_DIR"
+          echo $PATH
+          echo $CMAKE_PREFIX_PATH
 
       - name: Configure CMake
         run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
