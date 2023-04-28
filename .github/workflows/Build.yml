@@ -21,18 +21,26 @@ jobs:
         with:
           submodules: true
 
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v3
-        with:
-          host: 'mac'
-          target: 'desktop'
-          arch: 'clang_64'
-          dir: '${{ github.workspace }}/'
-          cache: 'true'
-          cache-key-prefix: 'install-qt-action'
+      # - name: Install Qt
+      #   uses: jurplel/install-qt-action@v3
+      #   with:
+      #     host: 'mac'
+      #     target: 'desktop'
+      #     arch: 'clang_64'
+      #     dir: '${{ github.workspace }}/'
+      #     cache: 'true'
+      #     cache-key-prefix: 'install-qt-action'
+
+      # - name: Configure CMake
+      # run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Install Qt5
+        run: |
+          brew install qt@5
+          brew link qt@5
 
       - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=$Qt5_DIR/lib/cmake
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
       - name: Build
         # Build your program with the given configuration
@@ -45,7 +53,17 @@ jobs:
       # run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Mac deploy
-        run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app -dmg
+        run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app
+
+      - name: Create DMG
+        shell: bash
+        run: |
+          pwd
+          cd ${{github.workspace}}/build
+          echo "Installing create-dmg"
+          npm install --global create-dmg
+          echo "Creating DMG"
+          create-dmg CopyPlusPlus-QtWidget.app
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
