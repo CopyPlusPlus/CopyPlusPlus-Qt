@@ -80,7 +80,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus
-          path: ${{github.workspace}}/build/CopyPlusPlus.dmg
+          path: ${{github.workspace}}/build/CopyPlusPlus*.dmg
 
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3
