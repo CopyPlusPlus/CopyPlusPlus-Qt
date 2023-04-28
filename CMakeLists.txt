@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.5)
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version")
 
-project(CopyPlusPlus VERSION 0.1 LANGUAGES CXX)
+project(CopyPlusPlus VERSION 0.1.0 LANGUAGES CXX)
 
 message(STATUS "CMAKE_OSX_DEPLOYMENT_TARGET: ${CMAKE_OSX_DEPLOYMENT_TARGET}")
 message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
@@ -95,7 +95,7 @@ set(MY_DIRECTORY "src" "src/components" "src/ui" "src/utils")
 target_include_directories(CopyPlusPlus PUBLIC ${MY_DIRECTORY})
 
 set_target_properties(CopyPlusPlus PROPERTIES
-    MACOSX_BUNDLE_NAME "CopyPlusPlus"
+    MACOSX_BUNDLE_BUNDLE_NAME CopyPlusPlus
     MACOSX_BUNDLE_GUI_IDENTIFIER wykj.CopyPlusPlus
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
