@@ -34,13 +34,20 @@ jobs:
       # - name: Configure CMake
       # run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
+      - name: Cache brew Qt5
+        uses: actions/cache@v3
+        with:
+          path: /usr/local/Cellar/qt@5
+          key: qt5
+
       - name: Install Qt5
         run: |
           brew install qt@5
-          brew link qt@5
+          export PATH="/usr/local/opt/qt@5/bin:$PATH"
 
       - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        # Already append Qt bin path to PATH, so no need to add -DCMAKE_PREFIX_PATH
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
 
       - name: Build
         # Build your program with the given configuration
