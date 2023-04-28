@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "josetr.cmake-language-support-vscode",
+        "ms-vscode.cmake-tools",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "ms-vscode.cpptools",
+        "jeff-hykin.better-cpp-syntax",
+        "aaron-bond.better-comments",
+        "eamodio.gitlens"
+    ]
+}
