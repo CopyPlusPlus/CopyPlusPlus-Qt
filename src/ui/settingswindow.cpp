@@ -41,7 +41,7 @@ void SettingsWindow::changeEvent(QEvent *event)
         // 感觉没啥用
         ui->retranslateUi(this);
 
-        // 更新文本，用于翻译
+        // 更新文本, 用于翻译
         updateText();
     }
 

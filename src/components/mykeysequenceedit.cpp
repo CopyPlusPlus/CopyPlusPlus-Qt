@@ -15,7 +15,7 @@ MyKeySequenceEdit::MyKeySequenceEdit(QWidget *parent) : QKeySequenceEdit(parent)
     lineEdit->setAlignment(Qt::AlignHCenter);          // 居中
     lineEdit->setContextMenuPolicy(Qt::NoContextMenu); // 禁用右键菜单
 
-    // setKeySequence 时会 resetState，从而 reset PlaceholderText
+    // setKeySequence 时会 resetState, 从而 reset PlaceholderText
     // 需要重新 setPlaceholderText 避免出现默认的"Press shortcut"
     lineEdit->setPlaceholderText(QKeySequenceEdit::tr("快捷键"));
 

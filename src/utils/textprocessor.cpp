@@ -79,8 +79,8 @@ void TextProcessor::pressCtrlC()
 
     const int n = hotKeys.size();
 
-    // 需要模拟的按键事件数组，共需要模拟：快捷键释放:n个；Ctrl+C按下、释放:4个
-    // 恢复时只需要按下Modifier，所以总个数为 2*n+4-1
+    // 需要模拟的按键事件数组, 共需要模拟：快捷键释放:n个；Ctrl+C按下、释放:4个
+    // 恢复时只需要按下Modifier, 所以总个数为 2*n+4-1
     INPUT inputs[2 * n + 3];
     ZeroMemory(inputs, sizeof(inputs));
 

@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     font.setStyleHint(QFont::SansSerif);
     QApplication::setFont(font);
 
-    // 设置应用标志信息，用于保存设置 QSettings
+    // 设置应用标志信息, 用于保存设置 QSettings
     QCoreApplication::setOrganizationName("WY");
     QCoreApplication::setApplicationName("CopyPlusPlus");
 
