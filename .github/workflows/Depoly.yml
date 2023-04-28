@@ -66,6 +66,7 @@ jobs:
         run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus.app
 
       - name: Create DMG
+        continue-on-error: true
         shell: bash
         run: |
           pwd
@@ -76,14 +77,12 @@ jobs:
           create-dmg CopyPlusPlus.app
 
       - name: Upload a Build Artifact
-        if: success() || failure()
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus
           path: ${{github.workspace}}/build/CopyPlusPlus.dmg
 
       - name: Download a Build Artifact
-        if: success() || failure()
         uses: actions/download-artifact@v3
         with:
           # Artifact name
