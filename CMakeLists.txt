@@ -95,7 +95,8 @@ set(MY_DIRECTORY "src" "src/components" "src/ui" "src/utils")
 target_include_directories(CopyPlusPlus-QtWidget PUBLIC ${MY_DIRECTORY})
 
 set_target_properties(CopyPlusPlus-QtWidget PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+    MACOSX_BUNDLE_NAME "CopyPlusPlus-QtWidget"
+    MACOSX_BUNDLE_GUI_IDENTIFIER wykj.CopyPlusPlus-QtWidget
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
