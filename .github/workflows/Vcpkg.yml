@@ -55,13 +55,13 @@ jobs:
       # run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Mac deploy
-        run: ${{github.workspace}}/vcpkg-export/installed/x64-osx/tools/qt5-tools/bin/macdeployqt ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app -dmg
+        run: ${{github.workspace}}/vcpkg-export/installed/x64-osx/tools/qt5-tools/bin/macdeployqt ${{github.workspace}}/build/CopyPlusPlus.app -dmg
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus
-          path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.dmg
+          path: ${{github.workspace}}/build/CopyPlusPlus.dmg
 
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3
