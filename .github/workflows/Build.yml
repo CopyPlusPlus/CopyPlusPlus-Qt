@@ -43,7 +43,7 @@ jobs:
       - name: Install Qt5
         run: |
           brew install qt@5
-          export PATH="/usr/local/opt/qt@5/bin:$PATH"
+          echo "/usr/local/opt/qt@5/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
         # Already append Qt bin path to PATH, so no need to add -DCMAKE_PREFIX_PATH
