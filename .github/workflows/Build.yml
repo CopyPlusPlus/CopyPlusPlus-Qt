@@ -60,7 +60,7 @@ jobs:
       # run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Mac deploy
-        run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app
+        run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus.app
 
       - name: Create DMG
         shell: bash
@@ -70,13 +70,13 @@ jobs:
           echo "Installing create-dmg"
           npm install --global create-dmg
           echo "Creating DMG"
-          create-dmg CopyPlusPlus-QtWidget.app
+          create-dmg CopyPlusPlus.app
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus
-          path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.dmg
+          path: ${{github.workspace}}/build/CopyPlusPlus.dmg
 
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3
