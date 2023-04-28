@@ -1,4 +1,4 @@
-name: CMake
+name: Build Qt application
 
 on:
   workflow_dispatch:
@@ -8,11 +8,9 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-  # Google drive file id
-  GDRIVE_FILE_ID: 1WxCknAfmcooVhKi3YYerqdxOd5_lwpQA
 
 jobs:
-  build:
+  deploy:
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
@@ -23,26 +21,36 @@ jobs:
         with:
           submodules: true
 
-      - name: Cache vcpkg-export.7z
-        id: cache-vcpkg-export
+      # - name: Install Qt
+      #   uses: jurplel/install-qt-action@v3
+      #   with:
+      #     host: 'mac'
+      #     target: 'desktop'
+      #     arch: 'clang_64'
+      #     dir: '${{ github.workspace }}/'
+      #     cache: 'true'
+      #     cache-key-prefix: 'install-qt-action'
+
+      # - name: Configure CMake
+      # run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+      - name: Cache Qt5
+        id: cache-qt5-brew
         uses: actions/cache@v3
         with:
-          path: vcpkg-export.7z
-          key: vcpkg-export.7z
+          path: /usr/local/Cellar/qt@5/
+          key: qt5-brew
 
-      - name: Download google drive file
-        if: steps.cache-vcpkg-export.outputs.cache-hit != 'true'
-        run: |
-          echo "Install gdown"
-          pip3 install gdown
-          echo "Download vcpkg-export.7z"
-          gdown ${{env.GDRIVE_FILE_ID}}
+      - name: Install Qt5
+        if: steps.cache-qt5-brew.outputs.cache-hit != 'true'
+        run: brew install qt@5
 
-      - name: Extract vcpkg-export.7z
-        run: 7z x vcpkg-export.7z -o${{github.workspace}}
+      - name: Add Qt5 to GITHUB_PATH
+        run: echo "/usr/local/opt/qt@5/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DVCPKG_MANIFEST_MODE=OFF -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/vcpkg-export/scripts/buildsystems/vcpkg.cmake
+        # Already append Qt bin path to PATH, so no need to add -DCMAKE_PREFIX_PATH
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
 
       - name: Build
         # Build your program with the given configuration
@@ -55,13 +63,24 @@ jobs:
       # run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: Mac deploy
-        run: ${{github.workspace}}/vcpkg-export/installed/x64-osx/tools/qt5-tools/bin/macdeployqt ${{github.workspace}}/build/CopyPlusPlus-QtWidget.app -dmg
+        run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus.app
+
+      - name: Create DMG
+        continue-on-error: true
+        shell: bash
+        run: |
+          pwd
+          cd ${{github.workspace}}/build
+          echo "Installing create-dmg"
+          npm install --global create-dmg
+          echo "Creating DMG"
+          create-dmg CopyPlusPlus.app
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus
-          path: ${{github.workspace}}/build/CopyPlusPlus-QtWidget.dmg
+          path: ${{github.workspace}}/build/CopyPlusPlus.dmg
 
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3

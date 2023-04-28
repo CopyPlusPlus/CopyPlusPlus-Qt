@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.5)
 
 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version")
 
-project(CopyPlusPlus-QtWidget VERSION 0.1 LANGUAGES CXX)
+project(CopyPlusPlus VERSION 0.1.0 LANGUAGES CXX)
 
 message(STATUS "CMAKE_OSX_DEPLOYMENT_TARGET: ${CMAKE_OSX_DEPLOYMENT_TARGET}")
 message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
@@ -24,7 +24,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
 message(STATUS "After find QT_DIR: ${QT_DIR}")
 
-set(TS_FILES translations/CopyPlusPlus-QtWidget_en_US.ts)
+set(TS_FILES translations/CopyPlusPlus_en_US.ts)
 
 set(COMPONENT_SOURCES
     src/components/mykeysequenceedit.cpp
@@ -59,26 +59,26 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(CopyPlusPlus-QtWidget
+    qt_add_executable(CopyPlusPlus
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
 
     # Define target properties for Android with Qt 6 as:
-    # set_property(TARGET CopyPlusPlus-QtWidget APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+    # set_property(TARGET CopyPlusPlus APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
     # ${CMAKE_CURRENT_SOURCE_DIR}/android)
     # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
     if(ANDROID)
-        add_library(CopyPlusPlus-QtWidget SHARED
+        add_library(CopyPlusPlus SHARED
             ${PROJECT_SOURCES}
         )
 
     # Define properties for Android with Qt 5 after find_package() calls as:
     # set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
-        add_executable(CopyPlusPlus-QtWidget
+        add_executable(CopyPlusPlus
             ${PROJECT_SOURCES}
         )
     endif()
@@ -88,24 +88,25 @@ endif()
 
 # Add and link QHotkey
 add_subdirectory("3rdparty/QHotkey")
-target_link_libraries(CopyPlusPlus-QtWidget PRIVATE Qt${QT_VERSION_MAJOR}::Widgets QHotkey::QHotkey)
+target_link_libraries(CopyPlusPlus PRIVATE Qt${QT_VERSION_MAJOR}::Widgets QHotkey::QHotkey)
 
 # Include directories
 set(MY_DIRECTORY "src" "src/components" "src/ui" "src/utils")
-target_include_directories(CopyPlusPlus-QtWidget PUBLIC ${MY_DIRECTORY})
+target_include_directories(CopyPlusPlus PUBLIC ${MY_DIRECTORY})
 
-set_target_properties(CopyPlusPlus-QtWidget PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+set_target_properties(CopyPlusPlus PROPERTIES
+    MACOSX_BUNDLE_BUNDLE_NAME CopyPlusPlus
+    MACOSX_BUNDLE_GUI_IDENTIFIER wykj.CopyPlusPlus
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
-install(TARGETS CopyPlusPlus-QtWidget
+install(TARGETS CopyPlusPlus
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(CopyPlusPlus-QtWidget)
+    qt_finalize_executable(CopyPlusPlus)
 endif()
