@@ -19,7 +19,7 @@ MainWindow *MainWindow::instance = nullptr;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     if (instance != nullptr) {
-        qCritical() << "创建多个MainWindow instance，这里应该是个Bug";
+        qCritical() << "创建多个MainWindow instance, 这里应该是个Bug";
     }
     instance = this;
 
@@ -48,7 +48,7 @@ MainWindow::~MainWindow()
 MainWindow *MainWindow::getInstance()
 {
     if (instance == nullptr) {
-        qDebug() << "MainWindow instance为空，这里应该是个Bug";
+        qDebug() << "MainWindow instance为空, 这里应该是个Bug";
     }
 
     return instance;
@@ -60,7 +60,7 @@ void MainWindow::changeEvent(QEvent *event)
         // 感觉没啥用
         ui->retranslateUi(this);
 
-        // 更新文本，用于翻译
+        // 更新文本, 用于翻译
         updateText();
     }
 
@@ -96,7 +96,7 @@ void MainWindow::initUI()
 #endif
 }
 
-// 更新文本，用于翻译
+// 更新文本, 用于翻译
 void MainWindow::updateText()
 {
     setWindowTitle(tr("CopyPlusPlus"));
@@ -168,7 +168,7 @@ void MainWindow::autoToggleChecked(bool status)
 
 // void MainWindow::toggleShortcutChecked(bool status)
 //{
-//     // TODO:快捷键为空、冲突时，应该有提醒
+//     // TODO:快捷键为空、冲突时, 应该有提醒
 //     QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
 //     if (status) {
 //         qDebug() << "Shortcut enabled";
@@ -195,7 +195,7 @@ void MainWindow::errorInput()
     hotkey->resetShortcut();
 
     QMessageBox msgBox;
-    msgBox.setText(tr("快捷键占用，请更换快捷键。"));
+    msgBox.setText(tr("快捷键占用, 请更换快捷键。"));
     msgBox.exec();
 }
 
