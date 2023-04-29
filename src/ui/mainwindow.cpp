@@ -2,7 +2,6 @@
 #include "qhotkey.h"
 // #include "qtmaterialtoggle.h"
 #include "settingswindow.h"
-#include "ui_mainwindow.h"
 #include "utils/language.h"
 #include "utils/textprocessor.h"
 
@@ -16,7 +15,7 @@
 
 MainWindow *MainWindow::instance = nullptr;
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     if (instance != nullptr) {
         qCritical() << "创建多个MainWindow instance, 这里应该是个Bug";
@@ -41,8 +40,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     instance = nullptr;
-
-    delete ui;
 }
 
 MainWindow *MainWindow::getInstance()
@@ -57,9 +54,6 @@ MainWindow *MainWindow::getInstance()
 void MainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
-        // 感觉没啥用
-        ui->retranslateUi(this);
-
         // 更新文本, 用于翻译
         updateText();
     }
@@ -69,7 +63,7 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::initUI()
 {
-    ui->setupUi(this);
+    //ui->setupUi(this);
 
     setWindowIcon(QIcon(":/icons/images/copy.png"));
 
@@ -101,18 +95,18 @@ void MainWindow::updateText()
 {
     setWindowTitle(tr("CopyPlusPlus"));
 
-    ui->autoLable->setText(tr("自动触发"));
-    ui->hotkeyLable->setText(tr("快捷键"));
-    ui->keySequenceEdit->lineEdit->setPlaceholderText(tr("快捷键"));
+    // ui->autoLable->setText(tr("自动触发"));
+    // ui->hotkeyLable->setText(tr("快捷键"));
+    // ui->keySequenceEdit->lineEdit->setPlaceholderText(tr("快捷键"));
 }
 
 void MainWindow::initConnections()
 {
     // connect(autoToggle, &QtMaterialToggle::toggled, this, &MainWindow::autoToggleChecked);
 
-    connect(ui->keySequenceEdit, &MyKeySequenceEdit::myEditFinished, this, &MainWindow::registerShortcut);
-    connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusIn, this, [&]() { hotkey->setRegistered(false); });
-    connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusOut, this, [&]() { hotkey->setRegistered(true); });
+    // connect(ui->keySequenceEdit, &MyKeySequenceEdit::myEditFinished, this, &MainWindow::registerShortcut);
+    // connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusIn, this, [&]() { hotkey->setRegistered(false); });
+    // connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusOut, this, [&]() { hotkey->setRegistered(true); });
 
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
@@ -159,10 +153,10 @@ void MainWindow::autoToggleChecked(bool status)
 {
     if (status) {
         qDebug() << "Auto enabled";
-        connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
+        //connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     } else {
         qDebug() << "Auto disabled";
-        disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
+        //disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
 }
 
