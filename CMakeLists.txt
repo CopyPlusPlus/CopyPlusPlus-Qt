@@ -20,8 +20,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 message(STATUS "Before find: QT_DIR: ${QT_DIR}")
 
-find_package(QT NAMES Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 
 message(STATUS "After find: QT_DIR: ${QT_DIR}")
 
@@ -69,7 +68,7 @@ target_include_directories(CopyPlusPlus PUBLIC ${MY_DIRECTORY})
 
 # Add and link QHotkey
 add_subdirectory("3rdparty/QHotkey")
-target_link_libraries(CopyPlusPlus PRIVATE Qt${QT_VERSION_MAJOR}::Widgets QHotkey::QHotkey)
+target_link_libraries(CopyPlusPlus PRIVATE Qt5::Widgets QHotkey::QHotkey)
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR}/translations ${TS_FILES})
 
