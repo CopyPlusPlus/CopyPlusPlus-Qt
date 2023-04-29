@@ -58,9 +58,9 @@ set(PROJECT_SOURCES
     ${TS_FILES}
 )
 
-add_executable(CopyPlusPlus
-    ${PROJECT_SOURCES}
-)
+# Add executable and link Qt5 libraries
+add_executable(CopyPlusPlus ${PROJECT_SOURCES})
+target_link_libraries(CopyPlusPlus PRIVATE Qt5::Widgets)
 
 # Include directories
 set(MY_DIRECTORY "src" "src/components" "src/ui" "src/utils")
@@ -68,7 +68,11 @@ target_include_directories(CopyPlusPlus PUBLIC ${MY_DIRECTORY})
 
 # Add and link QHotkey
 add_subdirectory("3rdparty/QHotkey")
-target_link_libraries(CopyPlusPlus PRIVATE Qt5::Widgets QHotkey::QHotkey)
+target_link_libraries(CopyPlusPlus PRIVATE QHotkey::QHotkey)
+
+# Add and link Material Widgets
+add_subdirectory("3rdparty/qt-material-widgets/components")
+target_link_libraries(CopyPlusPlus PRIVATE components)
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR}/translations ${TS_FILES})
 
