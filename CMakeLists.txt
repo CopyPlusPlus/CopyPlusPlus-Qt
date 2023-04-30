@@ -27,6 +27,8 @@ message(STATUS "After find: QT_DIR: ${QT_DIR}")
 set(COMPONENT_SOURCES
     src/components/mykeysequenceedit.cpp
     src/components/mykeysequenceedit.h
+    src/components/mytoggle.cpp
+    src/components/mytoggle.h
 )
 
 set(UI_SOURCES

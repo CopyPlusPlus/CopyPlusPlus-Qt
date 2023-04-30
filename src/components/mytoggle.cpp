@@ -1,57 +1,46 @@
-#include "toggle.h"
-#include "ui_toggle.h"
+#include "mytoggle.h"
+#include "qtmaterialtoggle.h"
+
 #include <QHBoxLayout>
-#include <qtmaterialtoggle.h>
+#include <QtWidgets>
 
-Toggle::Toggle(QWidget *parent) : QWidget(parent), ui(new Ui::Toggle)
+MyToggle::MyToggle(QString name, QWidget *parent) : QWidget(parent)
 {
-    ui->setupUi(this);
-    initToggle();
+    setFixedHeight(48);
+
+    label = new QLabel(name);
+    toggle = new QtMaterialToggle;
+
+    auto layout = new QHBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    layout->addWidget(label, 0, Qt::AlignLeft);
+    layout->addWidget(toggle, 0, Qt::AlignRight);
+
+    setFixedSize(layout->sizeHint());
+    setMinimumSize(layout->sizeHint());
 }
 
-Toggle::Toggle(QString name, QWidget *parent) : QWidget(parent), ui(new Ui::Toggle)
+MyToggle::~MyToggle()
 {
-    ui->setupUi(this);
-    ui->label->setText(name);
-    initToggle();
 }
 
-Toggle::~Toggle()
+bool MyToggle::isChecked()
 {
-    delete ui;
+    return toggle->isChecked();
 }
 
-void Toggle::initToggle()
+void MyToggle::setChecked(bool status)
 {
-    m_toggle = new QtMaterialToggle;
-
-    auto h = new QHBoxLayout();
-    ui->widget->setLayout(h);
-    h->setContentsMargins(0, 0, 0, 0);
-    h->addWidget(m_toggle, Qt::AlignRight);
+    toggle->setChecked(status);
 }
 
-bool Toggle::isChecked()
+void MyToggle::setName(QString name)
 {
-    return m_toggle->isChecked();
+    label->setText(name);
 }
 
-void Toggle::toggle()
+QString MyToggle::getName()
 {
-    m_toggle->setChecked(!m_toggle->isChecked());
-}
-
-void Toggle::setChecked(bool status)
-{
-    m_toggle->setChecked(status);
-}
-
-QString Toggle::getName()
-{
-    return ui->label->text();
-}
-
-void Toggle::setName(QString name)
-{
-    ui->label->setText(name);
+    return label->text();
 }
