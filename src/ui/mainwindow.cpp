@@ -1,6 +1,6 @@
 #include "mainwindow.h"
+#include "mytoggle.h"
 #include "qhotkey.h"
-// #include "qtmaterialtoggle.h"
 #include "settingswindow.h"
 #include "utils/language.h"
 #include "utils/textprocessor.h"
@@ -9,14 +9,18 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QLabel>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSettings>
+#include <QVBoxLayout>
+#include <QtWidgets/qwidget.h>
 
 MainWindow *MainWindow::instance = nullptr;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
+    // Singleton pattern
     if (instance != nullptr) {
         qCritical() << "创建多个MainWindow instance, 这里应该是个Bug";
     }
@@ -63,7 +67,7 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::initUI()
 {
-    //ui->setupUi(this);
+    // ui->setupUi(this);
 
     setWindowIcon(QIcon(":/icons/images/copy.png"));
 
@@ -72,12 +76,11 @@ void MainWindow::initUI()
 
     settingsWindow = nullptr;
 
-    // 初始化 toggle
-    // autoToggle = new QtMaterialToggle;
-    // auto h = new QHBoxLayout();
-    // ui->toggleWidget->setLayout(h);
-    // h->setContentsMargins(0, 0, 0, 0);
-    // h->addWidget(autoToggle, Qt::AlignRight);
+    QWidget *toggleWidget = new QWidget(this);
+    
+
+    MyToggle *autoToggle = new MyToggle(tr("自动触发"), this);
+    MyToggle *aaa = new MyToggle(tr("自动"), this);
 
     // 设置按钮
     // floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
@@ -153,10 +156,10 @@ void MainWindow::autoToggleChecked(bool status)
 {
     if (status) {
         qDebug() << "Auto enabled";
-        //connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
+        // connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     } else {
         qDebug() << "Auto disabled";
-        //disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
+        // disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
 }
 
