@@ -4,7 +4,7 @@
 #include "qhotkey.h"
 #include "qsettings.h"
 //#include "qtmaterialfab.h"
-//#include "qtmaterialtoggle.h"
+#include "qtmaterialtoggle.h"
 #include "qtranslator.h"
 #include "settingswindow.h"
 #include <QMainWindow>
@@ -52,7 +52,7 @@ public:
 private:
     static MainWindow *instance;
 
-    //QtMaterialToggle *autoToggle;
+    QtMaterialToggle *autoToggle;
     //QtMaterialFloatingActionButton *floatBtn;
 
     SettingsWindow *settingsWindow;
