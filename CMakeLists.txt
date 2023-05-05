@@ -9,7 +9,8 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment ve
 project(CopyPlusPlus VERSION 0.1.0 LANGUAGES CXX)
 
 message(STATUS "CMAKE_OSX_DEPLOYMENT_TARGET: ${CMAKE_OSX_DEPLOYMENT_TARGET}")
-message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -18,11 +19,13 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-message(STATUS "Before find: QT_DIR: ${QT_DIR}")
+message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+message(STATUS "Before find: Qt5_DIR: ${Qt5_DIR}")
 
+# Set CMAKE_PREFIX_PATH at VSCode settings.json
 find_package(Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 
-message(STATUS "After find: QT_DIR: ${QT_DIR}")
+message(STATUS "After find: Qt5_DIR: ${Qt5_DIR}")
 
 set(COMPONENT_SOURCES
     src/components/mykeysequenceedit.cpp

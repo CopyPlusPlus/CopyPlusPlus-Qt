@@ -192,7 +192,7 @@ void MainWindow::errorInput()
     hotkey->resetShortcut();
 
     QMessageBox msgBox;
-    msgBox.setText(tr("快捷键占用, 请更换快捷键。"));
+    msgBox.setText(tr("Hotkey occupied, change it."));
     msgBox.exec();
 }
 
