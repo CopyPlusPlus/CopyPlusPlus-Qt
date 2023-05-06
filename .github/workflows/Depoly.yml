@@ -98,7 +98,7 @@ jobs:
         run: |
           pwd
           mkdir ${{github.workspace}}/build/CopyPlusPlus
-          mv ${{github.workspace}}/build/CopyPlusPlus.exe ${{github.workspace}}/build/CopyPlusPlus/CopyPlusPlus.exe
+          mv ${{github.workspace}}/build/Release/CopyPlusPlus.exe ${{github.workspace}}/build/CopyPlusPlus/CopyPlusPlus.exe
           cd ${{github.workspace}}/build/CopyPlusPlus/
           windeployqt CopyPlusPlus.exe
 
