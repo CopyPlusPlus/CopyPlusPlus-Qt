@@ -10,47 +10,44 @@ env:
   BUILD_TYPE: Release
 
 jobs:
-  deploy:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: macos-latest
+  Build:
+    strategy:
+      matrix:
+        config: [ {os: macos-latest, arch: clang}, {os: windows-latest, arch: win64_msvc2019_64} ]
 
+    runs-on: ${{ config.os }}
+    
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           submodules: true
 
-      # - name: Install Qt
-      #   uses: jurplel/install-qt-action@v3
-      #   with:
-      #     host: 'mac'
-      #     target: 'desktop'
-      #     arch: 'clang_64'
-      #     dir: '${{ github.workspace }}/'
-      #     cache: 'true'
-      #     cache-key-prefix: 'install-qt-action'
-
-      # - name: Configure CMake
-      # run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-
-      - name: Cache Qt5
-        id: cache-qt5-brew
-        uses: actions/cache@v3
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
         with:
-          path: /usr/local/Cellar/qt@5/
-          key: qt5-brew
+          arch: ${{ config.arch  }}
+          dir: '${{ github.workspace }}/'
+          cache: 'true'
+          cache-key-prefix: '${{ runner.os }}-Install-Qt-Action'
 
-      - name: Install Qt5
-        if: steps.cache-qt5-brew.outputs.cache-hit != 'true'
-        run: brew install qt@5
+      # - name: Cache Qt5
+      #   id: cache-qt5-brew
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: /usr/local/Cellar/qt@5/
+      #     key: qt5-brew
 
-      - name: Add Qt5 to GITHUB_PATH
-        run: echo "/usr/local/opt/qt@5/bin" >> $GITHUB_PATH
+      # - name: Install Qt5
+      #   if: steps.cache-qt5-brew.outputs.cache-hit != 'true'
+      #   run: brew install qt@5
+
+      # - name: Add Qt5 to GITHUB_PATH
+      #   run: echo "/usr/local/opt/qt@5/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
         # Already append Qt bin path to PATH, so no need to add -DCMAKE_PREFIX_PATH
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
       - name: Build
         # Build your program with the given configuration
@@ -62,10 +59,12 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       # run: ctest -C ${{env.BUILD_TYPE}}
 
-      - name: Mac deploy
+      - name: macOS deploy
+        if: ${{ runner.os == macOS}}
         run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus.app
-
+        
       - name: Create DMG
+        if: ${{ runner.os == macOS}}
         continue-on-error: true
         shell: bash
         run: |
@@ -76,14 +75,35 @@ jobs:
           echo "Creating DMG"
           create-dmg CopyPlusPlus.app
 
-      - name: Upload a Build Artifact
+      - name: Upload macOS Artifact
+        if: ${{ runner.os == macOS}}
         uses: actions/upload-artifact@v3
         with:
-          name: CopyPlusPlus
+          name: CopyPlusPlus-macOS
           path: ${{github.workspace}}/build/CopyPlusPlus*.dmg
 
-      - name: Download a Build Artifact
+      - name: Download macOS Artifact
+        if: ${{ runner.os == macOS}}
         uses: actions/download-artifact@v3
         with:
           # Artifact name
-          name: CopyPlusPlus
+          name: CopyPlusPlus-macOS
+        
+      - name: Windows deploy
+        if: ${{ runner.os == Windows}}
+        run: windeployqt ${{github.workspace}}/build/CopyPlusPlus.exe
+
+      - name: Upload Windows Artifact
+        if: ${{ runner.os == Windows}}
+        uses: actions/upload-artifact@v3
+        with:
+          name: CopyPlusPlus-win
+          path: ${{github.workspace}}/build/
+
+      - name: Download Windows Artifact
+        if: ${{ runner.os == Windows}}
+        uses: actions/download-artifact@v3
+        with:
+          # Artifact name
+          name: CopyPlusPlus-win
+
