@@ -1,7 +1,6 @@
 {
   "cmake.configureSettings": {
     "CMAKE_TOOLCHAIN_FILE": "./3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
-    //"CMAKE_PREFIX_PATH": "D:/DevSoftware/Qt/5.12.12/msvc2017/lib/cmake"
   }
   //"cmake.generator": "Ninja"
 }
