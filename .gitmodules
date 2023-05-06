@@ -9,4 +9,3 @@
 [submodule "3rdparty/vcpkg"]
 	path = 3rdparty/vcpkg
 	url = https://github.com/Microsoft/vcpkg.git
-	shallow = true
