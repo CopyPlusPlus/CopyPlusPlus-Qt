@@ -1,14 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 
-# set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
-# CACHE STRING "Vcpkg toolchain file")
+# Set this at VSCode settings.json, for the convenience of diabling it at Github Actions
+# set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 
 # This need to be set before project() call
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OS X deployment version")
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15" CACHE STRING "Minimum OSX deployment version")
 
 project(CopyPlusPlus VERSION 0.1.0 LANGUAGES CXX)
-
-message(STATUS "CMAKE_OSX_DEPLOYMENT_TARGET: ${CMAKE_OSX_DEPLOYMENT_TARGET}")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -19,13 +17,10 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
-message(STATUS "Before find: Qt5_DIR: ${Qt5_DIR}")
-
-# Set CMAKE_PREFIX_PATH at VSCode settings.json
 find_package(Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 
-message(STATUS "After find: Qt5_DIR: ${Qt5_DIR}")
+message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+message(STATUS "Qt5_DIR: ${Qt5_DIR}")
 
 set(COMPONENT_SOURCES
     src/components/mykeysequenceedit.cpp
