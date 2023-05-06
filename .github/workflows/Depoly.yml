@@ -13,10 +13,14 @@ jobs:
   Build:
     strategy:
       matrix:
-        config: [ {os: macos-latest, arch: clang}, {os: windows-latest, arch: win64_msvc2019_64} ]
+        config:
+          [
+            { os: macos-latest, arch: clang },
+            { os: windows-latest, arch: win64_msvc2019_64 },
+          ]
 
-    runs-on: ${{ config.os }}
-    
+    runs-on: ${{ matrix.config.os }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -26,10 +30,10 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
-          arch: ${{ config.arch  }}
-          dir: '${{ github.workspace }}/'
-          cache: 'true'
-          cache-key-prefix: '${{ runner.os }}-Install-Qt-Action'
+          arch: ${{ matrix.config.arch  }}
+          dir: "${{ github.workspace }}/"
+          cache: "true"
+          cache-key-prefix: "${{ runner.os }}-Install-Qt-Action"
 
       # - name: Cache Qt5
       #   id: cache-qt5-brew
@@ -60,11 +64,11 @@ jobs:
       # run: ctest -C ${{env.BUILD_TYPE}}
 
       - name: macOS deploy
-        if: ${{ runner.os == macOS}}
+        if: runner.os == 'macOS'
         run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus.app
-        
+
       - name: Create DMG
-        if: ${{ runner.os == macOS}}
+        if: runner.os == 'macOS'
         continue-on-error: true
         shell: bash
         run: |
@@ -76,34 +80,38 @@ jobs:
           create-dmg CopyPlusPlus.app
 
       - name: Upload macOS Artifact
-        if: ${{ runner.os == macOS}}
+        if: runner.os == 'macOS'
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus-macOS
           path: ${{github.workspace}}/build/CopyPlusPlus*.dmg
 
       - name: Download macOS Artifact
-        if: ${{ runner.os == macOS}}
+        if: runner.os == 'macOS'
         uses: actions/download-artifact@v3
         with:
           # Artifact name
           name: CopyPlusPlus-macOS
-        
+
       - name: Windows deploy
-        if: ${{ runner.os == Windows}}
-        run: windeployqt ${{github.workspace}}/build/CopyPlusPlus.exe
+        if: runner.os == 'Windows'
+        run: |
+          pwd
+          mkdir ${{github.workspace}}/build/CopyPlusPlus
+          mv ${{github.workspace}}/build/CopyPlusPlus.exe ${{github.workspace}}/build/CopyPlusPlus/CopyPlusPlus.exe
+          cd ${{github.workspace}}/build/CopyPlusPlus/
+          windeployqt CopyPlusPlus.exe
 
       - name: Upload Windows Artifact
-        if: ${{ runner.os == Windows}}
+        if: runner.os == 'Windows'
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus-win
-          path: ${{github.workspace}}/build/
+          path: ${{github.workspace}}/build/CopyPlusPlus/
 
       - name: Download Windows Artifact
-        if: ${{ runner.os == Windows}}
+        if: runner.os == 'Windows'
         uses: actions/download-artifact@v3
         with:
           # Artifact name
           name: CopyPlusPlus-win
-
