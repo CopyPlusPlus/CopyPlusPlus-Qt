@@ -4,16 +4,10 @@
 #include "qhotkey.h"
 #include "qsettings.h"
 //#include "qtmaterialfab.h"
-//#include "qtmaterialtoggle.h"
+#include "qtmaterialtoggle.h"
 #include "qtranslator.h"
 #include "settingswindow.h"
 #include <QMainWindow>
-
-QT_BEGIN_NAMESPACE
-namespace Ui {
-    class MainWindow;
-}
-QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
@@ -58,9 +52,7 @@ public:
 private:
     static MainWindow *instance;
 
-    Ui::MainWindow *ui;
-
-    //QtMaterialToggle *autoToggle;
+    QtMaterialToggle *autoToggle;
     //QtMaterialFloatingActionButton *floatBtn;
 
     SettingsWindow *settingsWindow;

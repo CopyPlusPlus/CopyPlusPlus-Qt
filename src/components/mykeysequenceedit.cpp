@@ -15,9 +15,9 @@ MyKeySequenceEdit::MyKeySequenceEdit(QWidget *parent) : QKeySequenceEdit(parent)
     lineEdit->setAlignment(Qt::AlignHCenter);          // 居中
     lineEdit->setContextMenuPolicy(Qt::NoContextMenu); // 禁用右键菜单
 
-    // setKeySequence 时会 resetState，从而 reset PlaceholderText
+    // setKeySequence 时会 resetState, 从而 reset PlaceholderText
     // 需要重新 setPlaceholderText 避免出现默认的"Press shortcut"
-    lineEdit->setPlaceholderText(QKeySequenceEdit::tr("快捷键"));
+    lineEdit->setPlaceholderText(QKeySequenceEdit::tr("Hotkey"));
 
     QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
     qDebug() << "shortcut: " << seq;
@@ -42,7 +42,7 @@ void MyKeySequenceEdit::focusOutEvent(QFocusEvent *event)
 
         if (this->keySequence().isEmpty()) {
             setKeySequence(QKeySequence(settings.value("shortcut", "Ctrl+Shift+C").toString()));
-            lineEdit->setPlaceholderText(tr("快捷键"));
+            lineEdit->setPlaceholderText(tr("Hotkey"));
         }
 
         emit focusOut();
@@ -62,7 +62,7 @@ void MyKeySequenceEdit::keyPressEvent(QKeyEvent *event)
         setKeySequence(this->keySequence());
 
         clearFocus();
-        lineEdit->setPlaceholderText(tr("快捷键"));
+        lineEdit->setPlaceholderText(tr("Hotkey"));
 
         emit myEditFinished(this->keySequence());
         qDebug() << "myEditFinished";
@@ -86,5 +86,5 @@ void MyKeySequenceEdit::keyReleaseEvent(QKeyEvent *event)
 void MyKeySequenceEdit::clear()
 {
     QKeySequenceEdit::clear();
-    lineEdit->setPlaceholderText(QKeySequenceEdit::tr("快捷键"));
+    lineEdit->setPlaceholderText(QKeySequenceEdit::tr("Hotkey"));
 }

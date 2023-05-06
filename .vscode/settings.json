@@ -1,6 +1,6 @@
 {
   "cmake.configureSettings": {
-    //"CMAKE_TOOLCHAIN_FILE": "./3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
-    "CMAKE_PREFIX_PATH": "/usr/local/opt/qt@5/lib/cmake"
+    "CMAKE_TOOLCHAIN_FILE": "./3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
   }
+  //"cmake.generator": "Ninja"
 }

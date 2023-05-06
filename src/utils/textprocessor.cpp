@@ -79,10 +79,12 @@ void TextProcessor::pressCtrlC()
 
     const int n = hotKeys.size();
 
-    // 需要模拟的按键事件数组，共需要模拟：快捷键释放:n个；Ctrl+C按下、释放:4个
-    // 恢复时只需要按下Modifier，所以总个数为 2*n+4-1
-    INPUT inputs[2 * n + 3];
-    ZeroMemory(inputs, sizeof(inputs));
+    // 需要模拟的按键事件数组, 共需要模拟：快捷键释放:n个；Ctrl+C按下、释放:4个
+    // 恢复时只需要按下Modifier, 所以总个数为 2*n+4-1 = 2*n+3
+    const int keysNum = 2 * n + 3;
+
+    INPUT *inputs = new INPUT[keysNum];
+    ZeroMemory(inputs, keysNum * sizeof(INPUT));
 
     // 释放 Modifier
     for (int i = 0; i < n - 1; ++i) {
@@ -127,7 +129,7 @@ void TextProcessor::pressCtrlC()
     inputs[n + 3].ki.dwFlags = KEYEVENTF_KEYUP;
 
     // 恢复按下 Modifier
-    for (int i = n + 4; i < 2 * n + 3; ++i) {
+    for (int i = n + 4; i < keysNum; ++i) {
         inputs[i].type = INPUT_KEYBOARD;
         inputs[i].ki.dwFlags = 0;
 
@@ -148,12 +150,14 @@ void TextProcessor::pressCtrlC()
     }
 
     // 模拟按键
-    UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
-    if (uSent != ARRAYSIZE(inputs)) {
+    UINT uSent = SendInput(keysNum, inputs, sizeof(INPUT));
+    if (uSent != keysNum) {
         qDebug() << "SendInput failed:" << HRESULT_FROM_WIN32(GetLastError());
     } else {
         qDebug() << "SendInput succeed";
     }
+
+    delete[] inputs;
 
 #elif defined(Q_OS_MAC)
 

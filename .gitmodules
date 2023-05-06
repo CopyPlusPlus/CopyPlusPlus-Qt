@@ -1,6 +1,9 @@
-[submodule "vcpkg"]
-	path = 3rdparty/vcpkg
-	url = https://github.com/Microsoft/vcpkg.git
 [submodule "3rdparty/QHotkey"]
 	path = 3rdparty/QHotkey
 	url = https://github.com/Skycoder42/QHotkey.git
+[submodule "3rdparty/qt-material-widgets"]
+	path = 3rdparty/qt-material-widgets
+	url = https://github.com/Decodetalkers/qt-material-widgets.git
+[submodule "3rdparty/vcpkg"]
+	path = 3rdparty/vcpkg
+	url = https://github.com/Microsoft/vcpkg.git

@@ -1,8 +1,7 @@
 #include "mainwindow.h"
+#include "mytoggle.h"
 #include "qhotkey.h"
-// #include "qtmaterialtoggle.h"
 #include "settingswindow.h"
-#include "ui_mainwindow.h"
 #include "utils/language.h"
 #include "utils/textprocessor.h"
 
@@ -10,16 +9,20 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QLabel>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSettings>
+#include <QVBoxLayout>
+#include <QtWidgets/qwidget.h>
 
 MainWindow *MainWindow::instance = nullptr;
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
+    // Singleton pattern
     if (instance != nullptr) {
-        qCritical() << "创建多个MainWindow instance，这里应该是个Bug";
+        qCritical() << "创建多个MainWindow instance, 这里应该是个Bug";
     }
     instance = this;
 
@@ -41,14 +44,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     instance = nullptr;
-
-    delete ui;
 }
 
 MainWindow *MainWindow::getInstance()
 {
     if (instance == nullptr) {
-        qDebug() << "MainWindow instance为空，这里应该是个Bug";
+        qDebug() << "MainWindow instance为空, 这里应该是个Bug";
     }
 
     return instance;
@@ -57,10 +58,7 @@ MainWindow *MainWindow::getInstance()
 void MainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
-        // 感觉没啥用
-        ui->retranslateUi(this);
-
-        // 更新文本，用于翻译
+        // 更新文本, 用于翻译
         updateText();
     }
 
@@ -69,7 +67,7 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::initUI()
 {
-    ui->setupUi(this);
+    // ui->setupUi(this);
 
     setWindowIcon(QIcon(":/icons/images/copy.png"));
 
@@ -78,12 +76,11 @@ void MainWindow::initUI()
 
     settingsWindow = nullptr;
 
-    // 初始化 toggle
-    // autoToggle = new QtMaterialToggle;
-    // auto h = new QHBoxLayout();
-    // ui->toggleWidget->setLayout(h);
-    // h->setContentsMargins(0, 0, 0, 0);
-    // h->addWidget(autoToggle, Qt::AlignRight);
+    QWidget *toggleWidget = new QWidget(this);
+    
+
+    MyToggle *autoToggle = new MyToggle(tr("自动触发"), this);
+    MyToggle *aaa = new MyToggle(tr("自动"), this);
 
     // 设置按钮
     // floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
@@ -96,23 +93,23 @@ void MainWindow::initUI()
 #endif
 }
 
-// 更新文本，用于翻译
+// 更新文本, 用于翻译
 void MainWindow::updateText()
 {
     setWindowTitle(tr("CopyPlusPlus"));
 
-    ui->autoLable->setText(tr("自动触发"));
-    ui->hotkeyLable->setText(tr("快捷键"));
-    ui->keySequenceEdit->lineEdit->setPlaceholderText(tr("快捷键"));
+    // ui->autoLable->setText(tr("自动触发"));
+    // ui->hotkeyLable->setText(tr("快捷键"));
+    // ui->keySequenceEdit->lineEdit->setPlaceholderText(tr("快捷键"));
 }
 
 void MainWindow::initConnections()
 {
     // connect(autoToggle, &QtMaterialToggle::toggled, this, &MainWindow::autoToggleChecked);
 
-    connect(ui->keySequenceEdit, &MyKeySequenceEdit::myEditFinished, this, &MainWindow::registerShortcut);
-    connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusIn, this, [&]() { hotkey->setRegistered(false); });
-    connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusOut, this, [&]() { hotkey->setRegistered(true); });
+    // connect(ui->keySequenceEdit, &MyKeySequenceEdit::myEditFinished, this, &MainWindow::registerShortcut);
+    // connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusIn, this, [&]() { hotkey->setRegistered(false); });
+    // connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusOut, this, [&]() { hotkey->setRegistered(true); });
 
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
@@ -159,16 +156,16 @@ void MainWindow::autoToggleChecked(bool status)
 {
     if (status) {
         qDebug() << "Auto enabled";
-        connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
+        // connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     } else {
         qDebug() << "Auto disabled";
-        disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
+        // disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
 }
 
 // void MainWindow::toggleShortcutChecked(bool status)
 //{
-//     // TODO:快捷键为空、冲突时，应该有提醒
+//     // TODO:快捷键为空、冲突时, 应该有提醒
 //     QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
 //     if (status) {
 //         qDebug() << "Shortcut enabled";
@@ -195,7 +192,7 @@ void MainWindow::errorInput()
     hotkey->resetShortcut();
 
     QMessageBox msgBox;
-    msgBox.setText(tr("快捷键占用，请更换快捷键。"));
+    msgBox.setText(tr("Hotkey occupied, change it."));
     msgBox.exec();
 }
 
