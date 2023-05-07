@@ -2,12 +2,13 @@
 #define MAINWINDOW_H
 
 #include "qhotkey.h"
-#include "qsettings.h"
-//#include "qtmaterialfab.h"
+// #include "qtmaterialfab.h"
 #include "qtmaterialtoggle.h"
-#include "qtranslator.h"
 #include "settingswindow.h"
+
 #include <QMainWindow>
+#include <QSettings>
+#include <QTranslator>
 
 class MainWindow : public QMainWindow
 {
@@ -53,7 +54,7 @@ private:
     static MainWindow *instance;
 
     QtMaterialToggle *autoToggle;
-    //QtMaterialFloatingActionButton *floatBtn;
+    // QtMaterialFloatingActionButton *floatBtn;
 
     SettingsWindow *settingsWindow;
 

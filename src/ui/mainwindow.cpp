@@ -77,7 +77,6 @@ void MainWindow::initUI()
     settingsWindow = nullptr;
 
     QWidget *toggleWidget = new QWidget(this);
-    
 
     MyToggle *autoToggle = new MyToggle(tr("自动触发"), this);
     MyToggle *aaa = new MyToggle(tr("自动"), this);
