@@ -1,4 +1,4 @@
-name: Build Qt application
+name: Build
 
 on:
   workflow_dispatch:
@@ -6,9 +6,9 @@ on:
     branches: ["main"]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
-  QT_VERSION: "5.15.2"
+  # Customize the CMake build type here (Release, MinSizeRel, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: MinSizeRel
+  QT_VERSION: 5.15.2
 
 jobs:
   Build:
@@ -33,7 +33,7 @@ jobs:
         with:
           version: ${{ env.QT_VERSION }}
           arch: ${{ matrix.config.arch  }}
-          dir: "${{ github.workspace }}/"
+          dir: "${{ github.workspace }}"
           cache: "true"
           cache-key-prefix: "${{ runner.os }}-Install-Qt-${{ env.QT_VERSION }}-Action"
 
@@ -53,21 +53,21 @@ jobs:
 
       - name: Configure CMake
         # Already append Qt bin path to PATH, so no need to add -DCMAKE_PREFIX_PATH
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        run: cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
 
       - name: Build
         # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+        run: cmake --build ${{ github.workspace }}/build --config ${{ env.BUILD_TYPE }}
 
       # - name: Test
-      # working-directory: ${{github.workspace}}/build
+      # working-directory: ${{ github.workspace }}/build
       # Execute tests defined by the CMake configuration.
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      # run: ctest -C ${{env.BUILD_TYPE}}
+      # run: ctest -C ${{ env.BUILD_TYPE }}
 
       - name: macOS deploy
         if: runner.os == 'macOS'
-        run: macdeployqt ${{github.workspace}}/build/CopyPlusPlus.app
+        run: macdeployqt ${{ github.workspace }}/build/CopyPlusPlus.app
 
       - name: Create DMG
         if: runner.os == 'macOS'
@@ -75,7 +75,7 @@ jobs:
         shell: bash
         run: |
           pwd
-          cd ${{github.workspace}}/build
+          cd ${{ github.workspace }}/build
           echo "Installing create-dmg"
           npm install --global create-dmg
           echo "Creating DMG"
@@ -86,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus-macOS
-          path: ${{github.workspace}}/build/CopyPlusPlus*.dmg
+          path: ${{ github.workspace }}/build/CopyPlusPlus*.dmg
 
       - name: Download macOS Artifact
         if: runner.os == 'macOS'
@@ -98,10 +98,9 @@ jobs:
       - name: Windows deploy
         if: runner.os == 'Windows'
         run: |
-          pwd
-          mkdir ${{github.workspace}}/build/CopyPlusPlus
-          mv ${{github.workspace}}/build/Release/CopyPlusPlus.exe ${{github.workspace}}/build/CopyPlusPlus/CopyPlusPlus.exe
-          cd ${{github.workspace}}/build/CopyPlusPlus/
+          mkdir ${{ github.workspace }}/CopyPlusPlus
+          mv ${{ github.workspace }}/build/Release/CopyPlusPlus.exe ${{ github.workspace }}/CopyPlusPlus/CopyPlusPlus.exe
+          cd ${{ github.workspace }}/CopyPlusPlus
           windeployqt CopyPlusPlus.exe
 
       - name: Upload Windows Artifact
@@ -109,7 +108,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: CopyPlusPlus-win
-          path: ${{github.workspace}}/build/CopyPlusPlus/
+          path: ${{ github.workspace }}/CopyPlusPlus/
 
       - name: Download Windows Artifact
         if: runner.os == 'Windows'
