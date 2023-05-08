@@ -59,7 +59,7 @@ set(PROJECT_SOURCES
 )
 
 # Add executable and link Qt5 libraries
-add_executable(CopyPlusPlus ${PROJECT_SOURCES})
+add_executable(CopyPlusPlus ${PROJECT_SOURCES} resources.qrc)
 target_link_libraries(CopyPlusPlus PRIVATE Qt5::Widgets)
 
 # Include directories
