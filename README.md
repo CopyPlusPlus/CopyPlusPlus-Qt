@@ -1,5 +1,8 @@
 # CopyPlusPlus-Qt
 
+[![CodeQL](https://github.com/CopyPlusPlus/CopyPlusPlus-Qt/actions/workflows/CodeQL.yml/badge.svg?branch=main)](https://github.com/CopyPlusPlus/CopyPlusPlus-Qt/actions/workflows/CodeQL.yml)
+[![Build](https://github.com/CopyPlusPlus/CopyPlusPlus-Qt/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/CopyPlusPlus/CopyPlusPlus-Qt/actions/workflows/Build.yml)
+
 This is a version of CopyPlusPlus based on Qt/C++.
 
 Advantage: **Cross-platform**.
