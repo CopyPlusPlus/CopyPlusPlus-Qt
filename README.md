@@ -2,6 +2,7 @@
 
 [![CodeQL](https://github.com/CopyPlusPlus/CopyPlusPlus-Qt/actions/workflows/CodeQL.yml/badge.svg?branch=main)](https://github.com/CopyPlusPlus/CopyPlusPlus-Qt/actions/workflows/CodeQL.yml)
 [![Build](https://github.com/CopyPlusPlus/CopyPlusPlus-Qt/actions/workflows/Build.yml/badge.svg?branch=main)](https://github.com/CopyPlusPlus/CopyPlusPlus-Qt/actions/workflows/Build.yml)
+[![CodeFactor](https://www.codefactor.io/repository/github/copyplusplus/copyplusplus-qt/badge)](https://www.codefactor.io/repository/github/copyplusplus/copyplusplus-qt)
 
 This is a version of CopyPlusPlus based on Qt/C++.
 
