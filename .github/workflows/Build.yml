@@ -3,7 +3,7 @@ name: Build
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches: [main]
 
 env:
   # Customize the CMake build type here (Release, MinSizeRel, Debug, RelWithDebInfo, etc.)
@@ -33,9 +33,9 @@ jobs:
         with:
           version: ${{ env.QT_VERSION }}
           arch: ${{ matrix.config.arch  }}
-          dir: "${{ github.workspace }}"
-          cache: "true"
-          cache-key-prefix: "${{ runner.os }}-Install-Qt-${{ env.QT_VERSION }}-Action"
+          dir: ${{ github.workspace }}
+          cache: true
+          cache-key-prefix: ${{ runner.os }}-Install-Qt-${{ env.QT_VERSION }}-Action
 
       # - name: Cache Qt5
       #   id: cache-qt5-brew
@@ -45,7 +45,7 @@ jobs:
       #     key: qt5-brew
 
       # - name: Install Qt5
-      #   if: steps.cache-qt5-brew.outputs.cache-hit != 'true'
+      #   if: ${{ steps.cache-qt5-brew.outputs.cache-hit != true }}
       #   run: brew install qt@5
 
       # - name: Add Qt5 to GITHUB_PATH
