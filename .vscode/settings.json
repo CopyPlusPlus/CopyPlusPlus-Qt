@@ -3,7 +3,10 @@
     "CMAKE_TOOLCHAIN_FILE": "./3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
   },
   "files.associations": {
-    "qdebug": "cpp"
+    "qdebug": "cpp",
+    "set": "cpp",
+    "qgridlayout": "cpp",
+    "qpushbutton": "cpp"
   }
   //"cmake.generator": "Ninja"
 }

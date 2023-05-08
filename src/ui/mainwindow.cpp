@@ -8,13 +8,12 @@
 #include <QClipboard>
 #include <QCloseEvent>
 #include <QDebug>
-#include <QHBoxLayout>
+#include <QGridLayout>
 #include <QLabel>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSettings>
-#include <QVBoxLayout>
-#include <QtWidgets/qwidget.h>
+#include <QtWidgets>
 
 MainWindow *MainWindow::instance = nullptr;
 
@@ -77,9 +76,18 @@ void MainWindow::initUI()
     settingsWindow = nullptr;
 
     QWidget *toggleWidget = new QWidget(this);
+    QGridLayout *toggleWidgetLayout = new QGridLayout(toggleWidget);
 
-    MyToggle *autoToggle = new MyToggle(tr("自动触发"), this);
-    MyToggle *aaa = new MyToggle(tr("自动"), this);
+    QtMaterialToggle *autoModeToggle = new QtMaterialToggle();
+    QtMaterialToggle *hotkeyModetoggle = new QtMaterialToggle();
+
+    toggleWidgetLayout->addWidget(new QLabel("Auto Mode"), 0, 0, Qt::AlignLeft);
+    toggleWidgetLayout->addWidget(autoModeToggle, 0, 1);
+
+    toggleWidgetLayout->addWidget(new QLabel("Hotkey Mode"), 1, 0, Qt::AlignLeft);
+    toggleWidgetLayout->addWidget(hotkeyModetoggle, 1, 1);
+
+    toggleWidget->setFixedSize(toggleWidgetLayout->sizeHint());
 
     // 设置按钮
     // floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
