@@ -8,6 +8,7 @@
     "set": "cpp",
     "qgridlayout": "cpp",
     "qpushbutton": "cpp",
-    "qapplication": "cpp"
+    "qapplication": "cpp",
+    "qclipboard": "cpp"
   }
 }
