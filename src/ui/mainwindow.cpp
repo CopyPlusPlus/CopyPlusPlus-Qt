@@ -80,8 +80,8 @@ void MainWindow::initUI()
     settingsWindow = nullptr;
 
     // 设置按钮
-    floatBtn = new QtMaterialFloatingActionButton(QIcon(":/icons/settings"),this);
-    floatBtn->setMini(true);
+    //floatBtn = new QtMaterialFloatingActionButton(QIcon(":/icons/settings"),this);
+    //floatBtn->setMini(true);
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
