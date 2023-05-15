@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
-        <file alias="copy.png">resources/images/copy.png</file>
+        <file alias="copy">resources/images/copy.png</file>
+        <file alias="settings">resources/images/settings.svg</file>
     </qresource>
 </RCC>
