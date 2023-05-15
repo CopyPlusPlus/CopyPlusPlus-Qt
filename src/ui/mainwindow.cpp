@@ -70,7 +70,7 @@ void MainWindow::initUI()
 {
     ui->setupUi(this);
 
-    setWindowIcon(QIcon(":/icons/copy.png"));
+    setWindowIcon(QIcon(":/icons/copy"));
 
     ui->autoToggle->setText(tr("自动触发"));
     ui->hotkeyToggle->setText(tr("快捷键"));
@@ -78,8 +78,8 @@ void MainWindow::initUI()
     settingsWindow = nullptr;
 
     // 设置按钮
-    // floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
-    // floatBtn->setMini(true);
+    floatBtn = new QtMaterialFloatingActionButton(QIcon(":/icons/settings"),this);
+    floatBtn->setMini(true);
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并

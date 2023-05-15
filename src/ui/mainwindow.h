@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "qhotkey.h"
-// #include "qtmaterialfab.h"
+#include "qtmaterialfab.h"
 #include "qtmaterialtoggle.h"
 #include "settingswindow.h"
 
@@ -58,7 +58,7 @@ private:
     static MainWindow *instance;
     Ui::MainWindow *ui;
 
-    // QtMaterialFloatingActionButton *floatBtn;
+    QtMaterialFloatingActionButton *floatBtn;
 
     SettingsWindow *settingsWindow;
 
