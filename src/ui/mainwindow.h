@@ -10,6 +10,10 @@
 #include <QSettings>
 #include <QTranslator>
 
+namespace Ui {
+    class MainWindow;
+}
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -52,8 +56,11 @@ public:
 
 private:
     static MainWindow *instance;
+    Ui::MainWindow *ui;
 
-    QtMaterialToggle *autoToggle;
+    QWidget *centralWidget;
+
+    // QtMaterialToggle *autoToggle;
     // QtMaterialFloatingActionButton *floatBtn;
 
     SettingsWindow *settingsWindow;

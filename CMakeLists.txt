@@ -25,8 +25,8 @@ message(STATUS "Qt5_DIR: ${Qt5_DIR}")
 set(COMPONENT_SOURCES
     src/components/mykeysequenceedit.cpp
     src/components/mykeysequenceedit.h
-    src/components/mytoggle.cpp
-    src/components/mytoggle.h
+#    src/components/mytoggle.cpp
+#    src/components/mytoggle.h
 )
 
 set(UI_SOURCES
@@ -36,6 +36,9 @@ set(UI_SOURCES
     src/ui/settingswindow.cpp
     src/ui/settingswindow.h
     src/ui/settingswindow.ui
+    src/components/toggle.h
+    src/components/toggle.cpp
+    src/components/toggle.ui
 )
 
 set(UTILS_SOURCES
