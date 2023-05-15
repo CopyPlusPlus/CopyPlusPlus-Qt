@@ -6,18 +6,36 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>400</height>
+    <width>200</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>CopyPlusPlus</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QWidget" name="toggleWidget" native="true">
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QVBoxLayout" name="toggleWidgetLayout">
+       <property name="leftMargin">
+        <number>22</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>22</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="Toggle" name="autoToggle" native="true"/>
        </item>
@@ -34,7 +52,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>300</width>
+     <width>200</width>
      <height>24</height>
     </rect>
    </property>
