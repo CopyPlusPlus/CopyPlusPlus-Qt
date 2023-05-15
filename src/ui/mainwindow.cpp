@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 MainWindow::~MainWindow()
 {
-    instance = nullptr;
+    delete instance;
     delete ui;
 }
 
@@ -112,25 +112,28 @@ void MainWindow::initConnections()
 
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
-    // connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
-    //     if (settingsWindow == nullptr) {
-    //         settingsWindow = new SettingsWindow(this);
+    connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
+        if (settingsWindow == nullptr) {
+            settingsWindow = new SettingsWindow(this);
 
-    //         connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
-    //         settingsWindow->show();
-    //         settingsWindow->raise();
-    //         settingsWindow->activateWindow();
-    //     }
-    // });
+            connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
+            settingsWindow->show();
+            settingsWindow->raise();
+            settingsWindow->activateWindow();
+        }
+    });
 }
 
 void MainWindow::loadSettings()
 {
     // QSettings settings(settingsIniFile, QSettings::IniFormat);
 
-    // if (settings.value("autoToggle", false).toBool()) {
-    //     autoToggle->setChecked(true);
-    // }
+    if (settings.value("autoToggle", false).toBool()) {
+        ui->autoToggle->setChecked(true);
+    }
+    if (settings.value("hotkeyToggle", false).toBool()) {
+        ui->hotkeyToggle->setChecked(true);
+    }
 
     registerShortcut(settings.value("shortcut", "Ctrl+Shift+C").toString());
 }
@@ -139,9 +142,10 @@ void MainWindow::saveSettings()
 {
     // QSettings settings(settingsIniFile, QSettings::IniFormat, this);
 
-    // settings.setValue("autoToggle", autoToggle->isChecked());
-    settings.setValue("shortcut", hotkey->shortcut().toString());
+    settings.setValue("autoToggle", ui->autoToggle->isChecked());
+    settings.setValue("hotkeyToggle", ui->hotkeyToggle->isChecked());
 
+    settings.setValue("shortcut", hotkey->shortcut().toString());
     qDebug() << "Save shortcut: " << hotkey->shortcut().toString();
 }
 
@@ -155,25 +159,25 @@ void MainWindow::autoToggleChecked(bool status)
 {
     if (status) {
         qDebug() << "Auto enabled";
-        // connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
+        connect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     } else {
         qDebug() << "Auto disabled";
-        // disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
+        disconnect(QGuiApplication::clipboard(), &QClipboard::changed, this, &MainWindow::afterChanged);
     }
 }
 
-// void MainWindow::toggleShortcutChecked(bool status)
-//{
-//     // TODO:快捷键为空、冲突时, 应该有提醒
-//     QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
-//     if (status) {
-//         qDebug() << "Shortcut enabled";
-//         registerShortcut(seq);
-//     } else {
-//         qDebug() << "Shortcut disabled";
-//         hotkey->resetShortcut();
-//     }
-// }
+void MainWindow::hotkeyToggleChecked(bool status)
+{
+    // TODO:快捷键为空、冲突时, 应该有提醒
+    QString seq = settings.value("shortcut", "Ctrl+Shift+C").toString();
+    if (status) {
+        qDebug() << "Shortcut enabled";
+        registerShortcut(seq);
+    } else {
+        qDebug() << "Shortcut disabled";
+        hotkey->resetShortcut();
+    }
+}
 
 // Register shortcut
 void MainWindow::registerShortcut(const QKeySequence &keySequence)
