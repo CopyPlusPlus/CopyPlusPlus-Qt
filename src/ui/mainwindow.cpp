@@ -70,6 +70,9 @@ void MainWindow::initUI()
 {
     ui->setupUi(this);
 
+    setFocusPolicy(Qt::ClickFocus);
+    setFixedSize(200, 300);
+
     setWindowIcon(QIcon(":/icons/copy"));
 
     ui->autoToggle->setText(tr("自动触发"));
