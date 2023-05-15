@@ -40,7 +40,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QtMaterialToggle" name="widget" native="true">
+    <widget class="QtMaterialToggle" name="toggle" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>

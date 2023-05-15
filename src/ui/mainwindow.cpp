@@ -72,24 +72,10 @@ void MainWindow::initUI()
 
     setWindowIcon(QIcon(":/icons/copy.png"));
 
+    ui->autoToggle->setText(tr("自动触发"));
+    ui->hotkeyToggle->setText(tr("快捷键"));
+
     settingsWindow = nullptr;
-
-    // QWidget *toggleWidget = new QWidget(centralWidget);
-    // // center toggleWidget
-    // toggleWidget->setGeometry((width() - toggleWidget->width()) / 2, 20, toggleWidget->width(), toggleWidget->height());
-
-    // QGridLayout *toggleWidgetLayout = new QGridLayout(toggleWidget);
-
-    // QtMaterialToggle *autoModeToggle = new QtMaterialToggle();
-    // QtMaterialToggle *hotkeyModetoggle = new QtMaterialToggle();
-
-    // toggleWidgetLayout->addWidget(new QLabel("Auto Mode"), 0, 0, Qt::AlignLeft);
-    // toggleWidgetLayout->addWidget(autoModeToggle, 0, 1);
-
-    // toggleWidgetLayout->addWidget(new QLabel("Hotkey Mode"), 1, 0, Qt::AlignLeft);
-    // toggleWidgetLayout->addWidget(hotkeyModetoggle, 1, 1);
-
-    // toggleWidget->setFixedSize(toggleWidgetLayout->sizeHint());
 
     // 设置按钮
     // floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
@@ -107,14 +93,15 @@ void MainWindow::updateText()
 {
     setWindowTitle(tr("CopyPlusPlus"));
 
-    // ui->autoLable->setText(tr("自动触发"));
-    // ui->hotkeyLable->setText(tr("快捷键"));
+    ui->autoToggle->setText(tr("自动触发"));
+    ui->hotkeyToggle->setText(tr("快捷键"));
+
     // ui->keySequenceEdit->lineEdit->setPlaceholderText(tr("快捷键"));
 }
 
 void MainWindow::initConnections()
 {
-    // connect(autoToggle, &QtMaterialToggle::toggled, this, &MainWindow::autoToggleChecked);
+    connect(ui->autoToggle, &Toggle::toggled, this, &MainWindow::autoToggleChecked);
 
     // connect(ui->keySequenceEdit, &MyKeySequenceEdit::myEditFinished, this, &MainWindow::registerShortcut);
     // connect(ui->keySequenceEdit, &MyKeySequenceEdit::focusIn, this, [&]() { hotkey->setRegistered(false); });
