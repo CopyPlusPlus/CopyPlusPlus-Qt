@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>200</width>
+    <width>240</width>
     <height>300</height>
    </rect>
   </property>
@@ -65,7 +65,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>200</width>
+     <width>240</width>
      <height>24</height>
     </rect>
    </property>
@@ -78,29 +78,9 @@
    <addaction name="menuAppMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action2">
-   <property name="text">
-    <string>1</string>
-   </property>
-  </action>
-  <action name="action2_2">
-   <property name="text">
-    <string>2</string>
-   </property>
-  </action>
-  <action name="actionabout_cpp">
-   <property name="text">
-    <string>about.cpp</string>
-   </property>
-  </action>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
-   </property>
-  </action>
-  <action name="actionMenu1">
-   <property name="text">
-    <string>Menu1</string>
    </property>
   </action>
  </widget>
@@ -110,6 +90,11 @@
    <extends>QWidget</extends>
    <header location="global">toggle.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QtMaterialFlatButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">qtmaterialflatbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
