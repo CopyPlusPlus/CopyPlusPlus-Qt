@@ -70,18 +70,19 @@ void MainWindow::initUI()
     ui->setupUi(this);
 
     setFocusPolicy(Qt::ClickFocus);
-    setFixedSize(size());
 
     setWindowIcon(QIcon(":/icons/copy"));
 
-    ui->autoToggle->setText(tr("自动触发"));
-    ui->hotkeyToggle->setText(tr("快捷键"));
+    ui->autoToggle->setText(tr("Auto Mode"));
+    ui->hotkeyToggle->setText(tr("Hotkey Mode"));
+
+    setFixedSize(sizeHint()); // 放到最后，更新窗口大小
 
     settingsWindow = nullptr;
 
     // 设置按钮
-    //floatBtn = new QtMaterialFloatingActionButton(QIcon(":/icons/settings"),this);
-    //floatBtn->setMini(true);
+    // floatBtn = new QtMaterialFloatingActionButton(QIcon(":/icons/settings"),this);
+    // floatBtn->setMini(true);
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
@@ -95,8 +96,8 @@ void MainWindow::updateText()
 {
     setWindowTitle(tr("CopyPlusPlus"));
 
-    ui->autoToggle->setText(tr("自动触发"));
-    ui->hotkeyToggle->setText(tr("快捷键"));
+    ui->autoToggle->setText(tr("Auto Mode"));
+    ui->hotkeyToggle->setText(tr("Hotkey Mode"));
 
     // ui->keySequenceEdit->lineEdit->setPlaceholderText(tr("快捷键"));
 }
@@ -111,16 +112,16 @@ void MainWindow::initConnections()
 
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
-    connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
-        if (settingsWindow == nullptr) {
-            settingsWindow = new SettingsWindow(this);
+    // connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
+    //     if (settingsWindow == nullptr) {
+    //         settingsWindow = new SettingsWindow(this);
 
-            connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
-            settingsWindow->show();
-            settingsWindow->raise();
-            settingsWindow->activateWindow();
-        }
-    });
+    //         connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
+    //         settingsWindow->show();
+    //         settingsWindow->raise();
+    //         settingsWindow->activateWindow();
+    //     }
+    // });
 }
 
 void MainWindow::loadSettings()
