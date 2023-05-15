@@ -15,6 +15,14 @@ public:
     explicit Toggle(QWidget *parent = nullptr);
     ~Toggle();
 
+    void setChecked(bool checked);
+    bool isChecked();
+
+    void setText(const QString &text);
+
+signals:
+    void toggled(bool checked);
+
 private:
     Ui::Toggle *ui;
 };
