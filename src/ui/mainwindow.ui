@@ -103,7 +103,7 @@
        <item>
         <widget class="QtMaterialFlatButton" name="pushButton">
          <property name="text">
-          <string>设置</string>
+          <string>Settings</string>
          </property>
         </widget>
        </item>
