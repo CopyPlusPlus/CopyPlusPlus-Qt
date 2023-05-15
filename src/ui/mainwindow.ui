@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>240</width>
-    <height>300</height>
+    <width>200</width>
+    <height>266</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,10 +37,24 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="Toggle" name="autoToggle" native="true"/>
+        <widget class="Toggle" name="autoToggle" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>48</height>
+          </size>
+         </property>
+        </widget>
        </item>
        <item>
-        <widget class="Toggle" name="hotkeyToggle" native="true"/>
+        <widget class="Toggle" name="hotkeyToggle" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>48</height>
+          </size>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -63,18 +77,18 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>80</height>
+        <height>40</height>
        </size>
       </property>
       <layout class="QHBoxLayout" name="bottomWidgetLayout">
        <property name="leftMargin">
-        <number>22</number>
+        <number>11</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>22</number>
+        <number>11</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -88,8 +102,13 @@
        </item>
        <item>
         <widget class="QtMaterialFlatButton" name="pushButton">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
          <property name="text">
-          <string>PushButton</string>
+          <string>设置</string>
          </property>
         </widget>
        </item>
@@ -103,7 +122,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>240</width>
+     <width>200</width>
      <height>24</height>
     </rect>
    </property>
