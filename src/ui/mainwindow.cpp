@@ -76,6 +76,12 @@ void MainWindow::initUI()
     ui->autoToggle->setText(tr("Auto Mode"));
     ui->hotkeyToggle->setText(tr("Hotkey Mode"));
 
+    auto settingBtn = ui->bottomWidget->findChild<QtMaterialFlatButton *>("pushButton");
+    settingBtn->setText(tr("Settings"));
+    settingBtn->setIcon(QIcon(":/icons/settings"));
+    settingBtn->setRole(Material::Primary);
+    settingBtn->setBackgroundMode(Qt::OpaqueMode);
+
     setFixedSize(sizeHint()); // 放到最后，更新窗口大小
 
     settingsWindow = nullptr;
