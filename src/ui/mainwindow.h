@@ -58,9 +58,6 @@ private:
     static MainWindow *instance;
     Ui::MainWindow *ui;
 
-    QWidget *centralWidget;
-
-    // QtMaterialToggle *autoToggle;
     // QtMaterialFloatingActionButton *floatBtn;
 
     SettingsWindow *settingsWindow;
