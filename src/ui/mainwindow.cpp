@@ -71,7 +71,7 @@ void MainWindow::initUI()
     ui->setupUi(this);
 
     setFocusPolicy(Qt::ClickFocus);
-    setFixedSize(200, 300);
+    setFixedSize(200, 222);
 
     setWindowIcon(QIcon(":/icons/copy"));
 
