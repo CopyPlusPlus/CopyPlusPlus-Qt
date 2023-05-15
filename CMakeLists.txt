@@ -77,6 +77,8 @@ target_link_libraries(CopyPlusPlus PRIVATE QHotkey::QHotkey)
 add_subdirectory("3rdparty/qt-material-widgets/components")
 target_link_libraries(CopyPlusPlus PRIVATE components)
 
+add_subdirectory("3rdparty/qt-material-widgets/examples")
+
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR}/translations ${TS_FILES})
 
 set_target_properties(CopyPlusPlus PROPERTIES
