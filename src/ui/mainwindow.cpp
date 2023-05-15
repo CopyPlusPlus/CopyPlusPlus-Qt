@@ -1,9 +1,10 @@
 #include "mainwindow.h"
-#include "mytoggle.h"
 #include "qhotkey.h"
 #include "settingswindow.h"
 #include "utils/language.h"
 #include "utils/textprocessor.h"
+
+#include "ui_mainwindow.h"
 
 #include <QClipboard>
 #include <QCloseEvent>
@@ -17,7 +18,7 @@
 
 MainWindow *MainWindow::instance = nullptr;
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     // Singleton pattern
     if (instance != nullptr) {
@@ -43,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 MainWindow::~MainWindow()
 {
     instance = nullptr;
+    delete ui;
 }
 
 MainWindow *MainWindow::getInstance()
@@ -66,28 +68,28 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::initUI()
 {
-    // ui->setupUi(this);
+    ui->setupUi(this);
 
     setWindowIcon(QIcon(":/icons/copy.png"));
 
-    setFocusPolicy(Qt::ClickFocus);
-    setFixedSize(310, 370);
-
     settingsWindow = nullptr;
 
-    QWidget *toggleWidget = new QWidget(this);
-    QGridLayout *toggleWidgetLayout = new QGridLayout(toggleWidget);
+    // QWidget *toggleWidget = new QWidget(centralWidget);
+    // // center toggleWidget
+    // toggleWidget->setGeometry((width() - toggleWidget->width()) / 2, 20, toggleWidget->width(), toggleWidget->height());
 
-    QtMaterialToggle *autoModeToggle = new QtMaterialToggle();
-    QtMaterialToggle *hotkeyModetoggle = new QtMaterialToggle();
+    // QGridLayout *toggleWidgetLayout = new QGridLayout(toggleWidget);
 
-    toggleWidgetLayout->addWidget(new QLabel("Auto Mode"), 0, 0, Qt::AlignLeft);
-    toggleWidgetLayout->addWidget(autoModeToggle, 0, 1);
+    // QtMaterialToggle *autoModeToggle = new QtMaterialToggle();
+    // QtMaterialToggle *hotkeyModetoggle = new QtMaterialToggle();
 
-    toggleWidgetLayout->addWidget(new QLabel("Hotkey Mode"), 1, 0, Qt::AlignLeft);
-    toggleWidgetLayout->addWidget(hotkeyModetoggle, 1, 1);
+    // toggleWidgetLayout->addWidget(new QLabel("Auto Mode"), 0, 0, Qt::AlignLeft);
+    // toggleWidgetLayout->addWidget(autoModeToggle, 0, 1);
 
-    toggleWidget->setFixedSize(toggleWidgetLayout->sizeHint());
+    // toggleWidgetLayout->addWidget(new QLabel("Hotkey Mode"), 1, 0, Qt::AlignLeft);
+    // toggleWidgetLayout->addWidget(hotkeyModetoggle, 1, 1);
+
+    // toggleWidget->setFixedSize(toggleWidgetLayout->sizeHint());
 
     // 设置按钮
     // floatBtn = new QtMaterialFloatingActionButton(QtMaterialTheme::icon("settings"), this);
