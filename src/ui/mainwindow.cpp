@@ -76,8 +76,8 @@ void MainWindow::initUI()
     ui->autoToggle->setText(tr("Auto Mode"));
     ui->hotkeyToggle->setText(tr("Hotkey Mode"));
 
-    auto settingsBtn = ui->bottomWidget->findChild<QtMaterialFlatButton *>("settingsBtn");
-    auto aboutBtn = ui->bottomWidget->findChild<QtMaterialFlatButton *>("aboutBtn");
+    settingsBtn = ui->bottomWidget->findChild<QtMaterialFlatButton *>("settingsBtn");
+    aboutBtn = ui->bottomWidget->findChild<QtMaterialFlatButton *>("aboutBtn");
 
     // settingsBtn->setIcon(QIcon(":/icons/settings"));
     settingsBtn->setRole(Material::Primary);
@@ -123,16 +123,17 @@ void MainWindow::initConnections()
 
     connect(hotkey, &QHotkey::activated, this, &MainWindow::shortcutTriggered);
 
-    // connect(floatBtn, &QtMaterialFloatingActionButton::clicked, this, [&]() {
-    //     if (settingsWindow == nullptr) {
-    //         settingsWindow = new SettingsWindow(this);
+    connect(settingsBtn, &QtMaterialFlatButton::clicked, this, [&]() {
+        if (settingsWindow == nullptr) {
+            settingsWindow = new SettingsWindow(this);
 
-    //         connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
-    //         settingsWindow->show();
-    //         settingsWindow->raise();
-    //         settingsWindow->activateWindow();
-    //     }
-    // });
+            connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
+            
+            settingsWindow->show();
+            settingsWindow->raise();
+            settingsWindow->activateWindow();
+        }
+    });
 }
 
 void MainWindow::loadSettings()
