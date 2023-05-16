@@ -25,8 +25,9 @@ message(STATUS "Qt5_DIR: ${Qt5_DIR}")
 set(COMPONENT_SOURCES
     src/components/mykeysequenceedit.cpp
     src/components/mykeysequenceedit.h
-#    src/components/mytoggle.cpp
-#    src/components/mytoggle.h
+
+    # src/components/mytoggle.cpp
+    # src/components/mytoggle.h
 )
 
 set(UI_SOURCES
@@ -54,15 +55,11 @@ set(SOURCES src/main.cpp
     ${UTILS_SOURCES}
 )
 
-set(TS_FILES translations/CopyPlusPlus_en_US.ts)
-
-set(PROJECT_SOURCES
-    ${SOURCES}
-    ${TS_FILES}
-)
+set(TS_FILES translations/CopyPlusPlus_zh_CN.ts)
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR}/src ${TS_FILES})
 
 # Add executable and link Qt5 libraries
-add_executable(CopyPlusPlus ${PROJECT_SOURCES} resources.qrc)
+add_executable(CopyPlusPlus ${SOURCES} ${QM_FILES} resources.qrc)
 target_link_libraries(CopyPlusPlus PRIVATE Qt5::Widgets)
 
 # Include directories
@@ -77,9 +74,7 @@ target_link_libraries(CopyPlusPlus PRIVATE QHotkey::QHotkey)
 add_subdirectory("3rdparty/qt-material-widgets/components")
 target_link_libraries(CopyPlusPlus PRIVATE components)
 
-add_subdirectory("3rdparty/qt-material-widgets/examples")
-
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR}/translations ${TS_FILES})
+#add_subdirectory("3rdparty/qt-material-widgets/examples")
 
 set_target_properties(CopyPlusPlus PROPERTIES
     MACOSX_BUNDLE_BUNDLE_NAME CopyPlusPlus
