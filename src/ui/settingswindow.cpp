@@ -50,8 +50,8 @@ void SettingsWindow::changeEvent(QEvent *event)
 
 void SettingsWindow::updateText()
 {
-    setWindowTitle(tr("设置"));
-    ui->languageLable->setText(tr("语言"));
+    //    setWindowTitle(tr("设置"));
+    //    ui->languageLable->setText(tr("语言"));
 
     // Get QComboBox
     QComboBox *list = ui->languageList;
