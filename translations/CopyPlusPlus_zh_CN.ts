@@ -13,12 +13,12 @@
         <location filename="../src/ui/mainwindow.ui" line="102"/>
         <location filename="../src/ui/mainwindow.ui" line="138"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>关于</translation>
     </message>
     <message>
         <location filename="../src/ui/mainwindow.ui" line="109"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../src/ui/mainwindow.ui" line="129"/>
@@ -29,18 +29,18 @@
         <location filename="../src/ui/mainwindow.cpp" line="76"/>
         <location filename="../src/ui/mainwindow.cpp" line="110"/>
         <source>Auto Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>自动触发</translation>
     </message>
     <message>
         <location filename="../src/ui/mainwindow.cpp" line="77"/>
         <location filename="../src/ui/mainwindow.cpp" line="111"/>
         <source>Hotkey Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>快捷键触发</translation>
     </message>
     <message>
         <location filename="../src/ui/mainwindow.cpp" line="210"/>
         <source>Hotkey occupied, change it.</source>
-        <translation type="unfinished"></translation>
+        <translation>快捷键占用，请更换。</translation>
     </message>
 </context>
 <context>
@@ -66,12 +66,12 @@
     <message>
         <location filename="../src/ui/settingswindow.ui" line="14"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../src/ui/settingswindow.ui" line="27"/>
         <source>Languages</source>
-        <translation type="unfinished"></translation>
+        <translation>语言</translation>
     </message>
 </context>
 <context>
