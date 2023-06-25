@@ -87,7 +87,7 @@ void MainWindow::initUI()
     aboutBtn->setRole(Material::Primary);
     aboutBtn->setBackgroundMode(Qt::OpaqueMode);
 
-    setFixedSize(size()); // 放到最后，更新并固定窗口大小
+    //setFixedSize(size()); // 放到最后，更新并固定窗口大小
 
     settingsWindow = nullptr;
 
