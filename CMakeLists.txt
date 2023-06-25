@@ -17,6 +17,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Disable C4819 warning
+if(MSVC)
+    add_compile_options(/wd4819)
+endif()
+
 find_package(Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 
 message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
@@ -74,8 +79,7 @@ target_link_libraries(CopyPlusPlus PRIVATE QHotkey::QHotkey)
 add_subdirectory("3rdparty/qt-material-widgets/components")
 target_link_libraries(CopyPlusPlus PRIVATE components)
 
-#add_subdirectory("3rdparty/qt-material-widgets/examples")
-
+# add_subdirectory("3rdparty/qt-material-widgets/examples")
 set_target_properties(CopyPlusPlus PROPERTIES
     MACOSX_BUNDLE_BUNDLE_NAME CopyPlusPlus
     MACOSX_BUNDLE_GUI_IDENTIFIER wykj.CopyPlusPlus
