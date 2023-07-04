@@ -1,6 +1,7 @@
 {
   "cmake.configureSettings": {
-    "CMAKE_TOOLCHAIN_FILE": "./3rdparty/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    "CMAKE_TOOLCHAIN_FILE": "./3rdparty/qt5-vcpkg/scripts/buildsystems/vcpkg.cmake",
+    "VCPKG_MANIFEST_MODE": "OFF"
   },
   "cmake.generator": "Ninja",
   "files.associations": {
