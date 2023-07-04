@@ -3,6 +3,9 @@
     "CMAKE_TOOLCHAIN_FILE": "./3rdparty/qt5-vcpkg/scripts/buildsystems/vcpkg.cmake",
     "VCPKG_MANIFEST_MODE": "OFF"
   },
+  // set(CMAKE_GENERATOR "Ninja") in CMakeList is not useful cause the value can only be read in build process,
+  // but the configuring already use the default generator.
+  // This option below make vscode add '-G ninja' parameter when configure. Nice!
   "cmake.generator": "Ninja",
   "files.associations": {
     "qdebug": "cpp",
