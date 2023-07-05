@@ -7,11 +7,18 @@
     <x>0</x>
     <y>0</y>
     <width>260</width>
-    <height>320</height>
+    <height>300</height>
    </rect>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::ClickFocus</enum>
   </property>
   <property name="windowTitle">
    <string>CopyPlusPlus</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../resources.qrc">
+    <normaloff>:/icons/copy</normaloff>:/icons/copy</iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -115,26 +122,6 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>260</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuAppMenu">
-    <property name="locale">
-     <locale language="English" country="UnitedStates"/>
-    </property>
-    <property name="title">
-     <string>AppMenu</string>
-    </property>
-    <addaction name="actionAbout"/>
-   </widget>
-   <addaction name="menuAppMenu"/>
-  </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionAbout">
    <property name="text">
@@ -155,6 +142,8 @@
    <header location="global">qtmaterialflatbutton.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
