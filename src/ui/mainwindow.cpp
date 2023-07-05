@@ -29,6 +29,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     hotkey = new QHotkey(this);
     translator = new QTranslator(this);
 
+    ui->setupUi(this);
+
+    settingsBtn = ui->bottomWidget->findChild<QtMaterialFlatButton *>("settingsBtn");
+    aboutBtn = ui->bottomWidget->findChild<QtMaterialFlatButton *>("aboutBtn");
+    settingsWindow = nullptr;
+
     initUI();
 
     Language::initLanguage();
@@ -58,6 +64,8 @@ MainWindow *MainWindow::getInstance()
 void MainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
+        ui->retranslateUi(this);
+
         // 更新文本, 用于翻译
         updateText();
     }
@@ -67,33 +75,13 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::initUI()
 {
-    ui->setupUi(this);
-
-    setFocusPolicy(Qt::ClickFocus);
-
-    setWindowIcon(QIcon(":/icons/copy"));
-
     ui->autoToggle->setText(tr("Auto Mode"));
     ui->hotkeyToggle->setText(tr("Hotkey Mode"));
 
-    settingsBtn = ui->bottomWidget->findChild<QtMaterialFlatButton *>("settingsBtn");
-    aboutBtn = ui->bottomWidget->findChild<QtMaterialFlatButton *>("aboutBtn");
+    setFlatBtnStyle(aboutBtn);
+    setFlatBtnStyle(settingsBtn);
 
-    // settingsBtn->setIcon(QIcon(":/icons/settings"));
-    settingsBtn->setRole(Material::Primary);
-    settingsBtn->setBackgroundMode(Qt::OpaqueMode);
-
-    // aboutBtn->setIcon(QIcon(":/icons/settings"));
-    aboutBtn->setRole(Material::Primary);
-    aboutBtn->setBackgroundMode(Qt::OpaqueMode);
-
-    //setFixedSize(size()); // 放到最后，更新并固定窗口大小
-
-    settingsWindow = nullptr;
-
-    // 设置按钮
-    // floatBtn = new QtMaterialFloatingActionButton(QIcon(":/icons/settings"),this);
-    // floatBtn->setMini(true);
+    setFixedSize(size()); // 放到最后，更新并固定窗口大小
 
 #ifdef Q_OS_MAC
     // mac 暂不支持自动合并
@@ -113,6 +101,14 @@ void MainWindow::updateText()
     // ui->keySequenceEdit->lineEdit->setPlaceholderText(tr("快捷键"));
 }
 
+void MainWindow::setFlatBtnStyle(QtMaterialFlatButton *fBtn)
+{
+    // fBtn->setIcon(QIcon(":/icons/settings"));
+    fBtn->setRole(Material::Primary);
+    fBtn->setBackgroundMode(Qt::OpaqueMode);
+    fBtn->setFont(QFont("Microsoft YaHei"));
+}
+
 void MainWindow::initConnections()
 {
     connect(ui->autoToggle, &Toggle::toggled, this, &MainWindow::autoToggleChecked);
@@ -128,7 +124,7 @@ void MainWindow::initConnections()
             settingsWindow = new SettingsWindow(this);
 
             connect(settingsWindow, &SettingsWindow::closed, this, [&]() { settingsWindow = nullptr; });
-            
+
             settingsWindow->show();
             settingsWindow->raise();
             settingsWindow->activateWindow();
