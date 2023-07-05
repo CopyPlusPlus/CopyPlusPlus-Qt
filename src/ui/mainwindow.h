@@ -34,6 +34,8 @@ private:
     void loadSettings();
     void saveSettings();
 
+    void setFlatBtnStyle(QtMaterialFlatButton *fBtn);
+
     void autoToggleChecked(bool status);
     void hotkeyToggleChecked(bool status);
 

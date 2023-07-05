@@ -15,7 +15,10 @@
     "qapplication": "cpp",
     "qclipboard": "cpp",
     "qeventtransition": "cpp",
-    "qtranslator": "cpp"
+    "qtranslator": "cpp",
+    "atomic": "cpp",
+    "memory": "cpp",
+    "filesystem": "cpp"
   },
   "files.exclude": {
     "**/qt5-vcpkg": true
