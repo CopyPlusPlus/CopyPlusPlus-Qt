@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>240</width>
-    <height>278</height>
+    <width>260</width>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -120,11 +120,14 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>240</width>
-     <height>18</height>
+     <width>260</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAppMenu">
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="title">
      <string>AppMenu</string>
     </property>
