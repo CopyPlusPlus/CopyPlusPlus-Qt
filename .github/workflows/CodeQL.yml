@@ -62,7 +62,9 @@ jobs:
           # queries: security-extended,security-and-quality
 
       - name: Build
-        run: cmake --build ${{ github.workspace }}/build --config MinSizeRel
+        run: |
+          cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=MinSizeRel
+          cmake --build ${{ github.workspace }}/build --config MinSizeRel
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
