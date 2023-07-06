@@ -4,8 +4,6 @@
 #include "ui_settingswindow.h"
 #include "utils/language.h"
 
-#include "Windows.h"
-
 #include <QSettings>
 
 SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
