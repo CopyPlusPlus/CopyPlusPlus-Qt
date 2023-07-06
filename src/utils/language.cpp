@@ -44,8 +44,7 @@ void Language::updateLanguage(const int &newLangIndex)
     qApp->removeTranslator(translator);
 
     if (newLangIndex != 0) {
-        const QString baseName = "CopyPlusPlus_" + languageName[allLanguages[newLangIndex]];
-        if (translator->load(baseName)) {
+        if (translator->load(":/i18n/" + languageName[allLanguages[newLangIndex]])) {
             qApp->installTranslator(translator);
         }
     }
