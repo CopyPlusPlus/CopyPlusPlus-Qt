@@ -60,7 +60,10 @@ set(SOURCES src/main.cpp
     ${UTILS_SOURCES}
 )
 
+# Translations
 set(TS_FILES translations/CopyPlusPlus_zh_CN.ts)
+# Set qm file output path. Reference url: https://github.com/barry-ran/QtScrcpy/blob/dev/QtScrcpy/res/i18n/CMakeLists.txt
+set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION "${CMAKE_SOURCE_DIR}/translations")
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR}/src ${TS_FILES})
 
 # Add executable and link Qt5 libraries
