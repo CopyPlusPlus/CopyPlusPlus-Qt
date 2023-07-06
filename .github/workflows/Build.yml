@@ -99,7 +99,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           mkdir ${{ github.workspace }}/CopyPlusPlus
-          mv ${{ github.workspace }}/build/Release/CopyPlusPlus.exe ${{ github.workspace }}/CopyPlusPlus/CopyPlusPlus.exe
+          mv ${{ github.workspace }}/build/${{ env.BUILD_TYPE }}/CopyPlusPlus.exe ${{ github.workspace }}/CopyPlusPlus/CopyPlusPlus.exe
           cd ${{ github.workspace }}/CopyPlusPlus
           windeployqt CopyPlusPlus.exe
 
