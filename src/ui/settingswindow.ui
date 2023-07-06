@@ -2,46 +2,59 @@
 <ui version="4.0">
  <class>SettingsWindow</class>
  <widget class="QMainWindow" name="SettingsWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>260</width>
-    <height>295</height>
+    <width>190</width>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string notr="true">设置</string>
+   <string>Settings</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="languageLable">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>111</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string notr="true">语言</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="languageList">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>30</y>
-      <width>111</width>
-      <height>31</height>
-     </rect>
-    </property>
-   </widget>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item alignment="Qt::AlignTop">
+     <widget class="QWidget" name="horizontalWidget" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>2</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>2</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="languageLable">
+         <property name="text">
+          <string>Languages</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="languageList"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>languageList</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

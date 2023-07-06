@@ -17,6 +17,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Disable C4819 warning
+if(MSVC)
+    add_compile_options(/wd4819)
+endif()
+
 find_package(Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 
 message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
@@ -25,8 +30,9 @@ message(STATUS "Qt5_DIR: ${Qt5_DIR}")
 set(COMPONENT_SOURCES
     src/components/mykeysequenceedit.cpp
     src/components/mykeysequenceedit.h
-    src/components/mytoggle.cpp
-    src/components/mytoggle.h
+
+    # src/components/mytoggle.cpp
+    # src/components/mytoggle.h
 )
 
 set(UI_SOURCES
@@ -36,6 +42,9 @@ set(UI_SOURCES
     src/ui/settingswindow.cpp
     src/ui/settingswindow.h
     src/ui/settingswindow.ui
+    src/components/toggle.h
+    src/components/toggle.cpp
+    src/components/toggle.ui
 )
 
 set(UTILS_SOURCES
@@ -51,15 +60,14 @@ set(SOURCES src/main.cpp
     ${UTILS_SOURCES}
 )
 
-set(TS_FILES translations/CopyPlusPlus_en_US.ts)
-
-set(PROJECT_SOURCES
-    ${SOURCES}
-    ${TS_FILES}
-)
+# Translations
+set(TS_FILES translations/CopyPlusPlus_zh_CN.ts)
+# Set qm file output path. Reference url: https://github.com/barry-ran/QtScrcpy/blob/dev/QtScrcpy/res/i18n/CMakeLists.txt
+set_source_files_properties(${TS_FILES} PROPERTIES OUTPUT_LOCATION "${CMAKE_SOURCE_DIR}/translations")
+qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR}/src ${TS_FILES})
 
 # Add executable and link Qt5 libraries
-add_executable(CopyPlusPlus ${PROJECT_SOURCES})
+add_executable(CopyPlusPlus ${SOURCES} ${QM_FILES} resources.qrc)
 target_link_libraries(CopyPlusPlus PRIVATE Qt5::Widgets)
 
 # Include directories
@@ -74,8 +82,7 @@ target_link_libraries(CopyPlusPlus PRIVATE QHotkey::QHotkey)
 add_subdirectory("3rdparty/qt-material-widgets/components")
 target_link_libraries(CopyPlusPlus PRIVATE components)
 
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR}/translations ${TS_FILES})
-
+# add_subdirectory("3rdparty/qt-material-widgets/examples")
 set_target_properties(CopyPlusPlus PROPERTIES
     MACOSX_BUNDLE_BUNDLE_NAME CopyPlusPlus
     MACOSX_BUNDLE_GUI_IDENTIFIER wykj.CopyPlusPlus

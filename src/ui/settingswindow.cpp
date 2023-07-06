@@ -11,17 +11,19 @@ SettingsWindow::SettingsWindow(QWidget *parent) : QMainWindow(parent),
 {
     ui->setupUi(this);
 
-    setFixedSize(260, 295);
-    setWindowFlags(Qt::Tool);
+    setWindowFlags(Qt::Dialog);
+
+    // Remove question mark from the title bar
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     updateText();
-
-    QSettings settings;
-    ui->languageList->setCurrentIndex(settings.value("language", "0").toInt());
 
     // 函数指针
     void (QComboBox::*currentIndexChanged)(int) = &QComboBox::currentIndexChanged;
     connect(ui->languageList, currentIndexChanged, MainWindow::getInstance(), &Language::updateLanguage);
+
+    QSettings settings;
+    ui->languageList->setCurrentIndex(settings.value("language", "0").toInt());
 }
 
 SettingsWindow::~SettingsWindow()
@@ -50,8 +52,8 @@ void SettingsWindow::changeEvent(QEvent *event)
 
 void SettingsWindow::updateText()
 {
-    setWindowTitle(tr("设置"));
-    ui->languageLable->setText(tr("语言"));
+    //    setWindowTitle(tr("设置"));
+    //    ui->languageLable->setText(tr("语言"));
 
     // Get QComboBox
     QComboBox *list = ui->languageList;

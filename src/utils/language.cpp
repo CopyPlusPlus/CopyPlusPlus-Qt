@@ -6,11 +6,11 @@
 #include <QString>
 #include <QTranslator>
 
-QStringList Language::allLanguages = {"中文", "English"};
+QStringList Language::allLanguages = {"English", "中文"};
 
 QHash<QString, QString> Language::languageName = {
-    {"中文", "zh_CN"},
-    {"English", "en_US"}};
+    {"English", "en_US"},
+    {"中文", "zh_CN"}};
 
 void Language::initLanguage()
 {
@@ -21,7 +21,7 @@ void Language::initLanguage()
     //        settings.remove("language");
     //    }
 
-    // if no language setting, read system language
+    // If there is no language setting, read system language
     if (!settings.contains("language")) {
         QString sysLang = QLocale::system().name();
 
@@ -44,9 +44,7 @@ void Language::updateLanguage(const int &newLangIndex)
     qApp->removeTranslator(translator);
 
     if (newLangIndex != 0) {
-        const QString baseName = "CopyPlusPlus-Qt_" + languageName[allLanguages[newLangIndex]];
-
-        if (translator->load(":/i18n/" + baseName)) {
+        if (translator->load(":/i18n/" + languageName[allLanguages[newLangIndex]])) {
             qApp->installTranslator(translator);
         }
     }

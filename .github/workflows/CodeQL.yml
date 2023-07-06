@@ -45,7 +45,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{ env.QT_VERSION }}
-          dir: "${{ github.workspace }}/"
+          dir: "${{ github.workspace }}"
           cache: "true"
           cache-key-prefix: "${{ runner.os }}-Install-Qt-${{ env.QT_VERSION }}-Action"
 
@@ -61,8 +61,10 @@ jobs:
           # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
+      - name: Build
+        run: |
+          cmake -B ${{ github.workspace }}/build -DCMAKE_BUILD_TYPE=MinSizeRel
+          cmake --build ${{ github.workspace }}/build --config MinSizeRel
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2

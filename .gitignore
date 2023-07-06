@@ -1,6 +1,7 @@
 .DS_Store
 build
 .cache
+qt5-vcpkg
 
 # Created by https://www.toptal.com/developers/gitignore/api/c++,cmake,qt,visualstudiocode,git
 # Edit at https://www.toptal.com/developers/gitignore?templates=c++,cmake,qt,visualstudiocode,git
@@ -94,7 +95,7 @@ ui_*.h
 *.jsc
 Makefile*
 *build-*
-*.qm
+# *.qm qm翻译文件加入res中
 *.prl
 
 # Qt unit tests

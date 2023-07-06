@@ -2,13 +2,17 @@
 #define MAINWINDOW_H
 
 #include "qhotkey.h"
-// #include "qtmaterialfab.h"
 #include "qtmaterialtoggle.h"
 #include "settingswindow.h"
+#include "qtmaterialflatbutton.h"
 
 #include <QMainWindow>
 #include <QSettings>
 #include <QTranslator>
+
+namespace Ui {
+    class MainWindow;
+}
 
 class MainWindow : public QMainWindow
 {
@@ -30,8 +34,10 @@ private:
     void loadSettings();
     void saveSettings();
 
+    void setFlatBtnStyle(QtMaterialFlatButton *fBtn);
+
     void autoToggleChecked(bool status);
-    // void toggleShortcutChecked(bool status);
+    void hotkeyToggleChecked(bool status);
 
     void registerShortcut(const QKeySequence &keySequence);
     void shortcutTriggered();
@@ -52,9 +58,12 @@ public:
 
 private:
     static MainWindow *instance;
+    Ui::MainWindow *ui;
 
-    QtMaterialToggle *autoToggle;
-    // QtMaterialFloatingActionButton *floatBtn;
+    //QtMaterialFloatingActionButton *floatBtn;
+
+    QtMaterialFlatButton *aboutBtn;
+    QtMaterialFlatButton *settingsBtn;
 
     SettingsWindow *settingsWindow;
 

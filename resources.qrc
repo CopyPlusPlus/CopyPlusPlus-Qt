@@ -1,7 +1,9 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>3rdparty/material/icons/settings.svg</file>
-        <file>3rdparty/material/icons/star.svg</file>
-        <file>images/copy.png</file>
+        <file alias="copy">resources/images/copy.png</file>
+        <file alias="settings">resources/images/settings.svg</file>
+    </qresource>
+    <qresource prefix="/i18n">
+        <file alias="zh_CN">translations/CopyPlusPlus_zh_CN.qm</file>
     </qresource>
 </RCC>

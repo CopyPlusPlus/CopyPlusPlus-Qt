@@ -6,25 +6,144 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>310</width>
-    <height>370</height>
+    <width>260</width>
+    <height>300</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string notr="true">CopyPlusPlus</string>
+  <property name="focusPolicy">
+   <enum>Qt::ClickFocus</enum>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>310</width>
-     <height>24</height>
-    </rect>
-   </property>
+  <property name="windowTitle">
+   <string>CopyPlusPlus</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../resources.qrc">
+    <normaloff>:/icons/copy</normaloff>:/icons/copy</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QWidget" name="toggleWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QVBoxLayout" name="toggleWidgetLayout">
+       <property name="leftMargin">
+        <number>32</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="Toggle" name="autoToggle" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>48</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="Toggle" name="hotkeyToggle" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>48</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QWidget" name="bottomWidget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="bottomWidgetLayout">
+       <property name="leftMargin">
+        <number>11</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>11</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QtMaterialFlatButton" name="aboutBtn">
+         <property name="text">
+          <string>About</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QtMaterialFlatButton" name="settingsBtn">
+         <property name="text">
+          <string>Settings</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>Toggle</class>
+   <extends>QWidget</extends>
+   <header location="global">toggle.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QtMaterialFlatButton</class>
+   <extends>QPushButton</extends>
+   <header location="global">qtmaterialflatbutton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

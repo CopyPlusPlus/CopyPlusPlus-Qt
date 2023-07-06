@@ -6,19 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>150</width>
-    <height>50</height>
+    <width>130</width>
+    <height>48</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <family>微软雅黑</family>
-   </font>
+  <property name="minimumSize">
+   <size>
+    <width>130</width>
+    <height>48</height>
+   </size>
   </property>
-  <property name="windowTitle">
-   <string notr="true">Form</string>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -32,39 +33,34 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string notr="true">TextLabel</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
+    <widget class="QLabel" name="label"/>
    </item>
    <item>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QtMaterialToggle" name="toggle" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>70</width>
-       <height>50</height>
+       <width>64</width>
+       <height>48</height>
       </size>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtMaterialToggle</class>
+   <extends>QWidget</extends>
+   <header location="global">qtmaterialtoggle.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
